@@ -58,7 +58,6 @@
     var soon = m.href ? ' target="_blank"' : ' data-soon="1"';
     var iconSvg = ICONS[m.icon || 'default'];
 
-    // Add Arrow for all sub-items
     return '<a class="' + cls + '" href="' + href + '"' + soon + '>' +
       '<span class="sb-item-left">' +
         '<span class="sb-icon">' + iconSvg + '</span>' +
@@ -190,22 +189,31 @@
         margin-top: 4px; 
         padding-left: 0; 
         margin-left: 0;
+        list-style: none;
       }
       .sb-group.open > .sb-sub,
       .sb-group-sub.open > .sb-sub-sub {
         display: flex;
       }
 
+      /* Sub-item Card Styling (Grey Background & No Dots) */
       .sb-sub .sb-item, .sb-sub-sub .sb-item {
         font-size: 16px; 
         font-weight: 400; 
-        padding: 12px 16px 12px 45px; 
+        padding: 12px 16px; 
         color: var(--sb-text);
+        background-color: #F8F9FA; /* Grey Background */
+        margin-bottom: 6px; /* Space between cards */
+        border-radius: 8px; /* Rounded corners */
+        list-style-type: none !important; /* Remove dots */
+        border: 1px solid #E1E5EB; /* Light border */
       }
+      
       .sb-sub .sb-item:hover, .sb-sub-sub .sb-item:hover {
         color: #000;
-        background: var(--sb-hover-bg);
+        background: #F0F0F0; /* Darker grey on hover */
       }
+      
       .sb-sub .sb-item.active, .sb-sub-sub .sb-item.active {
          background: var(--sb-active-bg) !important;
          color: var(--sb-active-text) !important;

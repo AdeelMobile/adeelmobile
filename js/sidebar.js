@@ -52,7 +52,6 @@
     setTimeout(function () { t.remove(); }, 2000);
   }
 
-  // Link render karne ka function (target="_blank" add kiya hai)
   function linkHtml(m, extraCls) {
     var cls = 'sb-item' + (extraCls ? ' ' + extraCls : '') + (m.key === ACTIVE ? ' active' : '');
     var href = m.href ? ROOT + m.href : '#';
@@ -135,7 +134,7 @@
       .sb-overlay.show { opacity: 1; visibility: visible; }
 
       .sidebar {
-        position: fixed; top: 0; left: 0; bottom: 0; width: 290px;
+        position: fixed; top: 0; left: 0; bottom: 0; width: 100%; /* Full Width */
         background: var(--sb-bg); border-right: 1px solid var(--sb-border);
         z-index: 1000; overflow-y: auto; padding: 20px 12px;
         transform: translateX(-100%); transition: transform 0.3s ease;
@@ -156,7 +155,7 @@
         padding: 14px 16px; border-radius: var(--sb-radius);
         color: var(--sb-text); text-decoration: none; 
         font-size: 17px; 
-        font-weight: 500; /* Bold kam kiya */
+        font-weight: 500; 
         transition: background 0.2s, color 0.2s; cursor: pointer;
       }
       .sb-item:hover { background: var(--sb-hover-bg); color: #000; }
@@ -165,13 +164,13 @@
       .sb-icon { display: flex; align-items: center; justify-content: center; color: #555555; }
       .sb-icon svg { width: 22px; height: 22px; stroke-width: 2; }
 
-      .sb-item.sb-parent { background: var(--sb-hover-bg); font-weight: 500; } /* Parent weight kam kiya */
+      .sb-item.sb-parent { background: var(--sb-hover-bg); font-weight: 500; }
       .sb-item.sb-parent.has-active { color: #000000; }
 
       .sb-item.active {
         background: var(--sb-active-bg) !important; 
         color: var(--sb-active-text) !important; 
-        font-weight: 600; /* Active weight thoda bara */
+        font-weight: 600; 
       }
 
       .sb-arrow {
@@ -184,11 +183,10 @@
         transform: rotate(180deg);
       }
 
-      /* Submenu se vertical line remove ki hai */
       .sb-sub, .sb-sub-sub {
         display: none; flex-direction: column;
         margin-top: 4px; 
-        padding-left: 0; /* Line hatane ke liye padding 0 */
+        padding-left: 0; 
         margin-left: 0;
       }
       .sb-group.open > .sb-sub,
@@ -198,8 +196,8 @@
 
       .sb-sub .sb-item, .sb-sub-sub .sb-item {
         font-size: 16px; 
-        font-weight: 400; /* Sub-menu weight kam kiya */
-        padding: 12px 16px; 
+        font-weight: 400; 
+        padding: 12px 16px 12px 45px; /* Indent for sub items */
         color: var(--sb-text);
       }
       .sb-sub .sb-item:hover, .sb-sub-sub .sb-item:hover {
@@ -271,22 +269,18 @@
       var a = e.target.closest('.sb-item');
       if (!a) return;
 
-      // Agar parent hai to dropdown open/close karo (link na khule)
       if (a.getAttribute('data-parent') || a.getAttribute('data-parent-sub')) {
         e.preventDefault();
         a.parentNode.classList.toggle('open');
         return;
       }
 
-      // Agar page abhi nahi bana (coming soon)
       if (a.getAttribute('data-soon')) {
         e.preventDefault();
         toast('This page is coming soon');
         return; 
       }
 
-      // Agar normal link hai to new tab mein khulega (HTML mein target="_blank" hai)
-      // Sidebar mobile pe khula hai to use band kar do
       closeMenu();
     });
 

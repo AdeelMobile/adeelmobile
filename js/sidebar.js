@@ -58,11 +58,13 @@
     var soon = m.href ? ' target="_blank"' : ' data-soon="1"';
     var iconSvg = ICONS[m.icon || 'default'];
 
+    // Add Arrow for all sub-items
     return '<a class="' + cls + '" href="' + href + '"' + soon + '>' +
       '<span class="sb-item-left">' +
         '<span class="sb-icon">' + iconSvg + '</span>' +
         '<span>' + m.label + '</span>' +
       '</span>' +
+      '<span class="sb-arrow">▾</span>' +
     '</a>';
   }
 
@@ -134,7 +136,7 @@
       .sb-overlay.show { opacity: 1; visibility: visible; }
 
       .sidebar {
-        position: fixed; top: 0; left: 0; bottom: 0; width: 100%; /* Full Width */
+        position: fixed; top: 0; left: 0; bottom: 0; width: 100%; 
         background: var(--sb-bg); border-right: 1px solid var(--sb-border);
         z-index: 1000; overflow-y: auto; padding: 20px 12px;
         transform: translateX(-100%); transition: transform 0.3s ease;
@@ -197,7 +199,7 @@
       .sb-sub .sb-item, .sb-sub-sub .sb-item {
         font-size: 16px; 
         font-weight: 400; 
-        padding: 12px 16px 12px 45px; /* Indent for sub items */
+        padding: 12px 16px 12px 45px; 
         color: var(--sb-text);
       }
       .sb-sub .sb-item:hover, .sb-sub-sub .sb-item:hover {

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#ffffff">
+
+  <title>My Profits List | Adeel Mobile</title>
+
+  <link rel="stylesheet" href="my-profits.css">
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+
+  <!-- Icons for Share and Download Image -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+  <style>
+    /* My Profits Logo - Continuous 3D Rotation */
+
+    .profits-logo {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      perspective: 800px;
+    }
+
+    .profits-logo img {
+      transform-origin: center;
+      backface-visibility: visible;
+      animation: profitsLogoRotate 4s linear infinite;
+      will-change: transform;
+    }
+
+    @keyframes profitsLogoRotate {
+      from {
+        transform: rotateY(0deg);
+      }
+
+      to {
+        transform: rotateY(360deg);
+      }
+    }
+
+    /* Accessibility: Respect Reduced Motion */
+
+    @media (prefers-reduced-motion: reduce) {
+      .profits-logo img {
+        animation: none;
+        transform: none;
+        will-change: auto;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="profits-page">
+
+    <!-- Header: Logo + Search -->
+    <header class="profits-header">
+      <a
+        class="profits-logo"
+        href="../../index.html"
+        aria-label="Adeel Mobile Home">
+
+        <img
+          src="https://nqihozwbdrvpyalctwbc.supabase.co/storage/v1/object/public/logos/main-logo.png"
+          alt="Adeel Mobile Logo"
+          onerror="this.style.display='none'">
+      </a>
+
+      <div class="profits-search">
+        <input
+          type="search"
+          id="product-search"
+          placeholder="Search products..."
+          aria-label="Search products">
+
+        <button
+          type="button"
+          id="clear-search"
+          aria-label="Clear search">
+          ×
+        </button>
+      </div>
+    </header>
+
+    <!-- Brand Filters -->
+    <nav
+      class="brand-filters"
+      id="brand-filters"
+      aria-label="Filter products by brand">
+
+      <button
+        type="button"
+        class="brand-filter active"
+        data-brand="all">
+        All Brands
+      </button>
+    </nav>
+
+    <!-- Products Section -->
+    <section class="products-section">
+
+      <div class="products-heading">
+        <h1>All Products</h1>
+        <span id="products-count">0 Products</span>
+      </div>
+
+      <!-- Loading / Error / Empty Message -->
+      <div
+        id="products-message"
+        class="products-message"
+        role="status"
+        aria-live="polite">
+        Loading products...
+      </div>
+
+      <!-- Product Cards -->
+      <div
+        id="user-products-grid"
+        class="user-products-grid">
+      </div>
+
+    </section>
+  </main>
+
+  <!-- Supabase -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+
+  <!-- Existing project configuration -->
+  <script src="../../js/supabase-config.js"></script>
+
+  <!-- Existing poster dependencies -->
+  <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js"></script>
+  <script src="../Website-Preview/js/poster.js"></script>
+
+  <!-- My Profits functionality -->
+  <script src="my-profits.js"></script>
+</body>
+</html>

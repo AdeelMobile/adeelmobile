@@ -1,0 +1,629 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#171717">
+  <title>Adeel Mobile | Installment Price List</title>
+
+  <style>
+    :root {
+      --black: #171717;
+      --dark: #292929;
+      --grey: #686868;
+      --light: #f4f4f4;
+      --border: #dedede;
+      --white: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--light);
+      color: var(--black);
+      font-family: Roboto, Arial, sans-serif;
+      font-size: 15px;
+    }
+
+    button {
+      font: inherit;
+      cursor: pointer;
+    }
+
+    .page {
+      width: 100%;
+      max-width: 900px;
+      margin: auto;
+      padding: 16px;
+    }
+
+    .header {
+      text-align: center;
+      background: var(--white);
+      padding: 22px 14px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+    }
+
+    .logo {
+      width: 76px;
+      height: 76px;
+      object-fit: contain;
+      margin: 0 auto 8px;
+    }
+
+    .brand-title {
+      font-size: clamp(25px, 6vw, 36px);
+      font-weight: 900;
+      letter-spacing: 1px;
+      margin: 0;
+    }
+
+    .subtitle {
+      color: var(--grey);
+      margin: 10px auto 0;
+      line-height: 1.6;
+      max-width: 560px;
+    }
+
+    .updated {
+      margin-top: 12px;
+      font-size: 12px;
+      color: var(--grey);
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin: 15px 0;
+    }
+
+    .action-button {
+      flex: 1;
+      min-width: 130px;
+      border: 0;
+      border-radius: 9px;
+      padding: 13px 10px;
+      font-weight: 700;
+    }
+
+    .primary {
+      color: var(--white);
+      background: var(--black);
+    }
+
+    .secondary {
+      color: var(--black);
+      background: var(--white);
+      border: 1px solid var(--border);
+    }
+
+    .search-box {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px;
+      font-size: 16px;
+      background: var(--white);
+      margin-bottom: 18px;
+    }
+
+    .brand-section {
+      margin: 20px 0;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .brand-heading {
+      background: var(--dark);
+      color: var(--white);
+      padding: 14px;
+      font-size: 21px;
+      font-weight: 800;
+    }
+
+    .model-card {
+      padding: 14px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .model-card:last-child {
+      border-bottom: 0;
+    }
+
+    .model-name {
+      margin: 0 0 5px;
+      font-size: 18px;
+      font-weight: 800;
+    }
+
+    .variant-name {
+      color: var(--grey);
+      margin-bottom: 12px;
+      font-size: 13px;
+    }
+
+    .price-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px dashed var(--border);
+    }
+
+    .price-row:last-child {
+      border-bottom: 0;
+    }
+
+    .price-value {
+      font-weight: 800;
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    .plans {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .plan {
+      background: var(--light);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 5px;
+      text-align: center;
+    }
+
+    .plan-title {
+      display: block;
+      color: var(--grey);
+      font-size: 12px;
+      margin-bottom: 6px;
+    }
+
+    .plan-amount {
+      font-size: 14px;
+      font-weight: 900;
+      overflow-wrap: anywhere;
+    }
+
+    .message {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 12px;
+      text-align: center;
+      color: var(--grey);
+      line-height: 1.6;
+    }
+
+    .footer {
+      margin: 22px 0 8px;
+      padding: 18px 12px;
+      background: var(--black);
+      color: var(--white);
+      text-align: center;
+      border-radius: 12px;
+      line-height: 1.8;
+    }
+
+    .footer strong {
+      font-size: 18px;
+      letter-spacing: 1px;
+    }
+
+    #poster-stage {
+      position: fixed;
+      left: -10000px;
+      top: 0;
+      width: 1080px;
+      background: white;
+      color: #171717;
+      padding: 48px;
+      font-family: Arial, sans-serif;
+    }
+
+    .poster-header {
+      text-align: center;
+      padding-bottom: 24px;
+      border-bottom: 5px solid #171717;
+    }
+
+    .poster-logo {
+      width: 110px;
+      height: 110px;
+      object-fit: contain;
+    }
+
+    .poster-title {
+      font-size: 43px;
+      font-weight: 900;
+      margin: 10px 0;
+    }
+
+    .poster-subtitle {
+      font-size: 23px;
+      line-height: 1.5;
+    }
+
+    .poster-brand {
+      font-size: 31px;
+      font-weight: 900;
+      background: #171717;
+      color: white;
+      padding: 14px;
+      margin-top: 28px;
+    }
+
+    .poster-product {
+      padding: 18px 4px;
+      border-bottom: 2px solid #dedede;
+      break-inside: avoid;
+    }
+
+    .poster-model {
+      font-size: 25px;
+      font-weight: 900;
+      margin-bottom: 8px;
+    }
+
+    .poster-detail {
+      font-size: 20px;
+      line-height: 1.7;
+    }
+
+    .poster-plans {
+      display: flex;
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .poster-plan {
+      flex: 1;
+      background: #f1f1f1;
+      padding: 12px 6px;
+      text-align: center;
+      font-size: 18px;
+      font-weight: 800;
+      border-radius: 8px;
+    }
+
+    .poster-footer {
+      background: #171717;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      font-size: 22px;
+      margin-top: 28px;
+      line-height: 1.6;
+    }
+
+    @media (min-width: 650px) {
+      .model-list {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .model-card {
+        border-right: 1px solid var(--border);
+      }
+    }
+
+    @media (max-width: 360px) {
+      .page {
+        padding: 10px;
+      }
+
+      .plans {
+        gap: 5px;
+      }
+
+      .plan-amount {
+        font-size: 12px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page">
+    <header class="header">
+      <img id="logo" class="logo" alt="Adeel Mobile Logo" hidden>
+      <h1 class="brand-title">ADEEL MOBILE</h1>
+      <p id="subtitle" class="subtitle">
+        Installment Plans — Apna Pasandeeda Mobile Asaan Mahana Iqsaat Par Hasil Karein.
+      </p>
+      <div id="updated" class="updated"></div>
+    </header>
+
+    <div class="actions">
+      <button id="download-poster" class="action-button primary">
+        Download Price List Poster
+      </button>
+      <button id="whatsapp" class="action-button secondary">
+        WhatsApp Contact
+      </button>
+    </div>
+
+    <input
+      id="search"
+      class="search-box"
+      type="search"
+      placeholder="Brand ya mobile model search karein..."
+      aria-label="Search mobile models"
+    >
+
+    <div id="products" aria-live="polite">
+      <div class="message">Loading products...</div>
+    </div>
+
+    <footer class="footer">
+      <strong id="footer-title">ADEEL MOBILE OFFICIAL</strong>
+      <div id="footer-subtitle">Adeel Mobile Shalimar Link Road Waly</div>
+      <div>Rates aur availability confirm karne ke liye WhatsApp karein.</div>
+    </footer>
+  </main>
+
+  <div id="poster-stage" aria-hidden="true"></div>
+
+  <script src="../js/config.js"></script>
+  <script src="../js/common.js"></script>
+  <script src="./price-list.js"></script>
+
+  <script>
+    "use strict";
+
+    const productsContainer = document.getElementById("products");
+    const searchInput = document.getElementById("search");
+    const settings = PriceListCore.getSettings();
+
+    document.getElementById("subtitle").textContent = settings.subtitle;
+    document.getElementById("updated").textContent =
+      "Updated: " + settings.updatedDate;
+    document.getElementById("footer-title").textContent =
+      settings.footerTitle;
+    document.getElementById("footer-subtitle").textContent =
+      settings.footerSubtitle;
+
+    const logo = document.getElementById("logo");
+
+    if (settings.logo) {
+      logo.src = settings.logo;
+      logo.hidden = false;
+      logo.onerror = () => {
+        logo.hidden = true;
+      };
+    }
+
+    document.getElementById("whatsapp").addEventListener("click", () => {
+      window.open(settings.whatsappUrl, "_blank", "noopener");
+    });
+
+    function escapeHtml(value) {
+      return String(value ?? "").replace(/[&<>"']/g, char => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+      })[char]);
+    }
+
+    function priceText(value) {
+      return escapeHtml(PriceListCore.formatPrice(value));
+    }
+
+    function renderProducts() {
+      const query = searchInput.value.trim().toLowerCase();
+      const products = PriceListCore.getData().filter(product =>
+        `${product.brand} ${product.model} ${product.variant}`
+          .toLowerCase()
+          .includes(query)
+      );
+
+      if (!products.length) {
+        productsContainer.innerHTML =
+          '<div class="message">Koi matching mobile nahi mila.</div>';
+        return;
+      }
+
+      const grouped = {};
+
+      products.forEach(product => {
+        const brand = product.brand || "Other";
+        if (!grouped[brand]) grouped[brand] = [];
+        grouped[brand].push(product);
+      });
+
+      productsContainer.innerHTML = Object.entries(grouped).map(
+        ([brand, items]) => `
+          <section class="brand-section">
+            <div class="brand-heading">${escapeHtml(brand)}</div>
+            <div class="model-list">
+              ${items.map(product => `
+                <article class="model-card">
+                  <h2 class="model-name">${escapeHtml(product.model)}</h2>
+                  <div class="variant-name">
+                    Variant: ${escapeHtml(product.variant || "Standard")}
+                  </div>
+
+                  <div class="price-row">
+                    <span>Cash Price</span>
+                    <span class="price-value">${priceText(product.price)}</span>
+                  </div>
+
+                  <div class="price-row">
+                    <span>Advance</span>
+                    <span class="price-value">${priceText(product.plans.advance)}</span>
+                  </div>
+
+                  <div class="plans">
+                    <div class="plan">
+                      <span class="plan-title">3 Months</span>
+                      <div class="plan-amount">${priceText(product.plans.three)}</div>
+                      <span class="plan-title">per month</span>
+                    </div>
+                    <div class="plan">
+                      <span class="plan-title">6 Months</span>
+                      <div class="plan-amount">${priceText(product.plans.six)}</div>
+                      <span class="plan-title">per month</span>
+                    </div>
+                    <div class="plan">
+                      <span class="plan-title">9 Months</span>
+                      <div class="plan-amount">${priceText(product.plans.nine)}</div>
+                      <span class="plan-title">per month</span>
+                    </div>
+                  </div>
+                </article>
+              `).join("")}
+            </div>
+          </section>
+        `
+      ).join("");
+    }
+
+    searchInput.addEventListener("input", renderProducts);
+
+    function buildPoster() {
+      const stage = document.getElementById("poster-stage");
+      const products = PriceListCore.getData();
+      const posterSettings = PriceListCore.getSettings();
+      const grouped = {};
+
+      products.forEach(product => {
+        const brand = product.brand || "Other";
+        if (!grouped[brand]) grouped[brand] = [];
+        grouped[brand].push(product);
+      });
+
+      stage.innerHTML = `
+        <div class="poster-header">
+          ${posterSettings.logo ? `
+            <img class="poster-logo" src="${escapeHtml(posterSettings.logo)}" alt="">
+          ` : ""}
+          <div class="poster-title">${escapeHtml(posterSettings.title)}</div>
+          <div class="poster-subtitle">${escapeHtml(posterSettings.subtitle)}</div>
+          <div class="poster-subtitle">Updated: ${escapeHtml(posterSettings.updatedDate)}</div>
+        </div>
+
+        ${Object.entries(grouped).map(([brand, items]) => `
+          <section>
+            <div class="poster-brand">${escapeHtml(brand)}</div>
+            ${items.map(product => `
+              <div class="poster-product">
+                <div class="poster-model">
+                  ${escapeHtml(product.model)} — ${escapeHtml(product.variant)}
+                </div>
+                <div class="poster-detail">
+                  Cash Price: ${priceText(product.price)}<br>
+                  Advance: ${priceText(product.plans.advance)}
+                </div>
+                <div class="poster-plans">
+                  <div class="poster-plan">
+                    3 Months<br>${priceText(product.plans.three)}/month
+                  </div>
+                  <div class="poster-plan">
+                    6 Months<br>${priceText(product.plans.six)}/month
+                  </div>
+                  <div class="poster-plan">
+                    9 Months<br>${priceText(product.plans.nine)}/month
+                  </div>
+                </div>
+              </div>
+            `).join("")}
+          </section>
+        `).join("")}
+
+        <div class="poster-footer">
+          ${escapeHtml(posterSettings.footerTitle)}<br>
+          ${escapeHtml(posterSettings.footerSubtitle)}<br>
+          WhatsApp: ${escapeHtml(posterSettings.whatsappNumber)}
+        </div>
+      `;
+
+      return stage;
+    }
+
+    async function downloadPoster() {
+      const button = document.getElementById("download-poster");
+      button.disabled = true;
+      button.textContent = "Poster tayyar ho raha hai...";
+
+      try {
+        const stage = buildPoster();
+
+        if (document.fonts && document.fonts.ready) {
+          await document.fonts.ready;
+        }
+
+        if (stage.querySelector("img")) {
+          await Promise.all(
+            Array.from(stage.querySelectorAll("img")).map(img => {
+              if (img.complete) return Promise.resolve();
+              return new Promise(resolve => {
+                img.onload = resolve;
+                img.onerror = resolve;
+              });
+            })
+          );
+        }
+
+        if (typeof window.html2canvas !== "function") {
+          throw new Error("Poster library load nahi hui.");
+        }
+
+        const canvas = await window.html2canvas(stage, {
+          backgroundColor: "#ffffff",
+          scale: 1,
+          useCORS: true,
+          width: stage.scrollWidth,
+          height: stage.scrollHeight
+        });
+
+        const link = document.createElement("a");
+        link.download = "Adeel-Mobile-Installment-Price-List.png";
+        link.href = canvas.toDataURL("image/png");
+        link.click();
+
+      } catch (error) {
+        console.error(error);
+        alert(
+          "Poster download nahi ho saka. Internet check karein aur dobara try karein."
+        );
+      } finally {
+        button.disabled = false;
+        button.textContent = "Download Price List Poster";
+      }
+    }
+
+    document.getElementById("download-poster")
+      .addEventListener("click", downloadPoster);
+
+    async function startPriceList() {
+      try {
+        await PriceListCore.loadProducts();
+        renderProducts();
+      } catch (error) {
+        productsContainer.innerHTML = `
+          <div class="message">
+            Products load nahi ho sake. Internet aur Supabase connection check karein.
+          </div>
+        `;
+      }
+    }
+
+    startPriceList();
+  </script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</body>
+</html>

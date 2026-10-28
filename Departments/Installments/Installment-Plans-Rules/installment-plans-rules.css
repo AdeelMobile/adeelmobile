@@ -1,0 +1,36 @@
+.ip-page { padding: 20px 16px 40px; font-family: 'Roboto', sans-serif; font-size: 16px; color: #111; max-width: 900px; }
+.ip-title { font-size: 24px; font-weight: 700; margin: 0 0 16px; }
+.ip-sub { font-size: 22px; font-weight: 700; margin: 26px 0 10px; }
+
+.ip-box { padding: 14px; border: 1px solid #ddd; border-radius: 14px; background: #fff; margin-bottom: 14px; }
+.ip-label { display: block; font-size: 15px; color: #333; margin-bottom: 12px; }
+.ip-input { display: block; width: 100%; margin-top: 6px; font-family: inherit; font-size: 16px; padding: 12px; border: 1px solid #bbb; border-radius: 10px; background: #fff; color: #111; }
+
+.ip-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.ip-chip { font-family: inherit; font-size: 16px; padding: 10px 14px; border: 1px solid #bbb; border-radius: 999px; background: #fff; color: #111; cursor: pointer; }
+.ip-chip.active { background: #111; color: #fff; border-color: #111; }
+
+.ip-note { font-size: 15px; padding: 12px 14px; margin-bottom: 14px; background: #eee; border: 1px solid #999; border-radius: 10px; color: #111; }
+.ip-note[hidden] { display: none; }
+
+.ip-cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 14px; }
+.ip-card { padding: 14px; border: 1px solid #ddd; border-radius: 14px; background: #fff; }
+.ip-cl { font-size: 15px; color: #444; margin-bottom: 8px; }
+.ip-num { font-size: 26px; font-weight: 700; word-break: break-word; }
+.ip-hint { font-size: 15px; color: #888; margin-top: 4px; }
+
+.ip-save { width: 100%; font-family: inherit; font-size: 16px; font-weight: 500; padding: 14px; border: 0; border-radius: 12px; background: #111; color: #fff; cursor: pointer; }
+.ip-save:disabled { background: #bbb; cursor: not-allowed; }
+
+.ip-scroll { overflow-x: auto; border: 1px solid #ddd; border-radius: 14px; }
+.ip-table { width: 100%; border-collapse: collapse; font-size: 16px; }
+.ip-table th, .ip-table td { padding: 12px 14px; text-align: left; border-bottom: 1px solid #eee; white-space: nowrap; }
+.ip-table th { background: #f3f3f3; font-size: 15px; }
+.ip-table tr:last-child td { border-bottom: 0; }
+
+.ip-list { list-style: none; margin: 0; padding: 0; border: 1px solid #ddd; border-radius: 14px; overflow: hidden; }
+.ip-list li { padding: 12px 14px; border-bottom: 1px solid #eee; font-size: 16px; }
+.ip-list li:last-child { border-bottom: 0; }
+.ip-list .sm { display: block; font-size: 15px; color: #777; margin-top: 2px; }
+
+@media (min-width: 900px) { .ip-cards { grid-template-columns: repeat(4, 1fr); } }

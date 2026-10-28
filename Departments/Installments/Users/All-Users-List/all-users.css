@@ -1,0 +1,71 @@
+.us-page {
+    padding: 20px 14px 40px;
+    max-width: 1200px;
+    margin: auto;
+    font-family: Roboto, Arial, sans-serif;
+    font-size: 16px;
+}
+
+.us-title {
+    font-size: 27px;
+    font-weight: 700;
+    margin: 0 0 8px;
+}
+
+.us-box {
+    background: #fff;
+    border: 1px solid #e2e2e2;
+    border-radius: 12px;
+    padding: 0;
+    overflow-x: auto;
+    margin-top: 20px;
+    -webkit-overflow-scrolling: touch;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 900px; /* Text ko jagah dene ke liye */
+}
+
+/* Text wrap hone se rokne ke liye */
+th, td {
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+    font-size: 15px;
+    white-space: nowrap; 
+}
+
+th {
+    background: #f7f7f7;
+    font-weight: 700;
+    color: #333;
+}
+
+.status-badge {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: bold;
+    background: #e8f5e9;
+    color: #2e7d32;
+    display: inline-block;
+}
+
+.back-btn {
+    display: inline-block;
+    margin-bottom: 16px;
+    color: #111;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.user-row {
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.user-row:active {
+    background: #e0e0e0;
+}

@@ -1,0 +1,21 @@
+/* User Applications */
+.ap-back { display: inline-block; font-size: 16px; color: #111; text-decoration: none; margin-bottom: 10px; }
+.ap-title { font-size: 22px; font-weight: 700; color: #111; margin: 0 0 6px; }
+.ap-user { font-size: 16px; color: #555; margin-bottom: 12px; }
+.ap-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
+.ap-stat { background: #f7f7f7; border: 1px solid #e5e5e5; border-radius: 10px; padding: 12px; }
+.ap-stat span { display: block; font-size: 15px; color: #555; margin-bottom: 4px; }
+.ap-stat b { font-size: 26px; font-weight: 700; color: #111; }
+.ap-filters { display: flex; gap: 8px; overflow-x: auto; margin-bottom: 12px; }
+.ap-fbtn { flex: 0 0 auto; font-family: Roboto, sans-serif; font-size: 16px; padding: 10px 14px; border: 1px solid #ccc; border-radius: 20px; background: #fff; color: #111; }
+.ap-fbtn.active { background: #111; color: #fff; border-color: #111; }
+.ap-card { background: #fff; border: 1px solid #ddd; border-radius: 12px; padding: 14px; margin-bottom: 10px; }
+.ap-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 6px; }
+.ap-name { font-size: 18px; font-weight: 700; color: #111; }
+.ap-badge { font-size: 15px; font-weight: 500; padding: 4px 10px; border-radius: 14px; white-space: nowrap; }
+.ap-badge.pending { background: #eee; color: #333; }
+.ap-badge.approved { background: #111; color: #fff; }
+.ap-badge.rejected { background: #fff; color: #111; border: 1px solid #111; }
+.ap-line { font-size: 16px; color: #333; margin-top: 4px; }
+.ap-reason { font-size: 15px; color: #111; background: #f2f2f2; border-radius: 8px; padding: 8px 10px; margin-top: 8px; }
+.ap-empty { background: #f2f2f2; color: #333; border-radius: 10px; padding: 16px; font-size: 16px; text-align: center; }

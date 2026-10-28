@@ -1,0 +1,786 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f2f2f2">
+
+  <title>Adeel Mobile Installments</title>
+
+  <meta property="og:title" content="Adeel Mobile Installments">
+  <meta property="og:description" content="Easy installment phones, no guarantor needed">
+  <meta property="og:image" content="https://nqihozwbdrvpyalctwbc.supabase.co/storage/v1/object/public/logos/main-logo.png">
+
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+
+  <style>
+    /* Header Layout */
+    .top {
+      padding: 12px;
+    }
+
+    .header-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .header-logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      min-width: 0;
+      text-decoration: none;
+      overflow: hidden;
+      perspective: 700px;
+    }
+
+    .header-logo img {
+      display: block;
+      width: 100%;
+      height: auto;
+      max-width: 195px;
+      max-height: 85px;
+      object-fit: contain;
+      object-position: center;
+      transform-origin: center;
+      animation: logoFloat3D 3.5s ease-in-out infinite;
+      filter: drop-shadow(0 8px 5px rgba(0, 0, 0, 0.16));
+      will-change: transform, filter;
+    }
+
+    @keyframes logoFloat3D {
+      0%, 100% {
+        transform: perspective(700px) translateY(0) translateZ(0) scale(1);
+        filter: drop-shadow(0 8px 5px rgba(0, 0, 0, 0.16));
+      }
+
+      50% {
+        transform: perspective(700px) translateY(-6px) translateZ(18px) scale(1.025);
+        filter: drop-shadow(0 13px 7px rgba(0, 0, 0, 0.22));
+      }
+    }
+
+    .header-tools {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      min-width: 0;
+    }
+
+    /* Share Website Button */
+    .header-share {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      width: 100%;
+      min-width: 0;
+      min-height: 66px;
+      padding: 8px 3px;
+      box-sizing: border-box;
+      background: #e9e9e9;
+      color: #333333;
+      border: 1px solid #dedede;
+      border-radius: 9px;
+      font-family: Roboto, Arial, sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      line-height: 1.3;
+      text-align: center;
+      cursor: pointer;
+      overflow: hidden;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .header-share:active {
+      background: #dcdcdc;
+    }
+
+    .header-share svg {
+      display: block;
+      width: 21px;
+      height: 21px;
+      min-width: 21px;
+      flex: 0 0 21px;
+    }
+
+    .header-share span {
+      display: block;
+      min-width: 0;
+      white-space: nowrap;
+    }
+
+    .header-search {
+      display: block;
+      width: 100%;
+      min-width: 0;
+      height: 46px;
+      margin: 0;
+      padding: 0 12px;
+      box-sizing: border-box;
+      border: 1px solid #dddddd;
+      border-radius: 9px;
+      background: #ffffff;
+      color: #222222;
+      font-family: Roboto, sans-serif;
+      font-size: 14px;
+    }
+
+    /* Pakistan Date and Time */
+    .market-strip {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      max-width: 720px;
+      margin: 12px auto 0;
+      padding: 10px 12px;
+      background: #ffffff;
+      border: 1px solid #e5e5e5;
+      border-radius: 10px;
+      color: #444444;
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    #pakistan-date,
+    #pakistan-time {
+      min-width: 0;
+    }
+
+    #pakistan-time {
+      font-weight: 700;
+      color: #222222;
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    /* LIVE Label */
+    .live-label-row {
+      display: flex;
+      align-items: center;
+      max-width: 720px;
+      margin: 10px auto 0;
+      padding: 0 2px;
+    }
+
+    .live-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 6px 10px;
+      background: #d90000;
+      color: #ffffff;
+      border-radius: 5px;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 0.8px;
+      line-height: 1;
+      box-shadow: 0 2px 5px rgba(217, 0, 0, 0.18);
+    }
+
+    .live-label-dot {
+      width: 7px;
+      height: 7px;
+      flex: 0 0 7px;
+      background: #ffffff;
+      border-radius: 50%;
+      animation: livePulse 1.2s ease-in-out infinite;
+    }
+
+    @keyframes livePulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.35; }
+    }
+
+    /* Live Prices Ticker */
+    .live-prices {
+      max-width: 720px;
+      margin: 5px auto 0;
+      overflow: hidden;
+      background: #242424;
+      color: #ffffff;
+      border-radius: 10px;
+    }
+
+    .live-prices-heading {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 12px 4px;
+      font-size: 12px;
+      letter-spacing: 0.3px;
+    }
+
+    .live-dot {
+      width: 7px;
+      height: 7px;
+      flex: 0 0 7px;
+      background: #49d88a;
+      border-radius: 50%;
+      box-shadow: 0 0 7px rgba(73, 216, 138, 0.6);
+    }
+
+    .ticker-window {
+      width: 100%;
+      overflow: hidden;
+      padding: 7px 0 11px;
+    }
+
+    .ticker-track {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      width: max-content;
+      padding-left: 100%;
+      white-space: nowrap;
+      animation: mobilePriceTicker 300s linear infinite;
+      font-size: 12px;
+      will-change: transform;
+    }
+
+    .ticker-track:hover {
+      animation-play-state: paused;
+    }
+
+    .ticker-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .ticker-item strong {
+      color: #ffffff;
+      font-weight: 700;
+    }
+
+    .ticker-item span {
+      color: #d4d4d4;
+    }
+
+    .ticker-separator {
+      color: #777777;
+    }
+
+    @keyframes mobilePriceTicker {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* Promotional Banner and Product Slider */
+    .promo-banner {
+      position: relative;
+      display: block;
+      width: calc(100% - 24px);
+      max-width: 720px;
+      min-height: 240px;
+      box-sizing: border-box;
+      margin: 12px auto 0;
+      padding: 15px;
+      overflow: hidden;
+      border: 1px solid #e2e2e2;
+      border-radius: 14px;
+      background: #ffffff;
+      color: #222222;
+      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    .promo-banner-content {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+    }
+
+    .promo-banner-heading {
+      margin-bottom: 12px;
+    }
+
+    .promo-kicker {
+      display: inline-block;
+      margin-bottom: 5px;
+      color: #d90000;
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 1.4px;
+    }
+
+    .promo-banner h2 {
+      margin: 0;
+      color: #222222;
+      font-size: 19px;
+      line-height: 1.3;
+      font-weight: 900;
+    }
+
+    .promo-banner-subtitle {
+      margin: 4px 0 0;
+      color: #666666;
+      font-size: 12px;
+    }
+
+    .promo-slide-window {
+      position: relative;
+      min-height: 155px;
+      overflow: hidden;
+    }
+
+    .promo-slide {
+      display: grid;
+      grid-template-columns: 155px minmax(0, 1fr);
+      align-items: center;
+      gap: 14px;
+      min-height: 155px;
+      animation: promoSlideIn 0.55s ease both;
+    }
+
+    .promo-slide-image {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 155px;
+      height: 155px;
+      overflow: hidden;
+      border-radius: 10px;
+      background: #f7f7f7;
+    }
+
+    .promo-slide-image img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .promo-slide-details {
+      min-width: 0;
+    }
+
+    .promo-slide-brand {
+      display: block;
+      margin-bottom: 3px;
+      color: #777777;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .promo-slide-model {
+      display: block;
+      overflow: hidden;
+      color: #222222;
+      font-size: 16px;
+      font-weight: 900;
+      line-height: 1.3;
+      text-overflow: ellipsis;
+    }
+
+    .promo-slide-spec {
+      display: block;
+      margin-top: 3px;
+      color: #777777;
+      font-size: 11px;
+    }
+
+    .promo-slide-price {
+      display: block;
+      margin-top: 7px;
+      color: #d90000;
+      font-size: 16px;
+      font-weight: 900;
+    }
+
+    .promo-slide-count {
+      display: flex;
+      justify-content: center;
+      gap: 5px;
+      margin-top: 12px;
+    }
+
+    .promo-slide-dot {
+      width: 6px;
+      height: 6px;
+      padding: 0;
+      border: 0;
+      border-radius: 50%;
+      background: #d5d5d5;
+    }
+
+    .promo-slide-dot.active {
+      width: 18px;
+      border-radius: 5px;
+      background: #d90000;
+    }
+
+    @keyframes promoSlideIn {
+      from {
+        opacity: 0;
+        transform: translateX(18px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    /* Download Price List Button */
+    .price-list-action {
+      width: calc(100% - 24px);
+      max-width: 720px;
+      margin: 12px auto 0;
+    }
+
+    .price-list-button {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      width: 100%;
+      min-height: 66px;
+      padding: 8px 3px;
+      box-sizing: border-box;
+      border: 1px solid #dedede;
+      border-radius: 9px;
+      background: #e9e9e9;
+      color: #333333;
+      font-family: Roboto, Arial, sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      line-height: 1.3;
+      text-align: center;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      transition: background 0.2s ease;
+    }
+
+    .price-list-button:active {
+      background: #dcdcdc;
+    }
+
+    .price-list-button svg {
+      display: block;
+      width: 21px;
+      height: 21px;
+      flex: 0 0 21px;
+    }
+
+    /* Prevent Horizontal Overflow */
+    html,
+    body {
+      max-width: 100%;
+      overflow-x: hidden;
+    }
+
+    @media (max-width: 360px) {
+      .header-layout {
+        grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+        gap: 8px;
+      }
+
+      .header-logo img {
+        max-width: 155px;
+        max-height: 58px;
+      }
+
+      .header-share {
+        gap: 5px;
+        min-height: 62px;
+        padding: 7px 2px;
+        font-size: 10px;
+      }
+
+      .header-search {
+        padding: 0 8px;
+        font-size: 13px;
+      }
+
+      .market-strip {
+        padding: 9px;
+        font-size: 11px;
+      }
+
+      .promo-banner {
+        min-height: 210px;
+        padding: 12px;
+      }
+
+      .promo-banner h2 {
+        font-size: 18px;
+      }
+
+      .promo-slide {
+        grid-template-columns: 115px minmax(0, 1fr);
+        gap: 10px;
+        min-height: 115px;
+      }
+
+      .promo-slide-window {
+        min-height: 115px;
+      }
+
+      .promo-slide-image {
+        width: 115px;
+        height: 115px;
+      }
+
+      .promo-slide-model {
+        font-size: 14px;
+      }
+
+      .promo-slide-price {
+        font-size: 14px;
+      }
+
+      .price-list-button {
+        min-height: 62px;
+        padding: 7px 2px;
+        font-size: 10px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .header-logo img {
+        animation: none;
+        transform: none;
+        filter: none;
+        will-change: auto;
+      }
+
+      .ticker-track {
+        animation: none;
+        padding-left: 12px;
+        width: auto;
+        white-space: normal;
+        flex-wrap: wrap;
+      }
+
+      .live-label-dot {
+        animation: none;
+      }
+
+      .promo-slide {
+        animation: none;
+      }
+
+      .price-list-button {
+        transition: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="top">
+    <div class="header-layout">
+
+      <a href="index.html" class="logo header-logo">
+        <img
+          src="https://nqihozwbdrvpyalctwbc.supabase.co/storage/v1/object/public/logos/main-logo.png"
+          alt="Adeel Mobile"
+          onerror="this.replaceWith(document.createTextNode('Adeel Mobile'))"
+        >
+      </a>
+
+      <div class="header-tools">
+        <button id="share-website" class="header-share" type="button">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="18" cy="5" r="3"
+              fill="none" stroke="currentColor" stroke-width="1.8"/>
+            <circle cx="6" cy="12" r="3"
+              fill="none" stroke="currentColor" stroke-width="1.8"/>
+            <circle cx="18" cy="19" r="3"
+              fill="none" stroke="currentColor" stroke-width="1.8"/>
+            <path d="m8.7 10.7 6.6-4.4m-6.6 9 6.6 4.1"
+              fill="none" stroke="currentColor" stroke-width="1.8"/>
+          </svg>
+          <span>Share Website</span>
+        </button>
+
+        <input
+          id="q"
+          class="search header-search"
+          type="search"
+          placeholder="Search mobiles..."
+          aria-label="Search phones"
+        >
+      </div>
+    </div>
+  </header>
+
+  <!-- Pakistan Date and Time -->
+  <div class="market-strip" aria-label="Pakistan date and time">
+    <div id="pakistan-date">Loading date...</div>
+    <div id="pakistan-time">Loading time...</div>
+  </div>
+
+  <!-- LIVE Label -->
+  <div class="live-label-row">
+    <span class="live-label">
+      <span class="live-label-dot"></span>
+      LIVE
+    </span>
+  </div>
+
+  <!-- Live Mobile Prices -->
+  <section class="live-prices" aria-label="Live mobile prices">
+    <div class="live-prices-heading">
+      <span class="live-dot"></span>
+      <strong>LIVE MOBILE PRICES</strong>
+    </div>
+
+    <div class="ticker-window">
+      <div id="live-prices-track" class="ticker-track">
+        <span>Loading mobile prices...</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Product Slider -->
+  <section class="promo-banner" aria-label="Featured mobile phones">
+    <div class="promo-banner-content">
+      <div class="promo-banner-heading">
+        <span class="promo-kicker">ADEEL MOBILE</span>
+        <h2>Apna Pasandeeda Mobile</h2>
+        <p class="promo-banner-subtitle">Asaan Mahana Iqsaat Par</p>
+      </div>
+
+      <div id="promo-slide-window" class="promo-slide-window">
+        <p class="promo-banner-subtitle">Loading featured mobiles...</p>
+      </div>
+
+      <div id="promo-slide-count" class="promo-slide-count"></div>
+    </div>
+  </section>
+
+  <!-- Download Price List Button -->
+  <div class="price-list-action">
+    <button id="download-price-list" class="price-list-button" type="button">
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path
+          d="M12 3v11m0 0 4-4m-4 4-4-4M5 16v4h14v-4"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
+      <span>Download Price List</span>
+    </button>
+  </div>
+
+  <main>
+    <div id="chips" class="chips"></div>
+
+    <div class="tools">
+      <button id="sort" class="ghost" type="button">
+        Sort: Low to High
+      </button>
+
+      <button id="copy" class="ghost" type="button">
+        Copy Link
+      </button>
+    </div>
+
+    <div id="info" class="info" hidden></div>
+
+    <h1>Easy Installment Phones</h1>
+
+    <div id="grid" class="grid"></div>
+
+    <p id="msg" class="muted">Loading...</p>
+  </main>
+
+  <a id="wa" class="wa" hidden>WhatsApp</a>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js"></script>
+
+  <script src="js/config.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/poster.js"></script>
+  <script src="js/home.js"></script>
+
+  <!-- Pakistan Date and Clock -->
+  <script>
+    (function () {
+      const dateElement = document.getElementById('pakistan-date');
+      const timeElement = document.getElementById('pakistan-time');
+
+      function updatePakistanDateTime() {
+        const now = new Date();
+
+        dateElement.textContent = new Intl.DateTimeFormat('en-PK', {
+          timeZone: 'Asia/Karachi',
+          weekday: 'short',
+          day: '2-digit',
+          month: 'short',
+          year: 'numeric'
+        }).format(now);
+
+        timeElement.textContent = new Intl.DateTimeFormat('en-PK', {
+          timeZone: 'Asia/Karachi',
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit',
+          hour12: true
+        }).format(now);
+      }
+
+      updatePakistanDateTime();
+      setInterval(updatePakistanDateTime, 1000);
+    })();
+  </script>
+
+  <!-- Share Website -->
+  <script>
+    const shareWebsiteButton = document.getElementById('share-website');
+
+    shareWebsiteButton.addEventListener('click', async () => {
+      const shareData = {
+        title: document.title,
+        text: 'Adeel Mobile — Easy Installment Phones',
+        url: window.location.href
+      };
+
+      try {
+        if (navigator.share) {
+          await navigator.share(shareData);
+        } else if (navigator.clipboard) {
+          await navigator.clipboard.writeText(shareData.url);
+          alert('Website link copied!');
+        } else {
+          window.prompt('Copy website link:', shareData.url);
+        }
+      } catch (error) {
+        if (error.name !== 'AbortError') {
+          window.prompt('Copy website link:', shareData.url);
+        }
+      }
+    });
+  </script>
+
+  <!-- Open Price List Page -->
+  <script>
+    const downloadPriceListButton =
+      document.getElementById('download-price-list');
+
+    if (downloadPriceListButton) {
+      downloadPriceListButton.addEventListener('click', () => {
+        window.location.href = 'Price-List/price-list.html';
+      });
+    }
+  </script>
+</body>
+</html>

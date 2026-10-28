@@ -1,0 +1,15 @@
+/* Brand-Wise Profit Settings */
+.bw-back { display: inline-block; font-size: 16px; color: #111; text-decoration: none; margin-bottom: 10px; }
+.bw-title { font-size: 22px; font-weight: 700; color: #111; margin: 0 0 6px; }
+.bw-user { font-size: 16px; color: #555; margin-bottom: 12px; }
+.bw-note { font-size: 15px; color: #555; background: #f7f7f7; border-radius: 8px; padding: 10px 12px; margin-bottom: 12px; }
+.bw-card { background: #fff; border: 1px solid #ddd; border-radius: 12px; padding: 6px 14px; }
+.bw-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 12px 0; border-bottom: 1px solid #eee; }
+.bw-row:last-child { border-bottom: none; }
+.bw-name { font-size: 16px; font-weight: 500; color: #111; }
+.bw-pct { display: flex; align-items: center; gap: 6px; font-size: 16px; color: #111; }
+.bw-input { width: 90px; box-sizing: border-box; font-family: Roboto, sans-serif; font-size: 16px; padding: 10px; border: 1px solid #ccc; border-radius: 8px; background: #fff; color: #111; text-align: right; }
+.bw-save { width: 100%; margin-top: 16px; font-family: Roboto, sans-serif; font-size: 16px; font-weight: 700; padding: 14px; border: none; border-radius: 10px; background: #111; color: #fff; }
+.bw-save:disabled { background: #888; }
+.bw-empty { background: #f2f2f2; color: #333; border-radius: 10px; padding: 16px; font-size: 16px; text-align: center; }
+.bw-toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); background: #111; color: #fff; font-size: 16px; padding: 12px 18px; border-radius: 10px; z-index: 9999; max-width: 90%; }

@@ -1,0 +1,181 @@
+/* =========================================
+   VERIFICATIONS PAGE STYLING
+   ========================================= */
+.v-page {
+    padding: 20px 16px 40px;
+    max-width: 900px;
+    margin: auto;
+    font-family: 'Inter', sans-serif;
+    background-color: #F8F9FA;
+    min-height: 100vh;
+}
+
+.v-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.v-header h2 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #111;
+    margin: 0;
+}
+
+.v-icons {
+    font-size: 20px;
+    color: #666;
+    display: flex;
+    gap: 10px;
+}
+
+/* Summary Cards */
+.v-summary {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.v-card {
+    background: #fff;
+    border: 1px solid #e1e5eb;
+    border-radius: 16px;
+    padding: 16px 12px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+}
+
+.v-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.v-icon-bg {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 10px;
+    font-size: 18px;
+}
+
+.pending-bg { background: #FFF8E1; color: #F57F17; }
+.approved-bg { background: #E8F5E9; color: #2E7D32; }
+.rejected-bg { background: #FFEBEE; color: #C62828; }
+
+.v-label {
+    font-size: 13px;
+    color: #666;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+.v-value {
+    font-size: 22px;
+    font-weight: 700;
+    color: #111;
+}
+
+/* Search Bar */
+.v-search-wrap {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.v-search-icon {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 16px;
+    color: #888;
+}
+
+.v-search-input {
+    width: 100%;
+    padding: 14px 16px 14px 44px;
+    border: 1px solid #e1e5eb;
+    border-radius: 12px;
+    font-family: inherit;
+    font-size: 15px;
+    background: #fff;
+    box-sizing: border-box;
+    outline: none;
+    transition: border 0.2s;
+}
+
+.v-search-input:focus {
+    border-color: #2563eb;
+}
+
+/* List Items */
+.v-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.v-item {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    border: 1px solid #e1e5eb;
+    border-radius: 16px;
+    padding: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+}
+
+.v-item:hover {
+    border-color: #2563eb;
+    transform: translateY(-1px);
+}
+
+.v-item-img {
+    width: 60px;
+    height: 60px;
+    border-radius: 12px;
+    object-fit: cover;
+    background: #f0f2f5;
+    margin-right: 14px;
+}
+
+.v-item-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.v-item-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #111;
+    margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.v-item-sub {
+    font-size: 13px;
+    color: #666;
+}
+
+.v-status-badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.badge-pending { background: #FFF8E1; color: #F57F17; }
+.badge-approved { background: #E8F5E9; color: #2E7D32; }
+.badge-rejected { background: #FFEBEE; color: #C62828; }

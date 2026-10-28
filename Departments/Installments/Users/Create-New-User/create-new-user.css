@@ -1,0 +1,110 @@
+/* Create New User - Updated Font & Style */
+.cu-page { 
+    padding: 16px; 
+    max-width: 700px; 
+    font-family: 'Roboto', sans-serif; 
+    font-size: 16px; 
+    color: #111; 
+    margin: auto; 
+}
+
+.cu-title { 
+    font-family: 'Inter', sans-serif;
+    font-size: 26px; 
+    font-weight: 700; 
+    margin: 4px 0 20px; 
+    color: #111;
+}
+
+.cu-box { 
+    border: 1px solid #e1e5eb; 
+    border-radius: 14px; 
+    padding: 20px; 
+    background: #fff; 
+    box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+}
+
+/* Yahan Font Style update kiya hai (Image jaisa) */
+.cu-label { 
+    display: block; 
+    font-family: 'Roboto', sans-serif; 
+    font-size: 16px; 
+    font-weight: 500; 
+    color: #111; 
+    letter-spacing: 0.3px; 
+    margin-bottom: 16px; 
+}
+
+.cu-input { 
+    display: block; 
+    width: 100%; 
+    margin-top: 8px; 
+    font-family: 'Roboto', sans-serif; 
+    font-size: 16px; 
+    padding: 14px 16px; 
+    border: 1px solid #ccc; 
+    border-radius: 10px; 
+    background: #f8f9fa; 
+    color: #111; 
+    box-sizing: border-box;
+    outline: none;
+    transition: all 0.2s;
+}
+
+.cu-input:focus { 
+    border-color: #2563eb; 
+    background: #fff; 
+    outline: none;
+}
+
+.cu-save { 
+    width: 100%; 
+    font-family: 'Inter', sans-serif; 
+    font-size: 16px; 
+    font-weight: 600; 
+    padding: 16px; 
+    border: 0; 
+    border-radius: 12px; 
+    background: #111; 
+    color: #fff; 
+    cursor: pointer; 
+    margin-top: 10px;
+    transition: background 0.2s;
+}
+
+.cu-save:hover {
+    background: #333;
+}
+
+.cu-save:disabled { 
+    background: #999; 
+    cursor: not-allowed; 
+}
+
+.cu-link { 
+    display: block; 
+    text-align: center; 
+    margin-top: 20px; 
+    font-size: 15px; 
+    font-weight: 500;
+    color: #2563eb; 
+    text-decoration: none; 
+}
+
+.cu-toast { 
+    position: fixed; 
+    bottom: 24px; 
+    left: 50%; 
+    transform: translateX(-50%); 
+    background: #111; 
+    color: #fff; 
+    padding: 14px 20px; 
+    border-radius: 12px; 
+    font-size: 15px; 
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    z-index: 60; 
+    max-width: 90%; 
+    text-align: center; 
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}

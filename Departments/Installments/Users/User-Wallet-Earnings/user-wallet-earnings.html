@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>User Wallet & Earnings</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../../../css/theme.css">
+<link rel="stylesheet" href="../../../../css/layout.css">
+<link rel="stylesheet" href="user-wallet-earnings.css">
+</head>
+<body>
+
+<main id="page-content">
+  <a class="uw-back" id="backLink" href="../users.html">⬅️ Back</a>
+  <h1 class="uw-title">💰 Wallet & Earnings</h1>
+  <div class="uw-user" id="uwUser"></div>
+
+  <div id="uwMsg" class="uw-empty">Loading...</div>
+
+  <div id="uwBox" hidden>
+    <div class="uw-stats">
+      <div class="uw-stat"><span>Total Earned</span><b id="sumEarned">Rs 0</b></div>
+      <div class="uw-stat"><span>Paid Out</span><b id="sumPaid">Rs 0</b></div>
+      <div class="uw-stat full"><span>Balance</span><b id="sumBalance">Rs 0</b></div>
+    </div>
+
+    <button class="uw-main-btn" id="addBtn" type="button">💸 Add Payout</button>
+
+    <div class="uw-form" id="uwForm" hidden>
+      <label class="uw-lbl" for="fAmount">Amount (Rs)</label>
+      <input class="uw-input" id="fAmount" type="number" inputmode="numeric" min="1">
+
+      <label class="uw-lbl" for="fDate">Date</label>
+      <input class="uw-input" id="fDate" type="date">
+
+      <label class="uw-lbl" for="fMethod">Method</label>
+      <select class="uw-input" id="fMethod">
+        <option value="Cash">Cash</option>
+        <option value="Bank Transfer">Bank Transfer</option>
+        <option value="Easypaisa">Easypaisa</option>
+        <option value="JazzCash">JazzCash</option>
+        <option value="Other">Other</option>
+      </select>
+
+      <label class="uw-lbl" for="fNote">Note (optional)</label>
+      <input class="uw-input" id="fNote" type="text">
+
+      <div class="uw-form-btns">
+        <button class="uw-main-btn" id="saveBtn" type="button">💾 Save</button>
+        <button class="uw-btn" id="cancelBtn" type="button">Cancel</button>
+      </div>
+    </div>
+
+    <h2 class="uw-sub">Payout History</h2>
+    <div id="uwList"></div>
+  </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script src="../../../../js/supabase-config.js"></script>
+<script src="../../../../js/auth.js"></script>
+<script src="../../../../js/sidebar.js" data-root="../../../../" data-active="inst-users"></script>
+<script src="user-wallet-earnings.js"></script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+/* User Wallet & Earnings */
+.uw-back { display: inline-block; font-size: 16px; color: #111; text-decoration: none; margin-bottom: 10px; }
+.uw-title { font-size: 22px; font-weight: 700; color: #111; margin: 0 0 6px; }
+.uw-sub { font-size: 18px; font-weight: 700; color: #111; margin: 16px 0 8px; }
+.uw-user { font-size: 16px; color: #555; margin-bottom: 12px; }
+.uw-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
+.uw-stat { background: #f7f7f7; border: 1px solid #e5e5e5; border-radius: 10px; padding: 12px; }
+.uw-stat.full { grid-column: 1 / -1; background: #111; border-color: #111; }
+.uw-stat span { display: block; font-size: 15px; color: #555; margin-bottom: 4px; }
+.uw-stat b { font-size: 26px; font-weight: 700; color: #111; word-break: break-word; }
+.uw-stat.full span { color: #ccc; }
+.uw-stat.full b { color: #fff; }
+.uw-main-btn { width: 100%; font-family: Roboto, sans-serif; font-size: 16px; font-weight: 500; padding: 12px; border: 0; border-radius: 8px; background: #111; color: #fff; cursor: pointer; }
+.uw-main-btn:disabled { background: #888; }
+.uw-btn { width: 100%; font-family: Roboto, sans-serif; font-size: 16px; padding: 12px; border: 1px solid #ccc; border-radius: 8px; background: #fff; color: #111; cursor: pointer; }
+.uw-form { background: #f7f7f7; border: 1px solid #e5e5e5; border-radius: 12px; padding: 14px; margin-top: 12px; }
+.uw-lbl { display: block; font-size: 15px; color: #555; margin: 10px 0 6px; }
+.uw-lbl:first-child { margin-top: 0; }
+.uw-input { width: 100%; box-sizing: border-box; font-family: Roboto, sans-serif; font-size: 16px; padding: 10px; border: 1px solid #ccc; border-radius: 8px; background: #fff; color: #111; }
+.uw-form-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 14px; }
+.uw-card { background: #fff; border: 1px solid #ddd; border-radius: 12px; padding: 14px; margin-bottom: 10px; }
+.uw-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.uw-amt { font-size: 18px; font-weight: 700; color: #111; }
+.uw-line { font-size: 16px; color: #333; margin-top: 4px; }
+.uw-del { font-family: Roboto, sans-serif; font-size: 15px; padding: 6px 10px; border: 1px solid #ccc; border-radius: 8px; background: #fff; color: #111; cursor: pointer; }
+.uw-empty { background: #f2f2f2; color: #333; border-radius: 10px; padding: 16px; font-size: 16px; text-align: center; }
+.uw-toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); background: #111; color: #fff; font-size: 16px; padding: 12px 18px; border-radius: 10px; z-index: 9999; max-width: 90%; text-align: center; }

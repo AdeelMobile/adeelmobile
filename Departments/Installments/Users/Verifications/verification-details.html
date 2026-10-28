@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Adeel Mobile - Verification Details</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../../../../css/theme.css">
+  <link rel="stylesheet" href="../../../../css/layout.css">
+  
+  <style>
+    body { font-family: 'Inter', sans-serif; background: #F8F9FA; margin: 0; }
+    .vd-page { padding: 20px 16px 40px; max-width: 700px; margin: auto; }
+    
+    .vd-header { display: flex; align-items: center; margin-bottom: 20px; gap: 15px; }
+    .vd-back { text-decoration: none; font-size: 24px; color: #111; font-weight: bold; }
+    .vd-title { font-size: 20px; font-weight: 700; color: #111; margin: 0; }
+
+    .vd-card { background: #fff; border: 1px solid #e1e5eb; border-radius: 16px; padding: 20px; margin-bottom: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.02); }
+    .vd-card-title { font-size: 16px; font-weight: 700; color: #111; margin: 0 0 15px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+    
+    .vd-row { display: flex; justify-content: space-between; margin-bottom: 12px; font-size: 15px; }
+    .vd-row:last-child { margin-bottom: 0; }
+    .vd-label { color: #666; font-weight: 500; }
+    .vd-val { color: #111; font-weight: 600; text-align: right; }
+
+    .vd-images { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px; }
+    .vd-img { width: 100%; height: 120px; object-fit: cover; border-radius: 10px; border: 1px solid #ddd; }
+
+    .vd-actions { display: flex; gap: 12px; margin-top: 24px; }
+    .vd-btn { flex: 1; padding: 16px; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; }
+    .btn-approve { background: #2E7D32; color: #fff; }
+    .btn-reject { background: #C62828; color: #fff; }
+    .vd-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+    .status-badge { display: inline-block; padding: 6px 12px; border-radius: 20px; font-size: 13px; font-weight: 700; margin-top: 10px; }
+    .sb-pending { background: #FFF8E1; color: #F57F17; }
+    .sb-approved { background: #E8F5E9; color: #2E7D32; }
+    .sb-rejected { background: #FFEBEE; color: #C62828; }
+
+    /* Rejection Reason Box */
+    .rejection-box { background: #FFEBEE; border: 1px solid #FFCDD2; border-radius: 12px; padding: 16px; margin-top: 16px; display: none; }
+    .rejection-title { color: #C62828; font-weight: 700; font-size: 15px; margin-bottom: 6px; }
+    .rejection-text { color: #B71C1C; font-size: 14px; line-height: 1.5; }
+  </style>
+</head>
+<body>
+  <main id="page-content" class="vd-page">
+    
+    <header class="vd-header">
+      <a href="verifications.html" class="vd-back">←</a>
+      <h2 class="vd-title">Verification Details</h2>
+    </header>
+
+    <div id="loading" style="text-align:center; color:#666;">Loading details...</div>
+
+    <div id="detailsContainer" style="display:none;">
+      
+      <div class="vd-card">
+        <h3 class="vd-card-title">Customer Info</h3>
+        <div class="vd-row"><span class="vd-label">Name</span><span class="vd-val" id="dCustName">-</span></div>
+        <div class="vd-row"><span class="vd-label">CNIC</span><span class="vd-val" id="dCnic">-</span></div>
+        <div class="vd-row"><span class="vd-label">Phone</span><span class="vd-val" id="dPhone">-</span></div>
+      </div>
+
+      <div class="vd-card">
+        <h3 class="vd-card-title">Product Info</h3>
+        <div class="vd-row"><span class="vd-label">Product</span><span class="vd-val" id="dProdName">-</span></div>
+        <div class="vd-row"><span class="vd-label">IMEI</span><span class="vd-val" id="dImei">-</span></div>
+        <div class="vd-row"><span class="vd-label">Price</span><span class="vd-val" id="dPrice">-</span></div>
+      </div>
+
+      <div class="vd-card">
+        <h3 class="vd-card-title">Attached Documents</h3>
+        <div class="vd-images">
+          <div>
+             <img id="dImgFront" class="vd-img" src="" alt="CNIC Front" onerror="this.src='https://via.placeholder.com/300x200?text=Image+Not+Found'">
+             <a id="dImgFrontLink" href="#" target="_blank" style="display:block; text-align:center; font-size:12px; margin-top:5px; color:#0071E3;">View Full Image</a>
+          </div>
+          <div>
+             <img id="dImgBack" class="vd-img" src="" alt="CNIC Back" onerror="this.src='https://via.placeholder.com/300x200?text=Image+Not+Found'">
+             <a id="dImgBackLink" href="#" target="_blank" style="display:block; text-align:center; font-size:12px; margin-top:5px; color:#0071E3;">View Full Image</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Rejection Reason Box (Sirf tab dikhega jab reject hoga) -->
+      <div id="rejectionBox" class="rejection-box">
+        <div class="rejection-title">❌ Rejection Reason:</div>
+        <div class="rejection-text" id="dRejectReason">-</div>
+      </div>
+
+      <div id="currentStatusBox" style="text-align: center; margin-top: 10px;">
+         <span id="dStatusBadge" class="status-badge">-</span>
+      </div>
+
+      <div class="vd-actions" id="actionButtons">
+        <button class="vd-btn btn-approve" onclick="updateStatus('approved')">✔ Approve</button>
+        <button class="vd-btn btn-reject" onclick="updateStatus('rejected')">✖ Reject</button>
+      </div>
+
+    </div>
+
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+  <script src="../../../../js/supabase-config.js"></script>
+  <script src="../../../../js/auth.js"></script>
+  <script src="../../../../js/sidebar.js" data-root="../../../../" data-active="inst-users"></script>
+  
+  <script src="verification-details.js"></script>
+</body>
+</html>

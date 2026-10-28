@@ -1,0 +1,1453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Adeel Mobile - Main Dashboard</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../../css/theme.css">
+  <link rel="stylesheet" href="../../css/layout.css">
+  
+  <style>
+    /* =========================================
+       GLOBAL DESIGN TOKENS (Reference)
+       ========================================= */
+    :root {
+      --bg-page: #F8F9FA;
+      --bg-card: #FFFFFF;
+      --text-primary: #000000;
+      --text-secondary: #777777;
+      --text-body: #333333;
+      --border-color: #E1E5EB;
+      --shadow-base: 0 2px 6px rgba(0,0,0,0.02);
+      --shadow-hover: 0 4px 12px rgba(0,0,0,0.05);
+      --icon-default: #555555;
+      --icon-blue: #1565C0;
+      --icon-green: #2E7D32;
+      --icon-orange: #EF6C00;
+      --icon-red: #C62828;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* PURANE TOP BAR KO HIDE KARNE KE LIYE */
+    .topbar, .app-header { 
+        display: none !important; 
+    }
+
+    body {
+      visibility: hidden;
+      font-family: 'Roboto', sans-serif;
+      background-color: var(--bg-page);
+      color: var(--text-body);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* =========================================
+       NAYA TOP BAR
+       ========================================= */
+    .custom-top-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 16px;
+      background: #fff;
+      border-bottom: 1px solid var(--border-color);
+      gap: 10px;
+      z-index: 100;
+    }
+
+    .left-section {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .menu-btn {
+        display: block !important; 
+        font-size: 22px; 
+        background: #fff; 
+        border: 1px solid var(--border-color); 
+        border-radius: 10px; 
+        padding: 8px 12px; 
+        cursor: pointer; 
+        color: var(--text-primary);
+        flex-shrink: 0;
+    }
+
+    .title-area {
+      font-family: 'Inter', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-primary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .right-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .icon-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+      padding: 0;
+    }
+    .icon-btn:hover { transform: scale(1.1); }
+
+    .logout-btn-light {
+      background: #f0f0f0;
+      color: #333;
+      border: 1px solid #ddd;
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s;
+      height: 44px; 
+      display: flex;
+      align-items: center;
+    }
+    .logout-btn-light:hover { background: #e0e0e0; }
+
+    .page { 
+      padding: 85px 16px 40px; 
+      max-width: 600px; 
+      margin: auto; 
+      min-height: 100vh; 
+    }
+
+    /* =========================================
+       DEPARTMENTS ACCORDION CSS
+       ========================================= */
+    .departments-container {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .dept-item {
+      background: #fff;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: var(--shadow-base);
+    }
+
+    .dept-btn {
+      width: 100%;
+      text-align: left;
+      padding: 18px 16px;
+      background: #fff;
+      border: none;
+      font-family: 'Roboto', sans-serif;
+      font-size: 18px; 
+      font-weight: 500;
+      color: var(--text-primary);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: background 0.2s;
+    }
+
+    .dept-btn:hover { background: var(--bg-page); }
+
+    .dept-btn-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .dept-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--icon-default);
+    }
+    .dept-icon svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    .dept-btn .arrow {
+      transition: transform 0.3s ease;
+      font-size: 18px;
+      color: #666;
+    }
+
+    .dept-item.active > .dept-btn .arrow {
+      transform: rotate(180deg);
+    }
+
+    /* Dropdown Content */
+    .dept-content {
+      display: none;
+      padding: 16px;
+      border-top: 1px solid var(--border-color);
+      background: #fdfdfd;
+    }
+
+    .dept-item.active > .dept-content {
+      display: block;
+    }
+
+    /* =========================================
+       NESTED SUB-DROPDOWN KA CSS
+       ========================================= */
+    .sub-dept-container {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .sub-dept-item {
+      background: #fff;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .sub-dept-btn {
+      width: 100%;
+      text-align: left;
+      padding: 14px 16px;
+      background: #fff;
+      border: none;
+      font-family: 'Roboto', sans-serif;
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--text-body);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .sub-dept-btn:hover { background: var(--bg-page); }
+
+    .sub-dept-btn-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .sub-dept-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--icon-default);
+    }
+    .sub-dept-icon svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .sub-dept-btn .arrow {
+      transition: transform 0.3s ease;
+      font-size: 14px;
+      color: #888;
+    }
+
+    .sub-dept-item.active > .sub-dept-btn .arrow {
+      transform: rotate(180deg);
+    }
+
+    .sub-dept-content {
+      display: none;
+      padding: 12px;
+      background: #f9f9f9;
+      border-top: 1px solid #eee;
+    }
+
+    .sub-dept-item.active > .sub-dept-content {
+      display: block;
+    }
+
+    /* =========================================
+       UNIVERSAL OVERVIEW CARDS (Database Style)
+       ========================================= */
+    .overview-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    /* Standard Card */
+    .web-card, .overview-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 20px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      box-shadow: var(--shadow-base);
+      transition: box-shadow 0.2s ease, transform 0.2s ease;
+    }
+    
+    .web-card:hover, .overview-card:hover {
+      box-shadow: var(--shadow-hover);
+    }
+
+    /* Full width card for All Users */
+    .overview-card-full {
+      grid-column: 1 / -1;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 20px 16px;
+      box-shadow: var(--shadow-base);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    /* Card Icon */
+    .web-card-icon, .card-icon {
+      font-size: 20px;
+      color: var(--icon-default);
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      width: 26px;
+      height: 26px;
+      border-radius: 0;
+      background: transparent;
+    }
+    
+    .web-card-icon svg, .card-icon svg {
+      width: 26px;
+      height: 26px;
+      stroke-width: 1.5;
+    }
+
+    /* Card Typography */
+    .web-card-title, .card-title {
+      font-family: 'Roboto', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-primary);
+      line-height: 1.2;
+    }
+
+    .web-card-desc {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      font-weight: 400;
+    }
+
+    .web-card-value, .card-value {
+      font-family: 'Roboto', sans-serif;
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--text-primary);
+      margin-top: auto;
+      padding-top: 5px;
+      line-height: 1;
+    }
+
+    /* Remove old card-header margin since we use gap now */
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 0; 
+    }
+
+    /* =========================================
+       SPLIT CARD (All Users)
+       ========================================= */
+    .split-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--border-color);
+      padding-top: 12px;
+      margin-top: 4px;
+    }
+
+    .split-box {
+      flex: 1;
+      text-align: center;
+    }
+
+    .split-box:first-child {
+      border-right: 1px solid var(--border-color);
+    }
+
+    .split-label {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-bottom: 4px;
+      display: block;
+      font-weight: 400;
+    }
+    
+    .split-box.logged-in .split-value { color: var(--icon-green); }
+    .split-box.logged-off .split-value { color: var(--icon-red); }
+
+    .split-value {
+      font-family: 'Roboto', sans-serif;
+      font-size: 26px;
+      font-weight: 800;
+    }
+
+    /* =========================================
+       SALE GRAPH CSS (Grey colors)
+       ========================================= */
+    .sale-graph-card {
+      background: #fff;
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 16px;
+      margin-bottom: 12px;
+      box-shadow: var(--shadow-base);
+    }
+
+    .graph-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: #555;
+      margin-bottom: 16px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .graph-row {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .graph-row:last-child { margin-bottom: 0; }
+
+    .graph-label {
+      width: 90px;
+      font-size: 12px;
+      color: #666;
+      font-weight: 500;
+    }
+
+    .graph-bar-container {
+      flex: 1;
+      background: #f0f0f0;
+      height: 12px;
+      border-radius: 6px;
+      overflow: hidden;
+      margin-right: 10px;
+    }
+
+    .graph-bar {
+      height: 100%;
+      border-radius: 6px;
+      transition: width 0.5s ease;
+    }
+
+    .bar-primary { background: #555555; } 
+    .bar-secondary { background: #BDBDBD; } 
+
+    .graph-value {
+      width: 70px;
+      text-align: right;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .total-sale-card {
+      background: linear-gradient(135deg, #424242, #212121);
+      color: #fff;
+      border: none;
+      border-radius: 14px;
+      padding: 20px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      margin-bottom: 16px;
+    }
+    .total-sale-card .card-title { color: rgba(255,255,255,0.8); font-size: 18px; font-weight: 700; }
+    .total-sale-card .card-value { color: #fff; font-size: 26px; font-weight: 800; }
+
+    /* =========================================
+       ADDITIONAL SECTIONS (Lists & Progress)
+       ========================================= */
+    .web-additional-section {
+      margin-top: 24px;
+    }
+    .web-additional-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 12px;
+    }
+    
+    .report-list {
+      background: #fff;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    
+    .report-list-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 16px;
+      border-bottom: 1px solid #f0f0f0;
+      font-size: 13px;
+    }
+    .report-list-item:last-child { border-bottom: none; }
+    
+    .report-list-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 600;
+      color: var(--text-body);
+    }
+    
+    .report-list-right {
+      font-weight: 700;
+      color: var(--icon-default);
+      font-size: 13px;
+    }
+
+    .progress-item { margin-bottom: 14px; }
+    .progress-item:last-child { margin-bottom: 0; }
+
+    .progress-header {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-body);
+      margin-bottom: 6px;
+    }
+
+    .progress-bg {
+      background: #f0f0f0;
+      height: 8px;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: #888;
+      border-radius: 4px;
+    }
+
+    /* =========================================
+       ICON COLORS (Database Reference)
+       ========================================= */
+    .db-icon-blue { color: var(--icon-blue); }
+    .db-icon-green { color: var(--icon-green); }
+    .db-icon-grey { color: var(--icon-default); }
+    .db-icon-orange { color: var(--icon-orange); }
+    .db-icon-red { color: var(--icon-red); }
+
+    /* =========================================
+       MOBILE RESPONSIVENESS
+       ========================================= */
+    @media (max-width: 480px) {
+      .overview-grid {
+        grid-template-columns: 1fr; /* Mobile par 1 column */
+      }
+      
+      .web-card-title, .card-title { font-size: 16px; }
+      .web-card-value, .card-value { font-size: 22px; }
+      .split-value { font-size: 22px; }
+      
+      .page { padding: 85px 12px 40px; }
+      .dept-btn { font-size: 16px; padding: 16px 12px; }
+      .sub-dept-btn { font-size: 14px; padding: 12px; }
+    }
+
+  </style>
+</head>
+<body>
+
+  <header class="custom-top-bar">
+    <div class="left-section">
+      <div id="sidebar-toggle-container"></div>
+      <div class="title-area">Main Dashboard</div>
+    </div>
+
+    <div class="right-actions">
+      <div class="icon-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+          <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+        </svg>
+      </div>
+      <a href="../../index.html" class="logout-btn-light">Logout</a>
+    </div>
+  </header>
+
+  <main id="page-content" class="page">
+    
+    <div class="departments-container">
+      
+      <!-- Department 1: Installments -->
+      <div class="dept-item" id="dept-installments">
+        <button class="dept-btn">
+          <div class="dept-btn-left">
+            <span class="dept-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="5" width="20" height="14" rx="2" ry="2"></rect>
+                <line x1="2" y1="10" x2="22" y2="10"></line>
+              </svg>
+            </span>
+            <span>Installments</span>
+          </div>
+          <span class="arrow">▼</span>
+        </button>
+        
+        <div class="dept-content">
+          <div class="sub-dept-container">
+            
+            <!-- Verifications Sub -->
+            <div class="sub-dept-item" id="sub-verifications">
+              <button class="sub-dept-btn">
+                <div class="sub-dept-btn-left">
+                  <span class="sub-dept-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                      <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                    </svg>
+                  </span>
+                  <span>Verifications</span>
+                </div>
+                <span class="arrow">▼</span>
+              </button>
+              <div class="sub-dept-content">
+                <div class="overview-grid">
+                  <div class="overview-card">
+                    <div class="card-header">
+                      <span class="card-title">Pending</span>
+                      <span class="card-icon db-icon-orange">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                      </span>
+                    </div>
+                    <div class="card-value" id="c-ver-pending">0</div>
+                  </div>
+                  <div class="overview-card">
+                    <div class="card-header">
+                      <span class="card-title">Approved</span>
+                      <span class="card-icon db-icon-green">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                      </span>
+                    </div>
+                    <div class="card-value" id="c-ver-approved">0</div>
+                  </div>
+                  <div class="overview-card">
+                    <div class="card-header">
+                      <span class="card-title">Rejected</span>
+                      <span class="card-icon db-icon-red">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+                      </span>
+                    </div>
+                    <div class="card-value" id="c-ver-rejected">0</div>
+                  </div>
+                  <div class="overview-card">
+                    <div class="card-header">
+                      <span class="card-title">Total Forms</span>
+                      <span class="card-icon db-icon-blue">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                      </span>
+                    </div>
+                    <div class="card-value" id="c-ver-total">0</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Users Sub -->
+            <div class="sub-dept-item" id="sub-users">
+              <button class="sub-dept-btn">
+                <div class="sub-dept-btn-left">
+                  <span class="sub-dept-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                      <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                  </span>
+                  <span>Users</span>
+                </div>
+                <span class="arrow">▼</span>
+              </button>
+              
+              <div class="sub-dept-content">
+                <div class="overview-grid">
+                  <div class="overview-card-full">
+                    <div class="card-header">
+                      <span class="card-title">All Users</span>
+                      <span class="card-icon db-icon-blue">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                      </span>
+                    </div>
+                    <div class="split-container">
+                      <div class="split-box logged-in">
+                        <span class="split-label">Logged In</span>
+                        <div class="split-value" id="c-users-logged-in">0</div>
+                      </div>
+                      <div class="split-box logged-off">
+                        <span class="split-label">Logged Off</span>
+                        <div class="split-value" id="c-users-logged-off">0</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="overview-card-full">
+                    <div class="card-header">
+                      <span class="card-title">Users Wallet Balance (Pending Incentive)</span>
+                      <span class="card-icon db-icon-orange">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+                      </span>
+                    </div>
+                    <div class="card-value" id="c-users-wallet-balance">0</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Customers Sub -->
+            <div class="sub-dept-item" id="sub-customers">
+              <button class="sub-dept-btn">
+                <div class="sub-dept-btn-left">
+                  <span class="sub-dept-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                      <circle cx="9" cy="7" r="4"></circle>
+                      <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                      <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    </svg>
+                  </span>
+                  <span>Customers</span>
+                </div>
+                <span class="arrow">▼</span>
+              </button>
+              
+              <div class="sub-dept-content">
+                <div class="overview-grid">
+                  <div class="overview-card">
+                    <div class="card-header">
+                      <span class="card-title">Total Customers</span>
+                      <span class="card-icon db-icon-blue">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                      </span>
+                    </div>
+                    <div class="card-value" id="c-cust-total">0</div>
+                  </div>
+                  <div class="overview-card">
+                    <div class="card-header">
+                      <span class="card-title">With Sale Report</span>
+                      <span class="card-icon db-icon-green">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                      </span>
+                    </div>
+                    <div class="card-value" id="c-cust-with-sale">0</div>
+                  </div>
+                  <div class="overview-card">
+                    <div class="card-header">
+                      <span class="card-title">Repeat Customers</span>
+                      <span class="card-icon db-icon-orange">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+                      </span>
+                    </div>
+                    <div class="card-value" id="c-cust-repeat">0</div>
+                  </div>
+                  <div class="overview-card">
+                    <div class="card-header">
+                      <span class="card-title">Pending Verif.</span>
+                      <span class="card-icon db-icon-red">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                      </span>
+                    </div>
+                    <div class="card-value" id="c-cust-ver-pending">0</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Sale Sub -->
+            <div class="sub-dept-item" id="sub-sale">
+              <button class="sub-dept-btn">
+                <div class="sub-dept-btn-left">
+                  <span class="sub-dept-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                      <line x1="3" y1="6" x2="21" y2="6"></line>
+                      <path d="M16 10a4 4 0 0 1-8 0"></path>
+                    </svg>
+                  </span>
+                  <span>Sale</span>
+                </div>
+                <span class="arrow">▼</span>
+              </button>
+              
+              <div class="sub-dept-content">
+                <div class="total-sale-card">
+                  <div class="card-title">Total Sale</div>
+                  <div class="card-value" id="c-sale-total">0</div>
+                </div>
+
+                <div class="sale-graph-card">
+                  <div class="graph-title">Today vs Yesterday</div>
+                  <div class="graph-row">
+                    <div class="graph-label">Today</div>
+                    <div class="graph-bar-container"><div class="graph-bar bar-primary" id="bar-today" style="width: 0%;"></div></div>
+                    <div class="graph-value" id="val-today">0</div>
+                  </div>
+                  <div class="graph-row">
+                    <div class="graph-label">Yesterday</div>
+                    <div class="graph-bar-container"><div class="graph-bar bar-secondary" id="bar-yesterday" style="width: 0%;"></div></div>
+                    <div class="graph-value" id="val-yesterday">0</div>
+                  </div>
+                </div>
+
+                <div class="sale-graph-card">
+                  <div class="graph-title">This Week vs Last Week</div>
+                  <div class="graph-row">
+                    <div class="graph-label">This Week</div>
+                    <div class="graph-bar-container"><div class="graph-bar bar-primary" id="bar-this-week" style="width: 0%;"></div></div>
+                    <div class="graph-value" id="val-this-week">0</div>
+                  </div>
+                  <div class="graph-row">
+                    <div class="graph-label">Last Week</div>
+                    <div class="graph-bar-container"><div class="graph-bar bar-secondary" id="bar-last-week" style="width: 0%;"></div></div>
+                    <div class="graph-value" id="val-last-week">0</div>
+                  </div>
+                </div>
+
+                <div class="sale-graph-card">
+                  <div class="graph-title" id="month-graph-title">This Month vs Last Month</div>
+                  <div class="graph-row">
+                    <div class="graph-label" id="lbl-this-month">This Month</div>
+                    <div class="graph-bar-container"><div class="graph-bar bar-primary" id="bar-this-month" style="width: 0%;"></div></div>
+                    <div class="graph-value" id="val-this-month">0</div>
+                  </div>
+                  <div class="graph-row">
+                    <div class="graph-label" id="lbl-last-month">Last Month</div>
+                    <div class="graph-bar-container"><div class="graph-bar bar-secondary" id="bar-last-month" style="width: 0%;"></div></div>
+                    <div class="graph-value" id="val-last-month">0</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Department 2: Website -->
+      <div class="dept-item" id="dept-website">
+        <button class="dept-btn">
+          <div class="dept-btn-left">
+            <span class="dept-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="2" y1="12" x2="22" y2="12"></line>
+                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+              </svg>
+            </span>
+            <span>Website</span>
+          </div>
+          <span class="arrow">▼</span>
+        </button>
+        <div class="dept-content">
+          
+          <div class="overview-grid" style="margin-bottom: 24px;">
+            
+            <div class="web-card">
+              <div class="web-card-icon db-icon-grey">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+              </div>
+              <div class="web-card-title">Total Visitors</div>
+              <div class="web-card-desc">Website visit karne wale log</div>
+              <div class="web-card-value" id="web-total-visitors">0</div>
+            </div>
+
+            <div class="web-card">
+              <div class="web-card-icon db-icon-blue">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+              </div>
+              <div class="web-card-title">Unique Visitors</div>
+              <div class="web-card-desc">Andazatan alag visitors</div>
+              <div class="web-card-value" id="web-unique-visitors">0</div>
+            </div>
+
+            <div class="web-card">
+              <div class="web-card-icon db-icon-green">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path><line x1="4" y1="22" x2="4" y2="15"></line></svg>
+              </div>
+              <div class="web-card-title">Product Views</div>
+              <div class="web-card-desc">Mobiles ke detail pages ke views</div>
+              <div class="web-card-value" id="web-product-views">0</div>
+            </div>
+
+            <div class="web-card">
+              <div class="web-card-icon db-icon-orange">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+              </div>
+              <div class="web-card-title">WhatsApp Clicks</div>
+              <div class="web-card-desc">WhatsApp button par clicks</div>
+              <div class="web-card-value" id="web-wa-clicks">0</div>
+            </div>
+
+            <div class="web-card">
+              <div class="web-card-icon db-icon-grey">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
+              </div>
+              <div class="web-card-title">Total Leads</div>
+              <div class="web-card-desc">Collect ki gayi customer inquiries</div>
+              <div class="web-card-value" id="web-total-leads">0</div>
+            </div>
+
+            <div class="web-card">
+              <div class="web-card-icon db-icon-orange">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+              </div>
+              <div class="web-card-title">Follow-ups Due</div>
+              <div class="web-card-desc">Jin customers se dobara rabta karna hai</div>
+              <div class="web-card-value" id="web-followups">0</div>
+            </div>
+
+            <div class="web-card">
+              <div class="web-card-icon db-icon-green">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+              </div>
+              <div class="web-card-title">Converted Leads</div>
+              <div class="web-card-desc">Leads jo actual customers ban gaye</div>
+              <div class="web-card-value" id="web-converted-leads">0</div>
+            </div>
+
+            <div class="web-card">
+              <div class="web-card-icon db-icon-blue">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+              </div>
+              <div class="web-card-title">Traffic Sources</div>
+              <div class="web-card-desc">WhatsApp, Facebook, direct aur doosre sources</div>
+              <div class="web-card-value" id="web-traffic-sources">0</div>
+            </div>
+
+          </div>
+
+          <div class="web-additional-section">
+            <div class="web-additional-title">Top Viewed Products</div>
+            <div class="report-list" id="web-top-products" style="margin-bottom: 24px;">
+              <div class="report-list-item"><div class="report-list-left">Loading...</div></div>
+            </div>
+
+            <div class="web-additional-title">Popular Brands</div>
+            <div id="web-popular-brands" style="margin-bottom: 24px;">
+              <div class="progress-item">
+                <div class="progress-header"><span>Loading...</span><span>0%</span></div>
+                <div class="progress-bg"><div class="progress-fill" style="width: 0%;"></div></div>
+              </div>
+            </div>
+
+            <div class="web-additional-title">Recent Leads</div>
+            <div class="report-list" id="web-recent-leads" style="margin-bottom: 24px;">
+              <div class="report-list-item"><div class="report-list-left">Loading...</div></div>
+            </div>
+
+            <div class="web-additional-title">Traffic Trend (Visitors)</div>
+            <div style="margin-bottom: 24px;">
+              <div class="progress-item">
+                <div class="progress-header"><span>Today</span><span id="web-traffic-today">0</span></div>
+                <div class="progress-bg"><div class="progress-fill" id="web-bar-today" style="width: 0%;"></div></div>
+              </div>
+              <div class="progress-item">
+                <div class="progress-header"><span>This Week</span><span id="web-traffic-week">0</span></div>
+                <div class="progress-bg"><div class="progress-fill" id="web-bar-week" style="width: 0%;"></div></div>
+              </div>
+              <div class="progress-item">
+                <div class="progress-header"><span>This Month</span><span id="web-traffic-month">0</span></div>
+                <div class="progress-bg"><div class="progress-fill" id="web-bar-month" style="width: 0%;"></div></div>
+              </div>
+            </div>
+
+            <div class="web-additional-title">Lead Conversion Rate</div>
+            <div style="background: #fff; border: 1px solid #e1e5eb; border-radius: 12px; padding: 20px; text-align: center;">
+              <div style="font-size: 36px; font-weight: 800; color: #333; margin-bottom: 4px;" id="web-conv-rate">0%</div>
+              <div style="font-size: 12px; color: #777;">Visitors converted into Leads</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Department 3: Database -->
+      <div class="dept-item" id="dept-database">
+        <button class="dept-btn">
+          <div class="dept-btn-left">
+            <span class="dept-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+                <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
+                <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
+              </svg>
+            </span>
+            <span>Database</span>
+          </div>
+          <span class="arrow">▼</span>
+        </button>
+        <div class="dept-content">
+          
+          <div class="overview-grid">
+            
+            <div class="web-card">
+              <div class="web-card-icon db-icon-grey">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
+              </div>
+              <div class="web-card-title">Total Products</div>
+              <div class="web-card-desc">Database mein tamam mobile variants</div>
+              <div class="web-card-value" id="db-total-products">0</div>
+            </div>
+
+            <div class="web-card">
+              <div class="web-card-icon db-icon-green">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+              </div>
+              <div class="web-card-title">Active Products</div>
+              <div class="web-card-desc">Currently active products</div>
+              <div class="web-card-value" id="db-active-products">0</div>
+            </div>
+
+            <div class="web-card">
+              <div class="web-card-icon db-icon-grey">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
+              </div>
+              <div class="web-card-title">Total Models</div>
+              <div class="web-card-desc">Tamam mobile models ki tadaad</div>
+              <div class="web-card-value" id="db-total-models">0</div>
+            </div>
+
+            <div class="web-card">
+              <div class="web-card-icon db-icon-grey">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
+              </div>
+              <div class="web-card-title">Total Brands</div>
+              <div class="web-card-desc">Database mein registered brands</div>
+              <div class="web-card-value" id="db-total-brands">0</div>
+            </div>
+
+            <div class="web-card">
+              <div class="web-card-icon db-icon-grey">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+              </div>
+              <div class="web-card-title">Missing Images</div>
+              <div class="web-card-desc">Jin products ki images nahi hain</div>
+              <div class="web-card-value" id="db-missing-images">0</div>
+            </div>
+
+            <div class="web-card">
+              <div class="web-card-icon db-icon-orange">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+              </div>
+              <div class="web-card-title">Incomplete Data</div>
+              <div class="web-card-desc">Jin products ki zaroori information missing hai</div>
+              <div class="web-card-value" id="db-incomplete-data">0</div>
+            </div>
+
+            <div class="web-card">
+              <div class="web-card-icon db-icon-blue">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+              </div>
+              <div class="web-card-title">Website Products</div>
+              <div class="web-card-desc">Website par display enabled products</div>
+              <div class="web-card-value" id="db-website-products">0</div>
+            </div>
+
+            <div class="web-card">
+              <div class="web-card-icon db-icon-grey">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+              </div>
+              <div class="web-card-title">Pending Verifications</div>
+              <div class="web-card-desc">Verification ke intezar mein records</div>
+              <div class="web-card-value" id="db-pending-verifications">0</div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+  <script src="../../js/supabase-config.js"></script>
+  <script src="../../js/auth.js"></script>
+
+  <script>
+    (async function () {
+      try {
+        if (typeof db === 'undefined' || !db?.auth) {
+          window.location.replace('../../index.html');
+          return;
+        }
+        if (typeof requireLogin !== 'function') {
+          window.location.replace('../../index.html');
+          return;
+        }
+        const session = await requireLogin();
+        if (!session) return;
+
+        document.body.style.visibility = 'visible';
+
+        function loadScript(src, attributes = {}) {
+          return new Promise((resolve, reject) => {
+            const script = document.createElement('script');
+            script.src = src;
+            Object.entries(attributes).forEach(([key, value]) => {
+              script.setAttribute(key, value);
+            });
+            script.onload = resolve;
+            script.onerror = () => reject(new Error('Script load failed: ' + src));
+            document.body.appendChild(script);
+          });
+        }
+
+        await loadScript('../../js/sidebar.js', {
+          'data-root': '../../',
+          'data-active': 'dashboard'
+        });
+
+        setTimeout(() => {
+            const oldMenuBtn = document.getElementById('menuBtn');
+            const container = document.getElementById('sidebar-toggle-container');
+            if (oldMenuBtn && container) {
+                container.appendChild(oldMenuBtn);
+            }
+        }, 100);
+
+        // ==========================================
+        // LOCAL STORAGE SETUP FOR ACCORDION STATE
+        // ==========================================
+        function saveState(id, isActive) {
+          const openItems = JSON.parse(localStorage.getItem('dashboardOpenItems') || '[]');
+          if (isActive) {
+            if (!openItems.includes(id)) openItems.push(id);
+          } else {
+            const index = openItems.indexOf(id);
+            if (index > -1) openItems.splice(index, 1);
+          }
+          localStorage.setItem('dashboardOpenItems', JSON.stringify(openItems));
+        }
+
+        function loadState() {
+          const openItems = JSON.parse(localStorage.getItem('dashboardOpenItems') || '[]');
+          openItems.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.classList.add('active');
+          });
+        }
+
+        // Load initial state
+        loadState();
+
+        // ==========================================
+        // MAIN ACCORDION LOGIC (Now allows multiple open)
+        // ==========================================
+        const deptItems = document.querySelectorAll('.departments-container > .dept-item');
+        
+        deptItems.forEach(item => {
+          const btn = item.querySelector(':scope > .dept-btn');
+          
+          btn.addEventListener('click', () => {
+            item.classList.toggle('active');
+            saveState(item.id, item.classList.contains('active'));
+          });
+        });
+
+        // ==========================================
+        // SUB-DROPDOWN LOGIC (Now allows multiple open)
+        // ==========================================
+        const subDeptItems = document.querySelectorAll('.sub-dept-item');
+        
+        subDeptItems.forEach(item => {
+          const btn = item.querySelector(':scope > .sub-dept-btn');
+          
+          btn.addEventListener('click', (e) => {
+            e.stopPropagation(); 
+            item.classList.toggle('active');
+            saveState(item.id, item.classList.contains('active'));
+          });
+        });
+
+        // ==========================================
+        // FETCH ALL DATA
+        // ==========================================
+        async function fetchAllData() {
+          // 1. Verifications
+          try {
+            const { count: total } = await db.from('verifications').select('*', { count: 'exact', head: true });
+            const { count: pending } = await db.from('verifications').select('*', { count: 'exact', head: true }).eq('status', 'pending');
+            const { count: approved } = await db.from('verifications').select('*', { count: 'exact', head: true }).eq('status', 'approved');
+            const { count: rejected } = await db.from('verifications').select('*', { count: 'exact', head: true }).eq('status', 'rejected');
+
+            if (total !== null) document.getElementById('c-ver-total').innerText = total;
+            if (pending !== null) document.getElementById('c-ver-pending').innerText = pending;
+            if (approved !== null) document.getElementById('c-ver-approved').innerText = approved;
+            if (rejected !== null) document.getElementById('c-ver-rejected').innerText = rejected;
+          } catch (e) { console.error(e); }
+
+          // 2. Users
+          try {
+            const { count: loggedIn } = await db.from('users').select('*', { count: 'exact', head: true }).eq('login_status', 'online');
+            const { count: loggedOff } = await db.from('users').select('*', { count: 'exact', head: true }).eq('login_status', 'offline');
+
+            if (loggedIn !== null) document.getElementById('c-users-logged-in').innerText = loggedIn;
+            if (loggedOff !== null) document.getElementById('c-users-logged-off').innerText = loggedOff;
+
+            const { data: walletData } = await db.from('users').select('wallet');
+            if (walletData) {
+              const totalWallet = walletData.reduce((sum, row) => sum + (Number(row.wallet) || 0), 0);
+              document.getElementById('c-users-wallet-balance').innerText = totalWallet.toLocaleString('en-IN');
+            }
+          } catch (e) { console.error(e); }
+
+          // 3. Customers
+          try {
+            const { count: totalCust } = await db.from('customers').select('*', { count: 'exact', head: true });
+            if (totalCust !== null) document.getElementById('c-cust-total').innerText = totalCust;
+
+            const { count: withSale } = await db.from('customers').select('*', { count: 'exact', head: true }).gt('sale', 0);
+            if (withSale !== null) document.getElementById('c-cust-with-sale').innerText = withSale;
+
+            const { count: repeatCust } = await db.from('customers').select('*', { count: 'exact', head: true }).gt('sale_count', 1);
+            if (repeatCust !== null) document.getElementById('c-cust-repeat').innerText = repeatCust;
+
+            const { count: pendingCustVer } = await db.from('customers').select('*', { count: 'exact', head: true }).eq('verification_status', 'pending');
+            if (pendingCustVer !== null) document.getElementById('c-cust-ver-pending').innerText = pendingCustVer;
+          } catch (e) { console.error(e); }
+
+          // 4. Sale Data
+          try {
+            const now = new Date();
+            function getDateString(d) { return d.toISOString().split('T')[0]; }
+            const todayStr = getDateString(now);
+            const yesterday = new Date(now);
+            yesterday.setDate(now.getDate() - 1);
+            const yesterdayStr = getDateString(yesterday);
+
+            const startOfWeek = new Date(now);
+            const day = now.getDay() || 7; 
+            if (day !== 1) startOfWeek.setHours(-24 * (day - 1));
+            const endOfWeek = new Date(startOfWeek);
+            endOfWeek.setDate(startOfWeek.getDate() + 6);
+
+            const startOfLastWeek = new Date(startOfWeek);
+            startOfLastWeek.setDate(startOfWeek.getDate() - 7);
+            const endOfLastWeek = new Date(startOfWeek);
+            endOfLastWeek.setDate(startOfWeek.getDate() - 1);
+
+            const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+            const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+
+            const startOfLastMonth = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+            const endOfLastMonth = new Date(now.getFullYear(), now.getMonth(), 0);
+
+            const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+            const currentMonthName = monthNames[now.getMonth()];
+            const lastMonthName = monthNames[now.getMonth() === 0 ? 11 : now.getMonth() - 1];
+
+            document.getElementById('month-graph-title').innerText = `${currentMonthName} vs ${lastMonthName}`;
+            document.getElementById('lbl-this-month').innerText = currentMonthName;
+            document.getElementById('lbl-last-month').innerText = lastMonthName;
+
+            async function getSaleSum(startDate, endDate) {
+              const { data } = await db.from('sales').select('amount').gte('created_at', startDate.toISOString()).lte('created_at', endDate.toISOString());
+              if (!data) return 0;
+              return data.reduce((sum, row) => sum + (Number(row.amount) || 0), 0);
+            }
+
+            const [todaySale, yesterdaySale, thisWeekSale, lastWeekSale, thisMonthSale, lastMonthSale, totalSaleRes] = await Promise.all([
+              getSaleSum(new Date(todayStr), new Date(todayStr + 'T23:59:59')),
+              getSaleSum(new Date(yesterdayStr), new Date(yesterdayStr + 'T23:59:59')),
+              getSaleSum(startOfWeek, endOfWeek),
+              getSaleSum(startOfLastWeek, endOfLastWeek),
+              getSaleSum(startOfMonth, endOfMonth),
+              getSaleSum(startOfLastMonth, endOfLastMonth),
+              db.from('sales').select('amount')
+            ]);
+
+            const totalSale = totalSaleRes.data ? totalSaleRes.data.reduce((sum, row) => sum + (Number(row.amount) || 0), 0) : 0;
+            document.getElementById('c-sale-total').innerText = totalSale.toLocaleString('en-IN');
+
+            function updateBar(barId, valId, value, maxVal) {
+              const percent = maxVal > 0 ? (value / maxVal) * 100 : 0;
+              document.getElementById(barId).style.width = percent + '%';
+              document.getElementById(valId).innerText = value.toLocaleString('en-IN');
+            }
+
+            updateBar('bar-today', 'val-today', todaySale, Math.max(todaySale, yesterdaySale));
+            updateBar('bar-yesterday', 'val-yesterday', yesterdaySale, Math.max(todaySale, yesterdaySale));
+            updateBar('bar-this-week', 'val-this-week', thisWeekSale, Math.max(thisWeekSale, lastWeekSale));
+            updateBar('bar-last-week', 'val-last-week', lastWeekSale, Math.max(thisWeekSale, lastWeekSale));
+            updateBar('bar-this-month', 'val-this-month', thisMonthSale, Math.max(thisMonthSale, lastMonthSale));
+            updateBar('bar-last-month', 'val-last-month', lastMonthSale, Math.max(thisMonthSale, lastMonthSale));
+
+          } catch (e) { console.error(e); }
+
+          // 5. Website Data
+          try {
+            const { count: totalVisitors } = await db.from('visitors').select('*', { count: 'exact', head: true });
+            const { count: uniqueVisitors } = await db.from('visitors').select('ip_address', { count: 'exact', head: true });
+            if (totalVisitors !== null) document.getElementById('web-total-visitors').innerText = totalVisitors.toLocaleString('en-IN');
+            if (uniqueVisitors !== null) document.getElementById('web-unique-visitors').innerText = uniqueVisitors.toLocaleString('en-IN');
+
+            const { count: prodViews } = await db.from('page_views').select('*', { count: 'exact', head: true }).eq('page_type', 'product');
+            if (prodViews !== null) document.getElementById('web-product-views').innerText = prodViews.toLocaleString('en-IN');
+
+            const { count: waClicks } = await db.from('clicks').select('*', { count: 'exact', head: true }).eq('type', 'whatsapp');
+            if (waClicks !== null) document.getElementById('web-wa-clicks').innerText = waClicks.toLocaleString('en-IN');
+
+            const { count: totalLeads } = await db.from('leads').select('*', { count: 'exact', head: true });
+            if (totalLeads !== null) document.getElementById('web-total-leads').innerText = totalLeads.toLocaleString('en-IN');
+
+            const { count: followUps } = await db.from('leads').select('*', { count: 'exact', head: true }).eq('status', 'follow_up');
+            if (followUps !== null) document.getElementById('web-followups').innerText = followUps.toLocaleString('en-IN');
+
+            const { count: convertedLeads } = await db.from('leads').select('*', { count: 'exact', head: true }).eq('status', 'converted');
+            if (convertedLeads !== null) document.getElementById('web-converted-leads').innerText = convertedLeads.toLocaleString('en-IN');
+
+            const { data: sourcesData } = await db.from('customers').select('source');
+            if (sourcesData) {
+              const uniqueSources = new Set(sourcesData.map(d => d.source).filter(Boolean));
+              document.getElementById('web-traffic-sources').innerText = uniqueSources.size;
+            }
+
+            const { data: viewsData } = await db.from('page_views').select('product_name').eq('page_type', 'product');
+            if (viewsData && viewsData.length > 0) {
+              const counts = {};
+              viewsData.forEach(v => { if(v.product_name) counts[v.product_name] = (counts[v.product_name] || 0) + 1; });
+              const sorted = Object.entries(counts).sort((a,b) => b[1] - a[1]).slice(0, 4);
+              
+              const container = document.getElementById('web-top-products');
+              container.innerHTML = '';
+              sorted.forEach(([name, count]) => {
+                container.innerHTML += `<div class="report-list-item"><div class="report-list-left">${name}</div><div class="report-list-right">${count} views</div></div>`;
+              });
+            }
+
+            const { data: brandData } = await db.from('page_views').select('brand_name').eq('page_type', 'product');
+            if (brandData && brandData.length > 0) {
+              const brandCounts = {};
+              let totalBrandViews = 0;
+              brandData.forEach(v => { if(v.brand_name) { brandCounts[v.brand_name] = (brandCounts[v.brand_name] || 0) + 1; totalBrandViews++; } });
+              const sortedBrands = Object.entries(brandCounts).sort((a,b) => b[1] - a[1]).slice(0, 4);
+              
+              const brandContainer = document.getElementById('web-popular-brands');
+              brandContainer.innerHTML = '';
+              sortedBrands.forEach(([name, count]) => {
+                const percent = totalBrandViews > 0 ? Math.round((count / totalBrandViews) * 100) : 0;
+                brandContainer.innerHTML += `
+                  <div class="progress-item">
+                    <div class="progress-header"><span>${name}</span><span>${percent}%</span></div>
+                    <div class="progress-bg"><div class="progress-fill" style="width: ${percent}%;"></div></div>
+                  </div>`;
+              });
+            }
+
+            const { data: leadsData } = await db.from('leads').select('*').order('created_at', { ascending: false }).limit(3);
+            if (leadsData && leadsData.length > 0) {
+              const leadContainer = document.getElementById('web-recent-leads');
+              leadContainer.innerHTML = '';
+              leadsData.forEach(lead => {
+                const name = lead.name || 'Unknown';
+                const contact = lead.phone || lead.contact || 'N/A';
+                leadContainer.innerHTML += `<div class="report-list-item"><div class="report-list-left">${name}</div><div class="report-list-right">${contact}</div></div>`;
+              });
+            }
+
+            const { count: visitorsToday } = await db.from('visitors').select('*', { count: 'exact', head: true }).gte('created_at', todayStr);
+            const { count: visitorsWeek } = await db.from('visitors').select('*', { count: 'exact', head: true }).gte('created_at', startOfWeek.toISOString());
+            const { count: visitorsMonth } = await db.from('visitors').select('*', { count: 'exact', head: true }).gte('created_at', startOfMonth.toISOString());
+
+            const vToday = visitorsToday || 0;
+            const vWeek = visitorsWeek || 0;
+            const vMonth = visitorsMonth || 0;
+            const maxTraffic = Math.max(vToday, vWeek, vMonth) || 1;
+
+            document.getElementById('web-traffic-today').innerText = vToday;
+            document.getElementById('web-traffic-week').innerText = vWeek;
+            document.getElementById('web-traffic-month').innerText = vMonth;
+            
+            document.getElementById('web-bar-today').style.width = (vToday / maxTraffic) * 100 + '%';
+            document.getElementById('web-bar-week').style.width = (vWeek / maxTraffic) * 100 + '%';
+            document.getElementById('web-bar-month').style.width = (vMonth / maxTraffic) * 100 + '%';
+
+            if (vMonth > 0 && totalLeads !== null) {
+              const rate = ((totalLeads / vMonth) * 100).toFixed(1);
+              document.getElementById('web-conv-rate').innerText = rate + '%';
+            }
+
+          } catch (e) { console.error("Website data fetch error:", e); }
+
+          // 6. Database Data
+          try {
+            const { count: dbTotalProducts } = await db.from('variants').select('*', { count: 'exact', head: true });
+            if (dbTotalProducts !== null) document.getElementById('db-total-products').innerText = dbTotalProducts.toLocaleString('en-IN');
+
+            const { count: dbActiveProducts } = await db.from('variants').select('*', { count: 'exact', head: true }).eq('status', 'active');
+            if (dbActiveProducts !== null) document.getElementById('db-active-products').innerText = dbActiveProducts.toLocaleString('en-IN');
+
+            const { count: dbTotalModels } = await db.from('models').select('*', { count: 'exact', head: true });
+            if (dbTotalModels !== null) document.getElementById('db-total-models').innerText = dbTotalModels.toLocaleString('en-IN');
+
+            const { count: dbTotalBrands } = await db.from('brands').select('*', { count: 'exact', head: true });
+            if (dbTotalBrands !== null) document.getElementById('db-total-brands').innerText = dbTotalBrands.toLocaleString('en-IN');
+
+            const { count: dbMissingImages } = await db.from('variants').select('*', { count: 'exact', head: true }).is('image_url', null);
+            if (dbMissingImages !== null) document.getElementById('db-missing-images').innerText = dbMissingImages.toLocaleString('en-IN');
+
+            const { count: dbIncompleteData } = await db.from('variants').select('*', { count: 'exact', head: true }).is('description', null);
+            if (dbIncompleteData !== null) document.getElementById('db-incomplete-data').innerText = dbIncompleteData.toLocaleString('en-IN');
+
+            const { count: dbWebsiteProducts } = await db.from('variants').select('*', { count: 'exact', head: true }).eq('show_on_website', true);
+            if (dbWebsiteProducts !== null) document.getElementById('db-website-products').innerText = dbWebsiteProducts.toLocaleString('en-IN');
+
+            const { count: dbPendingVerifications } = await db.from('variants').select('*', { count: 'exact', head: true }).eq('verification_status', 'pending');
+            if (dbPendingVerifications !== null) document.getElementById('db-pending-verifications').innerText = dbPendingVerifications.toLocaleString('en-IN');
+
+          } catch (e) { console.error("Database data fetch error:", e); }
+        }
+
+        fetchAllData();
+
+      } catch (error) {
+        console.error('Admin dashboard security check failed:', error);
+        window.location.replace('../../index.html');
+      }
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Products Database | Adeel Mobile</title>
+<link rel="stylesheet" href="css/products-database.css"></head><body>
+<header><b>Products Database</b></header>
+<main>
+<section id="home" class="pnl">
+ <div class="row"><div class="card"><small>Total Products</small><b id="nTotal">-</b></div>
+ <div class="card"><small>Installment Website</small><b id="nInst">-</b></div>
+ <div class="card"><small>Cash Website</small><b id="nCash">-</b></div></div>
+ <div class="row"><div class="card tap" data-go="pnlImg"><small>Missing Images</small><b id="nImg">-</b></div>
+ <div class="card tap" data-go="pnlSpec"><small>Missing Specs</small><b id="nSpec">-</b></div>
+ <div class="card tap" data-go="pnlBrand"><small>Brands</small><b id="nBrand">-</b></div></div>
+ <div class="card tap" data-go="pnlShare"><small>Share Links</small><b>Open</b></div>
+ <input id="pq" placeholder="Search product to edit"><ul id="pList" class="list"></ul>
+ <button id="addBtn" class="btn">+ Add Product</button>
+</section>
+<section id="pnlImg" class="pnl" hidden><button class="back">← Back</button><h2>Missing Images</h2>
+ <input id="bulkFiles" type="file" accept="image/*" multiple><button id="runBulk" class="btn">Upload all</button>
+ <progress id="bar" value="0" max="100"></progress><pre id="bulkOut">Select images. Name: brand-model-pakistan-priceoye-CODE-500x500.webp</pre>
+ <input id="mq" placeholder="Search products without images"><ul id="mList" class="list"></ul></section>
+<section id="pnlSpec" class="pnl" hidden><button class="back">← Back</button><h2>Missing Specs</h2>
+ <p>Paste from Google Sheet (first row = headings, first column = model name) or text lines like: Samsung A07 4/128 | RAM: 6GB | Camera: 50MP</p>
+ <textarea id="spText" rows="8"></textarea><button id="spPrev" class="btn">Preview</button><pre id="spOut"></pre><button id="spSave" class="btn" hidden>Save specs</button></section>
+<section id="pnlBrand" class="pnl" hidden><button class="back">← Back</button><h2>Brands</h2><ul id="bList" class="list"></ul>
+ <input id="nb" placeholder="New brand name"><button id="nbAdd" class="btn">Add New Brand</button></section>
+<section id="pnlShare" class="pnl" hidden><button class="back">← Back</button><h2>Share Links</h2>
+ <div class="box"><b>All Products</b><span class="muted">Cheapest to expensive</span><button class="btn" data-c="all">Copy Link</button></div>
+ <div class="box"><b>Brand Wise</b><select id="shBrand"></select><button class="btn" data-c="brand">Copy Link</button></div>
+ <div class="box"><b>Price</b><div class="two"><input id="pMin" type="number" inputmode="numeric" placeholder="From"><input id="pMax" type="number" inputmode="numeric" placeholder="To"></div><button class="btn" data-c="price">Copy Link</button></div>
+ <div class="box"><b>Monthly Installment</b><div class="two"><input id="mMin" type="number" inputmode="numeric" placeholder="From"><input id="mMax" type="number" inputmode="numeric" placeholder="To"></div><button class="btn" data-c="monthly">Copy Link</button></div></section>
+<section id="pnlForm" class="pnl" hidden><button class="back">← Back</button><h2 id="fTitle"></h2>
+ <label>Brand<select id="fBrand"></select></label>
+ <label>Product name<input id="fName" placeholder="e.g. Galaxy A17"></label>
+ <div id="fVars" class="vars"></div><button id="fAddVar" class="ghost">+ Add variant</button>
+ <label>Specifications (one per line, Key: value)<textarea id="fSpecs" rows="6"></textarea></label>
+ <div id="fSw"></div><div id="fImgs"></div>
+ <label>Upload images<input id="fFiles" type="file" accept="image/*" multiple></label>
+ <button id="fSave" class="btn">Save</button><button id="fDel" class="ghost" hidden>Hide from both websites</button><button id="fRm" class="ghost del" hidden>Delete permanently</button></section>
+</main><div id="toast"></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script src="js/supabase-config.js"></script><script src="js/image-upload.js"></script>
+<script src="js/bulk-upload.js"></script><script src="js/product-edit.js"></script>
+<script src="js/missing-images.js"></script><script src="js/dashboard.js"></script>
+<script src="js/brands.js"></script><script src="js/share-links.js"></script><script src="js/specs-import.js"></script>
+<script src="js/product-form.js"></script><script src="js/products-database.js"></script>
+</body></html>

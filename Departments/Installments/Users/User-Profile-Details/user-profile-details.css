@@ -1,0 +1,33 @@
+/* User Profile & Details */
+.pf-page { padding: 16px; max-width: 700px; font-family: 'Roboto', sans-serif; font-size: 16px; color: #111; }
+.pf-back { display: inline-block; margin-bottom: 12px; font-size: 16px; color: #111; text-decoration: none; padding: 8px 12px; border: 1px solid #ccc; border-radius: 10px; }
+
+.pf-head { border: 1px solid #e2e2e2; border-radius: 12px; padding: 16px; background: #fff; margin-bottom: 12px; }
+.pf-row { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.pf-name { font-size: 24px; font-weight: 700; word-break: break-word; }
+.pf-badge { font-size: 14px; font-weight: 500; padding: 4px 10px; border-radius: 20px; white-space: nowrap; }
+.pf-badge.on { background: #111; color: #fff; }
+.pf-badge.off { background: #e6e6e6; color: #444; }
+.pf-btns { display: flex; gap: 8px; margin-top: 14px; }
+.pf-btn { flex: 1; text-align: center; text-decoration: none; font-size: 16px; padding: 12px; border-radius: 10px; border: 1px solid #ccc; background: #fff; color: #111; cursor: pointer; font-family: inherit; }
+.pf-btn.wa { background: #25D366; border-color: #25D366; color: #fff; font-weight: 500; }
+
+.pf-stats { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 12px; }
+.pf-stat { border: 1px solid #e2e2e2; border-radius: 12px; padding: 12px; background: #fff; }
+.pf-stat span { display: block; font-size: 14px; color: #555; }
+.pf-stat b { display: block; font-size: 26px; font-weight: 700; margin-top: 4px; word-break: break-word; }
+
+.pf-card { border: 1px solid #e2e2e2; border-radius: 12px; background: #fff; }
+.pf-item { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 14px; border-bottom: 1px solid #eee; }
+.pf-item:last-child { border-bottom: 0; }
+.pf-lbl { font-size: 15px; color: #555; }
+.pf-val { font-size: 16px; font-weight: 500; text-align: right; word-break: break-word; }
+.pf-copy { font-family: inherit; font-size: 15px; padding: 6px 10px; border: 1px solid #ccc; border-radius: 8px; background: #fff; cursor: pointer; margin-left: 8px; }
+
+.pf-empty { padding: 20px; text-align: center; color: #555; border: 1px dashed #ccc; border-radius: 12px; }
+
+.pf-toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: #111; color: #fff; padding: 12px 18px; border-radius: 10px; font-size: 16px; z-index: 60; max-width: 90%; text-align: center; }
+
+@media (max-width: 420px) {
+  .pf-stats { grid-template-columns: 1fr; }
+}

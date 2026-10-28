@@ -1,0 +1,22 @@
+/* User Performance Reports */
+.pr-back { display: inline-block; font-size: 16px; color: #111; text-decoration: none; margin-bottom: 10px; }
+.pr-title { font-size: 22px; font-weight: 700; color: #111; margin: 0 0 6px; }
+.pr-sub { font-size: 18px; font-weight: 700; color: #111; margin: 18px 0 8px; }
+.pr-user { font-size: 16px; color: #555; margin-bottom: 12px; }
+.pr-lbl { display: block; font-size: 15px; color: #555; margin-bottom: 6px; }
+.pr-input { width: 100%; box-sizing: border-box; font-family: Roboto, sans-serif; font-size: 16px; padding: 10px; border: 1px solid #ccc; border-radius: 8px; background: #fff; color: #111; }
+.pr-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.pr-stat { background: #f7f7f7; border: 1px solid #e5e5e5; border-radius: 10px; padding: 12px; }
+.pr-stat span { display: block; font-size: 15px; color: #555; margin-bottom: 4px; }
+.pr-stat b { font-size: 26px; font-weight: 700; color: #111; word-break: break-word; }
+.pr-bar { height: 14px; background: #e5e5e5; border-radius: 8px; overflow: hidden; margin-top: 12px; }
+.pr-fill { height: 100%; width: 0; background: #111; border-radius: 8px; }
+.pr-note { font-size: 15px; color: #555; margin-top: 6px; }
+.pr-card { background: #fff; border: 1px solid #ddd; border-radius: 12px; padding: 14px; margin-bottom: 10px; }
+.pr-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.pr-month { font-size: 18px; font-weight: 700; color: #111; }
+.pr-pill { font-size: 15px; font-weight: 500; padding: 4px 10px; border-radius: 14px; background: #eee; color: #333; white-space: nowrap; }
+.pr-pill.hit { background: #111; color: #fff; }
+.pr-line { font-size: 16px; color: #333; margin-top: 4px; }
+.pr-empty { background: #f2f2f2; color: #333; border-radius: 10px; padding: 16px; font-size: 16px; text-align: center; }
+.pr-toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); background: #111; color: #fff; font-size: 16px; padding: 12px 18px; border-radius: 10px; z-index: 9999; max-width: 90%; text-align: center; }

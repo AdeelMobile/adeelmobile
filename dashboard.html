@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Adeel Mobile - Users Management</title>
+
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="css/theme.css">
+  <link rel="stylesheet" href="css/layout.css">
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      background-color: #F8F9FA;
+      color: #1C1C1E;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .body {
+      padding: 22px 16px 40px;
+      max-width: 1100px;
+      margin: auto;
+    }
+
+    .page-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 22px;
+    }
+
+    .page-heading h2 {
+      font-size: 28px;
+      margin: 0;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: #111;
+    }
+
+    .page-heading p {
+      margin: 7px 0 0;
+      color: #666;
+      font-size: 15px;
+      font-weight: 500;
+    }
+
+    .admin-tag {
+      padding: 8px 14px;
+      border-radius: 20px;
+      background: #e0e7ff;
+      color: #2563eb;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-bottom: 30px;
+    }
+
+    .summary-card {
+      border: 1px solid #e1e5eb;
+      background: #fff;
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+    }
+
+    .summary-label {
+      color: #666;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .summary-value {
+      font-size: 28px;
+      font-weight: 700;
+      margin-top: 8px;
+      color: #111;
+    }
+
+    .section-title {
+      font-size: 20px;
+      margin: 25px 0 15px;
+      font-weight: 700;
+      color: #111;
+    }
+
+    .module-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .module-card {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-align: left;
+      width: 100%;
+      min-width: 0;
+      padding: 16px;
+      border: 1px solid #e1e5eb;
+      border-radius: 14px;
+      background: #fff;
+      color: #111;
+      font: inherit;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+    }
+
+    .module-card:hover,
+    .module-card:focus-visible {
+      border-color: #2563eb;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+      outline: none;
+    }
+
+    .module-card:active { transform: scale(.99); }
+
+    .module-icon {
+      display: flex;
+      flex: 0 0 44px;
+      width: 44px;
+      height: 44px;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      background: #e0e7ff;
+      color: #2563eb;
+      font-size: 22px;
+    }
+
+    .module-info { min-width: 0; }
+
+    .module-name {
+      font-size: 15px;
+      line-height: 1.4;
+      font-weight: 600;
+    }
+
+    .module-action {
+      font-size: 12px;
+      margin-top: 4px;
+      color: #666;
+    }
+
+    .module-detail {
+      display: none;
+      margin-top: 22px;
+      padding: 18px;
+      border: 1px solid #e1e5eb;
+      border-radius: 14px;
+      background: #fff;
+    }
+
+    .module-detail.show { display: block; }
+
+    .module-detail h3 {
+      font-size: 18px;
+      margin: 0 0 10px;
+      color: #111;
+      font-weight: 700;
+    }
+
+    .module-detail p {
+      color: #666;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .status-note {
+      padding: 12px;
+      border-radius: 9px;
+      background: #f0f2f5;
+      font-size: 13px;
+      line-height: 1.6;
+      color: #333;
+    }
+
+    .close-detail {
+      padding: 9px 14px;
+      border: 1px solid #e1e5eb;
+      border-radius: 8px;
+      background: transparent;
+      color: inherit;
+      cursor: pointer;
+      font: inherit;
+      font-weight: 600;
+    }
+
+    .footer-note {
+      margin-top: 25px;
+      color: #666;
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    @media (min-width: 700px) {
+      .body { padding: 30px 24px 50px; }
+      .module-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+      .summary-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 360px) {
+      .module-grid { grid-template-columns: 1fr; }
+      .page-heading h2 { font-size: 24px; }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="body" id="page-content">
+
+    <header class="page-heading">
+      <div>
+        <h2>Users Management</h2>
+        <p>Installments Department</p>
+      </div>
+      <span class="admin-tag">ADMIN PANEL</span>
+    </header>
+
+    <section class="summary-grid">
+      <div class="summary-card">
+        <div class="summary-label">Total Users</div>
+        <div class="summary-value">—</div>
+      </div>
+
+      <div class="summary-card">
+        <div class="summary-label">Active Users</div>
+        <div class="summary-value">—</div>
+      </div>
+
+      <div class="summary-card">
+        <div class="summary-label">Inactive Users</div>
+        <div class="summary-value">—</div>
+      </div>
+
+      <div class="summary-card">
+        <div class="summary-label">Total Submodules</div>
+        <div class="summary-value">13</div>
+      </div>
+    </section>
+
+    <h3 class="section-title">1. User Management</h3>
+    <section class="module-grid">
+
+      <button class="module-card" data-module="Create New User">
+        <span class="module-icon">＋</span>
+        <span class="module-info">
+          <div class="module-name">Create New User</div>
+          <div class="module-action">Naya user add karein</div>
+        </span>
+      </button>
+
+      <button class="module-card" data-module="All Users List">
+        <span class="module-icon">☷</span>
+        <span class="module-info">
+          <div class="module-name">All Users List</div>
+          <div class="module-action">Tamam users dekhein</div>
+        </span>
+      </button>
+
+      <button class="module-card" data-module="User Profile & Details">
+        <span class="module-icon">♙</span>
+        <span class="module-info">
+          <div class="module-name">User Profile & Details</div>
+          <div class="module-action">User ki maloomat</div>
+        </span>
+      </button>
+
+      <button class="module-card" data-module="Edit User">
+        <span class="module-icon">✎</span>
+        <span class="module-info">
+          <div class="module-name">Edit User</div>
+          <div class="module-action">User details update</div>
+        </span>
+      </button>
+
+      <button class="module-card" data-module="User Status (Active / Inactive)">
+        <span class="module-icon">◉</span>
+        <span class="module-info">
+          <div class="module-name">User Status</div>
+          <div class="module-action">Active / Inactive</div>
+        </span>
+      </button>
+
+    </section>
+
+    <h3 class="section-title">2. Login & Settings</h3>
+    <section class="module-grid">
+
+      <button class="module-card" data-module="User Login & Access">
+        <span class="module-icon">⚿</span>
+        <span class="module-info">
+          <div class="module-name">User Login & Access</div>
+          <div class="module-action">Login aur permissions</div>
+        </span>
+      </button>
+
+      <button class="module-card" data-module="Reset Password">
+        <span class="module-icon">↻</span>
+        <span class="module-info">
+          <div class="module-name">Reset Password</div>
+          <div class="module-action">Password reset karein</div>
+        </span>
+      </button>
+
+      <button class="module-card" data-module="Brand-Wise Profit Settings">
+        <span class="module-icon">％</span>
+        <span class="module-info">
+          <div class="module-name">Brand-Wise Profit Settings</div>
+          <div class="module-action">Brand ke mutabiq profit</div>
+        </span>
+      </button>
+
+      <button class="module-card" data-module="Model-Wise Special Incentives">
+        <span class="module-icon">★</span>
+        <span class="module-info">
+          <div class="module-name">Model-Wise Special Incentives</div>
+          <div class="module-action">Model ke mutabiq incentive</div>
+        </span>
+      </button>
+
+    </section>
+
+    <h3 class="section-title">3. Applications, Wallet & Reports</h3>
+    <section class="module-grid">
+
+      <button class="module-card" data-module="User Applications">
+        <span class="module-icon">▤</span>
+        <span class="module-info">
+          <div class="module-name">User Applications</div>
+          <div class="module-action">Applications record</div>
+        </span>
+      </button>
+
+      <button class="module-card" data-module="User Wallet & Earnings">
+        <span class="module-icon">▣</span>
+        <span class="module-info">
+          <div class="module-name">User Wallet & Earnings</div>
+          <div class="module-action">Earnings aur wallet</div>
+        </span>
+      </button>
+
+      <button class="module-card" data-module="User Sales Reports">
+        <span class="module-icon">▥</span>
+        <span class="module-info">
+          <div class="module-name">User Sales Reports</div>
+          <div class="module-action">Sales ki reports</div>
+        </span>
+      </button>
+
+      <button class="module-card" data-module="User Performance Reports">
+        <span class="module-icon">↗</span>
+        <span class="module-info">
+          <div class="module-name">User Performance Reports</div>
+          <div class="module-action">Targets aur performance</div>
+        </span>
+      </button>
+
+    </section>
+
+    <section class="module-detail" id="module-detail" aria-live="polite">
+      <h3 id="detail-title"></h3>
+      <p id="detail-description"></p>
+      <div class="status-note">
+        Interface selection working hai. Is module ka form aur database functionality aglay step mein banegi.
+      </div>
+      <br>
+      <button class="close-detail" id="close-detail" type="button">Band karein</button>
+    </section>
+
+    <p class="footer-note">
+      Adeel Mobile Business Software · Users Module
+    </p>
+
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+  <script src="js/supabase-config.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/sidebar.js" data-root="" data-active="dashboard"></script>
+
+  <script>
+    requireLogin().then(session => {
+      if (!session) return;
+
+      document.querySelectorAll('[data-module]').forEach(button => {
+        button.addEventListener('click', () => {
+          const name = button.dataset.module;
+
+          document.getElementById('detail-title').textContent = name;
+          document.getElementById('detail-description').textContent =
+            name + ' ka interface yahan tayyar hoga.';
+
+          const detail = document.getElementById('module-detail');
+          detail.classList.add('show');
+          detail.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        });
+      });
+
+      document.getElementById('close-detail').addEventListener('click', () => {
+        document.getElementById('module-detail').classList.remove('show');
+      });
+    }).catch(error => {
+      console.error('Login check error:', error);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Test - Main Dashboard</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;700;800&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #F8F9FA;
+      color: #111;
+    }
+
+    .page { padding: 20px 16px 40px; max-width: 600px; margin: auto; }
+
+    .title { font-family: 'Inter', sans-serif; font-size: 26px; font-weight: 700; margin-bottom: 20px; }
+
+    /* Department Card Styling */
+    .department-box {
+      background: #fff;
+      border: 1px solid #e1e5eb;
+      border-radius: 14px;
+      margin-bottom: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+    }
+
+    .department-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .department-header:hover { background: #f9f9f9; }
+
+    .department-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: 'Inter', sans-serif;
+      font-size: 17px;
+      font-weight: 600;
+    }
+
+    .icon-header {
+      width: 40px;
+      height: 40px;
+      background: #f0f0f0;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+    }
+
+    .arrow {
+      font-size: 14px;
+      color: #666;
+      transition: transform 0.3s ease;
+    }
+
+    /* Expandable Content (Grid - 3 Columns) */
+    .department-content {
+      display: none; 
+      padding: 0 18px 18px 18px;
+      grid-template-columns: repeat(3, 1fr); 
+      gap: 10px; 
+    }
+
+    .department-content.open {
+      display: grid; 
+    }
+
+    /* Sub Buttons (Image wala Design) */
+    .sub-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: #E8E8E8; 
+      border: 1px solid #E0E0E0;
+      padding: 14px 6px; 
+      border-radius: 10px;
+      text-decoration: none;
+      color: #111;
+      font-family: 'Inter', sans-serif;
+      font-size: 13px; 
+      font-weight: 700;
+      transition: background 0.2s;
+      text-align: center;
+    }
+    
+    .sub-btn:hover {
+      background: #DCDCDC; 
+    }
+
+    /* Emojis / Icons */
+    .sub-btn-icon {
+      font-size: 24px; 
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 30px;
+    }
+
+    /* Arrow Rotate */
+    .department-box.active .arrow {
+      transform: rotate(180deg);
+    }
+  </style>
+</head>
+<body>
+
+  <main class="page">
+    <h2 class="title">Departments</h2>
+
+    <!-- 1. Installments Department -->
+    <div class="department-box">
+      <div class="department-header" onclick="toggleAccordion(this)">
+        <div class="department-title">
+          <div class="icon-header">💵</div> Installments
+        </div>
+        <div class="arrow">▼</div>
+      </div>
+      
+      <div class="department-content">
+        <a href="test-installments-page.html" class="sub-btn"><span class="sub-btn-icon">📊</span> Dashboard</a>
+        <a href="#" class="sub-btn"><span class="sub-btn-icon">🖥️</span> Website</a>
+        <a href="#" class="sub-btn"><span class="sub-btn-icon">📦</span> Orders</a>
+        <a href="#" class="sub-btn"><span class="sub-btn-icon">✔️</span> Verification</a>
+        <a href="#" class="sub-btn"><span class="sub-btn-icon">🧑‍💼</span> Customers</a>
+        <a href="#" class="sub-btn"><span class="sub-btn-icon">👥</span> Users</a>
+        <a href="#" class="sub-btn"><span class="sub-btn-icon">💰</span> Sales</a>
+        <a href="#" class="sub-btn"><span class="sub-btn-icon">📋</span> Plans</a>
+        <a href="#" class="sub-btn"><span class="sub-btn-icon">📈</span> Reports</a>
+        <a href="#" class="sub-btn"><span class="sub-btn-icon">⚙️</span> Settings</a>
+      </div>
+    </div>
+
+    <!-- 2. Walking Customers Department -->
+    <div class="department-box">
+      <div class="department-header" onclick="toggleAccordion(this)">
+        <div class="department-title">
+          <div class="icon-header">🚶</div> Walking Customers
+        </div>
+        <div class="arrow">▼</div>
+      </div>
+      
+      <div class="department-content">
+        <a href="#" class="sub-btn"><span class="sub-btn-icon">📊</span> Dashboard</a>
+        <a href="#" class="sub-btn"><span class="sub-btn-icon">🧑‍💼</span> Customers</a>
+        <a href="#" class="sub-btn"><span class="sub-btn-icon">🛒</span> Orders</a>
+        <a href="#" class="sub-btn"><span class="sub-btn-icon">📦</span> Products</a>
+        <a href="#" class="sub-btn"><span class="sub-btn-icon">💳</span> Payments</a>
+        <a href="#" class="sub-btn"><span class="sub-btn-icon">📈</span> Reports</a>
+        <a href="#" class="sub-btn"><span class="sub-btn-icon">⚙️</span> Settings</a>
+      </div>
+    </div>
+
+    <!-- 3. POS Department -->
+    <div class="department-box">
+      <div class="department-header" onclick="toggleAccordion(this)">
+        <div class="department-title">
+          <div class="icon-header">🛒</div> POS
+        </div>
+        <div class="arrow">▼</div>
+      </div>
+      
+      <div class="department-content">
+        <a href="#" class="sub-btn"><span class="sub-btn-icon">📊</span> Dashboard</a>
+        <a href="#" class="sub-btn"><span class="sub-btn-icon">🧾</span> Billing</a>
+        <a href="#" class="sub-btn"><span class="sub-btn-icon">📦</span> Stock</a>
+        <a href="#" class="sub-btn"><span class="sub-btn-icon">🚚</span> Purchases</a>
+        <a href="#" class="sub-btn"><span class="sub-btn-icon">🧑‍💼</span> Customers</a>
+        <a href="#" class="sub-btn"><span class="sub-btn-icon">💸</span> Expenses</a>
+        <a href="#" class="sub-btn"><span class="sub-btn-icon">🏦</span> Cash & Bank</a>
+        <a href="#" class="sub-btn"><span class="sub-btn-icon">📈</span> Reports</a>
+        <a href="#" class="sub-btn"><span class="sub-btn-icon">⚙️</span> Settings</a>
+      </div>
+    </div>
+
+    <!-- 4. Dropshipping Department -->
+    <div class="department-box">
+      <div class="department-header" onclick="toggleAccordion(this)">
+        <div class="department-title">
+          <div class="icon-header">🚚</div> Dropshipping
+        </div>
+        <div class="arrow">▼</div>
+      </div>
+      
+      <div class="department-content">
+        <a href="#" class="sub-btn"><span class="sub-btn-icon">📊</span> Dashboard</a>
+        <a href="#" class="sub-btn"><span class="sub-btn-icon">📦</span> Products</a>
+        <a href="#" class="sub-btn"><span class="sub-btn-icon">📋</span> Orders</a>
+        <a href="#" class="sub-btn"><span class="sub-btn-icon">🧑‍💼</span> Customers</a>
+        <a href="#" class="sub-btn"><span class="sub-btn-icon">💳</span> Payments</a>
+        <a href="#" class="sub-btn"><span class="sub-btn-icon">🚚</span> Shipping</a>
+        <a href="#" class="sub-btn"><span class="sub-btn-icon">🔄</span> Returns</a>
+        <a href="#" class="sub-btn"><span class="sub-btn-icon">📈</span> Reports</a>
+        <a href="#" class="sub-btn"><span class="sub-btn-icon">⚙️</span> Settings</a>
+      </div>
+    </div>
+
+    <!-- 5. AI Agents Department -->
+    <div class="department-box">
+      <div class="department-header" onclick="toggleAccordion(this)">
+        <div class="department-title">
+          <div class="icon-header">🤖</div> AI Agents
+        </div>
+        <div class="arrow">▼</div>
+      </div>
+      
+      <div class="department-content">
+        <a href="#" class="sub-btn"><span class="sub-btn-icon">📊</span> Dashboard</a>
+        <a href="#" class="sub-btn"><span class="sub-btn-icon">🤖</span> Agents</a>
+        <a href="#" class="sub-btn"><span class="sub-btn-icon">📱</span> Products Bot</a>
+        <a href="#" class="sub-btn"><span class="sub-btn-icon">💬</span> WhatsApp Bot</a>
+        <a href="#" class="sub-btn"><span class="sub-btn-icon">💵</span> Instal. Bot</a>
+        <a href="#" class="sub-btn"><span class="sub-btn-icon">🛒</span> POS Bot</a>
+        <a href="#" class="sub-btn"><span class="sub-btn-icon">📈</span> Marketing Bot</a>
+        <a href="#" class="sub-btn"><span class="sub-btn-icon">🧠</span> Assistant</a>
+        <a href="#" class="sub-btn"><span class="sub-btn-icon">📋</span> Logs</a>
+        <a href="#" class="sub-btn"><span class="sub-btn-icon">⚙️</span> Settings</a>
+        <a href="#" class="sub-btn"><span class="sub-btn-icon">🔗</span> Workflows</a>
+      </div>
+    </div>
+
+    <!-- 6. Social Media Department -->
+    <div class="department-box">
+      <div class="department-header" onclick="toggleAccordion(this)">
+        <div class="department-title">
+          <div class="icon-header">📱</div> Social Media
+        </div>
+        <div class="arrow">▼</div>
+      </div>
+      
+      <div class="department-content">
+        <a href="#" class="sub-btn"><span class="sub-btn-icon">📊</span> Dashboard</a>
+        <a href="#" class="sub-btn"><span class="sub-btn-icon">🖼️</span> Posters</a>
+        <a href="#" class="sub-btn"><span class="sub-btn-icon">💵</span> Price Posters</a>
+        <a href="#" class="sub-btn"><span class="sub-btn-icon">📊</span> Compare</a>
+        <a href="#" class="sub-btn"><span class="sub-btn-icon">📝</span> Captions</a>
+        <a href="#" class="sub-btn"><span class="sub-btn-icon">📅</span> Calendar</a>
+        <a href="#" class="sub-btn"><span class="sub-btn-icon">🔗</span> Accounts</a>
+        <a href="#" class="sub-btn"><span class="sub-btn-icon">✅</span> Published</a>
+        <a href="#" class="sub-btn"><span class="sub-btn-icon">⚙️</span> Settings</a>
+      </div>
+    </div>
+
+    <!-- 7. Products Database Department -->
+    <div class="department-box">
+      <div class="department-header" onclick="toggleAccordion(this)">
+        <div class="department-title">
+          <div class="icon-header">🗄️</div> Products Database
+        </div>
+        <div class="arrow">▼</div>
+      </div>
+      
+      <div class="department-content">
+        <a href="#" class="sub-btn"><span class="sub-btn-icon">📱</span> Products</a>
+        <a href="#" class="sub-btn"><span class="sub-btn-icon">🏷️</span> Brands</a>
+        <a href="#" class="sub-btn"><span class="sub-btn-icon">📥</span> Import</a>
+        <a href="#" class="sub-btn"><span class="sub-btn-icon">🔄</span> Sync</a>
+        <a href="#" class="sub-btn"><span class="sub-btn-icon">⚙️</span> Settings</a>
+      </div>
+    </div>
+
+    <!-- 8. Website Department -->
+    <div class="department-box">
+      <div class="department-header" onclick="toggleAccordion(this)">
+        <div class="department-title">
+          <div class="icon-header">🌐</div> Website
+        </div>
+        <div class="arrow">▼</div>
+      </div>
+      
+      <div class="department-content">
+        <a href="#" class="sub-btn"><span class="sub-btn-icon">🖥️</span> Control</a>
+        <a href="#" class="sub-btn"><span class="sub-btn-icon">🎨</span> Design</a>
+        <a href="#" class="sub-btn"><span class="sub-btn-icon">🖼️</span> Banners</a>
+        <a href="#" class="sub-btn"><span class="sub-btn-icon">📝</span> Content</a>
+        <a href="#" class="sub-btn"><span class="sub-btn-icon">🛒</span> Orders</a>
+        <a href="#" class="sub-btn"><span class="sub-btn-icon">⚙️</span> Settings</a>
+      </div>
+    </div>
+
+  </main>
+
+  <script>
+    function toggleAccordion(element) {
+      const box = element.parentElement;
+      const content = box.querySelector('.department-content');
+      box.classList.toggle('active');
+      content.classList.toggle('open');
+    }
+  </script>
+</body>
+</html>

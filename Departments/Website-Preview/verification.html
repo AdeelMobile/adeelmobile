@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Verification | Adeel Mobile</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="top">
+  <a href="index.html" class="logo">
+    <img src="https://nqihozwbdrvpyalctwbc.supabase.co/storage/v1/object/public/logos/main-logo.png" alt="Adeel Mobile" onerror="this.replaceWith(document.createTextNode('Adeel Mobile'))">
+  </a>
+</header>
+
+<main>
+  <a class="back" id="back" href="index.html">← Back</a>
+
+  <h1>Verification</h1>
+
+  <div id="sum"></div>
+
+  <form id="f" class="form">
+
+    <label>
+      Full Name
+      <input id="name" required>
+    </label>
+
+    <label>
+      Father Name
+      <input id="father" required>
+    </label>
+
+    <label>
+      Mobile Number
+      <input id="contact" inputmode="numeric" placeholder="03XXXXXXXXX" required>
+    </label>
+
+    <label>
+      WhatsApp Number
+      <input id="wapp" inputmode="numeric" placeholder="03XXXXXXXXX" required>
+    </label>
+
+    <div class="two">
+      <label>
+        CNIC Front
+        <input id="front" type="file" accept="image/*" required>
+      </label>
+
+      <label>
+        CNIC Back
+        <input id="back2" type="file" accept="image/*" required>
+      </label>
+    </div>
+
+    <label>
+      Any running loan?
+      <select id="loan">
+        <option>No</option>
+        <option>Yes</option>
+      </select>
+    </label>
+
+    <p class="muted">Your information is kept private.</p>
+
+    <button class="btn" id="sub">Submit for Verification</button>
+
+    <p id="err" class="err"></p>
+
+  </form>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script src="js/config.js"></script>
+<script src="js/common.js"></script>
+<script src="js/verification.js"></script>
+
+</body>
+</html>

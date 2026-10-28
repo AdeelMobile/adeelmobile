@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4f4f4">
+  <title>Products | Adeel Mobile</title>
+  <link rel="stylesheet" href="products.css">
+</head>
+<body>
+  <header class="products-header">
+    <button type="button" onclick="history.back()">← Back</button>
+    <h1>Products</h1>
+    <p>Available Mobile Phones</p>
+  </header>
+
+  <main class="products-container">
+    <section class="products-summary">
+      <h2>All Products</h2>
+      <p>Apne liye available products aur profit check karein.</p>
+    </section>
+
+    <div id="products-loading">Loading products...</div>
+    <div id="products-list"></div>
+    <div id="products-empty" hidden>
+      Abhi koi product available nahi hai.
+    </div>
+    <div id="products-error" hidden>
+      Products load nahi ho sake. Dobara try karein.
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+  <script src="../../js/supabase-config.js"></script>
+  <script src="product-profit.js"></script>
+  <script src="products.js"></script>
+</body>
+</html>

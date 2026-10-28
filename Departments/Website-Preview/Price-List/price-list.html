@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f7f7">
+  <title>Adeel Mobile | Installments Price List</title>
+
+  <style>
+    :root {
+      --bg: #f7f7f7;
+      --card: #ffffff;
+      --text: #171717;
+      --muted: #666666;
+      --line: #dedede;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Roboto, Arial, sans-serif;
+    }
+
+    .page {
+      width: min(100%, 760px);
+      margin: auto;
+      padding: 16px;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 10px 0 16px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .logo {
+      width: 76px;
+      height: 76px;
+      flex-shrink: 0;
+      object-fit: contain;
+      border-radius: 50%;
+      background: #fff;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(20px, 5vw, 29px);
+      line-height: 1.2;
+    }
+
+    .tagline {
+      margin: 7px 0 0;
+      font-size: 14px;
+      line-height: 1.5;
+      color: var(--muted);
+    }
+
+    .date {
+      margin: 12px 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 16px 0 22px;
+    }
+
+    .btn {
+      border: 0;
+      border-radius: 8px;
+      padding: 13px 16px;
+      background: #191919;
+      color: white;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .btn.secondary {
+      background: #e7e7e7;
+      color: #171717;
+    }
+
+    .btn:disabled {
+      opacity: 0.55;
+      cursor: wait;
+    }
+
+    .status {
+      padding: 18px;
+      border-radius: 10px;
+      background: white;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .brand-group {
+      margin: 24px 0;
+    }
+
+    .brand-title {
+      margin: 0 0 12px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #222;
+      font-size: 22px;
+    }
+
+    .model-card {
+      margin-bottom: 10px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--card);
+    }
+
+    .model-name {
+      margin: 0 0 5px;
+      font-size: 18px;
+      line-height: 1.35;
+    }
+
+    .spec {
+      margin-bottom: 9px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .cash-price {
+      margin: 7px 0 9px;
+      font-size: 16px;
+      font-weight: 800;
+    }
+
+    .advance {
+      margin-bottom: 10px;
+      font-size: 14px;
+    }
+
+    .plans {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 7px;
+    }
+
+    .plan {
+      padding: 8px 4px;
+      border-radius: 7px;
+      background: #f0f0f0;
+      text-align: center;
+    }
+
+    .plan-label {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .plan-value {
+      display: block;
+      font-size: 13px;
+      font-weight: 800;
+      overflow-wrap: anywhere;
+    }
+
+    .footer {
+      margin-top: 28px;
+      padding: 16px 0;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.8;
+      text-align: center;
+    }
+
+    .footer a {
+      color: #171717;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    @media (max-width: 380px) {
+      .page {
+        padding: 12px;
+      }
+
+      .logo {
+        width: 62px;
+        height: 62px;
+      }
+
+      .model-card {
+        padding: 11px;
+      }
+
+      .plan-value {
+        font-size: 12px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+<main class="page">
+
+  <header class="header">
+    <img id="brand-logo" class="logo" alt="Adeel Mobile Logo">
+
+    <div>
+      <h1>Adeel Mobile Installments Plans</h1>
+
+      <p class="tagline">
+        Bagair ksi garranty k ab Koi b phone asan installments pe hasil karin.
+      </p>
+    </div>
+  </header>
+
+  <p class="date" id="current-date"></p>
+
+  <div class="actions">
+    <button class="btn" id="download-poster" type="button">
+      Download Price List
+    </button>
+
+    <button class="btn secondary" id="refresh-list" type="button">
+      Refresh Prices
+    </button>
+  </div>
+
+  <div id="message" class="status" role="status">
+    Loading latest prices...
+  </div>
+
+  <div id="products"></div>
+
+  <footer class="footer">
+    <div><strong>Adeel Mobile Official</strong></div>
+
+    <div>Adeel Mobile Shalimar Link Road Waly</div>
+
+    <div>For details and orders</div>
+
+    <a id="whatsapp-link" href="#" target="_blank" rel="noopener">
+      Book Order on WhatsApp:
+      <span id="whatsapp-number"></span>
+    </a>
+
+    <div>Follow Adeel Mobile Official on social media</div>
+
+    <div>Prices and installment plans are subject to confirmation.</div>
+  </footer>
+
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../js/config.js"></script>
+<script src="../js/common.js"></script>
+
+<script>
+"use strict";
+
+const productsContainer = document.getElementById("products");
+const messageBox = document.getElementById("message");
+const downloadButton = document.getElementById("download-poster");
+const refreshButton = document.getElementById("refresh-list");
+
+let allProducts = [];
+let loading = false;
+
+document.getElementById("brand-logo").src = LOGO_URL;
+
+function updateDate() {
+  document.getElementById("current-date").textContent =
+    "Updated: " + new Date().toLocaleString("en-PK", {
+      dateStyle: "medium",
+      timeStyle: "short"
+    });
+}
+
+updateDate();
+
+document.getElementById("whatsapp-number").textContent =
+  WHATSAPP_DISPLAY || WHATSAPP_NUMBER;
+
+document.getElementById("whatsapp-link").href =
+  "https://wa.me/" + WHATSAPP_NUMBER;
+
+
+function formatPrice(value) {
+  return "Rs. " + Number(value || 0).toLocaleString("en-PK");
+}
+
+
+function getModelName(model, variant) {
+  let name = String(model || "").trim();
+  const v = String(variant || "").trim();
+
+  if (v && name.endsWith(v)) {
+    name = name.slice(0, -v.length).trim();
+  }
+
+  return name;
+}
+
+
+function getPlans(price) {
+  return {
+    advance: calcPlan(price, 3).advance,
+    three: calcPlan(price, 3).monthly,
+    six: calcPlan(price, 6).monthly,
+    nine: calcPlan(price, 9).monthly
+  };
+}
+
+
+function makeProductCard(product) {
+  const plans = getPlans(product.price);
+
+  return `
+    <article class="model-card">
+
+      <h3 class="model-name">
+        ${esc(product.brand)} ${esc(product.model)}
+      </h3>
+
+      <div class="spec">
+        ${esc(fmtVar(product.variant))}
+      </div>
+
+      <div class="cash-price">
+        Cash Price: ${formatPrice(product.price)}
+      </div>
+
+      <div class="advance">
+        Advance:
+        <strong>${formatPrice(plans.advance)}</strong>
+      </div>
+
+      <div class="plans">
+
+        <div class="plan">
+          <span class="plan-label">3 Months</span>
+          <span class="plan-value">
+            ${formatPrice(plans.three)}
+          </span>
+        </div>
+
+        <div class="plan">
+          <span class="plan-label">6 Months</span>
+          <span class="plan-value">
+            ${formatPrice(plans.six)}
+          </span>
+        </div>
+
+        <div class="plan">
+          <span class="plan-label">9 Months</span>
+          <span class="plan-value">
+            ${formatPrice(plans.nine)}
+          </span>
+        </div>
+
+      </div>
+    </article>
+  `;
+}
+
+
+function renderProducts() {
+  const groups = new Map();
+
+  allProducts.forEach(product => {
+    if (!groups.has(product.brand)) {
+      groups.set(product.brand, []);
+    }
+
+    groups.get(product.brand).push(product);
+  });
+
+  productsContainer.innerHTML = [...groups.entries()]
+    .map(([brand, products]) => `
+      <section class="brand-group">
+        <h2 class="brand-title">${esc(brand)}</h2>
+        ${products.map(makeProductCard).join("")}
+      </section>
+    `)
+    .join("");
+}
+
+
+async function loadPriceList() {
+  if (loading) return;
+
+  loading = true;
+  messageBox.hidden = false;
+  messageBox.textContent = "Loading latest prices...";
+  productsContainer.innerHTML = "";
+  downloadButton.disabled = true;
+
+  try {
+    const { data, error } = await sb
+      .from("variants")
+      .select(`
+        id,
+        variant,
+        price,
+        discount_price,
+        models!inner (
+          model,
+          show_inst_website,
+          brands!inner (
+            id,
+            brand,
+            show_inst_website
+          )
+        )
+      `)
+      .eq("models.show_inst_website", true)
+      .eq("models.brands.show_inst_website", true)
+      .limit(1000);
+
+    if (error) throw error;
+
+    allProducts = (data || [])
+      .filter(v => v.models && v.models.brands)
+      .map(v => {
+        const modelInfo = v.models;
+        const brandInfo = modelInfo.brands;
+
+        return {
+          id: v.id,
+          brand: brandInfo.brand || "",
+          model: getModelName(modelInfo.model, v.variant),
+          variant: v.variant || "",
+          price: Number(effPrice(v))
+        };
+      })
+      .filter(p => p.price > 0)
+      .sort((a, b) =>
+        a.brand.localeCompare(b.brand) ||
+        a.model.localeCompare(b.model) ||
+        a.variant.localeCompare(b.variant)
+      );
+
+    if (!allProducts.length) {
+      messageBox.textContent =
+        "Abhi koi installment product available nahi hai.";
+      return;
+    }
+
+    messageBox.hidden = true;
+    renderProducts();
+    downloadButton.disabled = false;
+
+  } catch (error) {
+    console.error("Price List Error:", error);
+
+    messageBox.hidden = false;
+    messageBox.textContent =
+      "Prices load nahi ho sakin. Internet aur Supabase settings check karein, phir Refresh Prices dabayein.";
+
+  } finally {
+    loading = false;
+  }
+}
+
+
+/* POSTER FUNCTIONS */
+
+function roundRect(ctx, x, y, w, h, r, fill) {
+  ctx.beginPath();
+
+  if (typeof ctx.roundRect === "function") {
+    ctx.roundRect(x, y, w, h, r);
+  } else {
+    ctx.rect(x, y, w, h);
+  }
+
+  ctx.fillStyle = fill;
+  ctx.fill();
+}
+
+
+function canvasText(
+  ctx,
+  text,
+  x,
+  y,
+  size,
+  weight = "400",
+  color = "#171717",
+  align = "left"
+) {
+  ctx.font = `${weight} ${size}px Arial`;
+  ctx.fillStyle = color;
+  ctx.textAlign = align;
+  ctx.textBaseline = "alphabetic";
+  ctx.fillText(String(text), x, y);
+}
+
+
+function fitTextSize(ctx, text, maxWidth, start, min, weight = "700") {
+  let size = start;
+
+  while (size > min) {
+    ctx.font = `${weight} ${size}px Arial`;
+
+    if (ctx.measureText(String(text)).width <= maxWidth) {
+      break;
+    }
+
+    size--;
+  }
+
+  return Math.max(min, size);
+}
+
+
+async function loadLogoForPoster() {
+  return new Promise(resolve => {
+    const image = new Image();
+
+    image.crossOrigin = "anonymous";
+
+    image.onload = () => resolve(image);
+    image.onerror = () => resolve(null);
+
+    image.src = LOGO_URL;
+  });
+}
+
+
+function groupProducts() {
+  const groups = new Map();
+
+  allProducts.forEach(product => {
+    if (!groups.has(product.brand)) {
+      groups.set(product.brand, []);
+    }
+
+    groups.get(product.brand).push(product);
+  });
+
+  return [...groups.entries()];
+}
+
+
+function drawPoster(ctx, logoImage) {
+  const W = 1080;
+  const H = 1920;
+
+  ctx.fillStyle = "#F7F7F7";
+  ctx.fillRect(0, 0, W, H);
+
+  /* HEADER */
+
+  ctx.fillStyle = "#FFFFFF";
+  ctx.fillRect(0, 0, W, 250);
+
+  if (logoImage) {
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(112, 88, 55, 0, Math.PI * 2);
+    ctx.clip();
+    ctx.drawImage(logoImage, 57, 33, 110, 110);
+    ctx.restore();
+  } else {
+    ctx.beginPath();
+    ctx.arc(112, 88, 55, 0, Math.PI * 2);
+    ctx.fillStyle = "#EEEEEE";
+    ctx.fill();
+
+    canvasText(ctx, "AM", 112, 98, 30, "700", "#333333", "center");
+  }
+
+  canvasText(
+    ctx,
+    "Adeel Mobile Installments Plans",
+    190,
+    72,
+    fitTextSize(ctx, "Adeel Mobile Installments Plans", 820, 38, 24),
+    "700"
+  );
+
+  canvasText(
+    ctx,
+    "Bagair ksi garranty k ab Koi b phone",
+    190,
+    112,
+    fitTextSize(ctx, "Bagair ksi garranty k ab Koi b phone", 820, 22, 16),
+    "400",
+    "#555555"
+  );
+
+  canvasText(
+    ctx,
+    "asan installments pe hasil karin.",
+    190,
+    142,
+    22,
+    "400",
+    "#555555"
+  );
+
+  canvasText(
+    ctx,
+    new Date().toLocaleString("en-PK", {
+      dateStyle: "medium",
+      timeStyle: "short"
+    }),
+    190,
+    181,
+    18,
+    "400",
+    "#666666"
+  );
+
+  ctx.strokeStyle = "#DCDCDC";
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.moveTo(42, 225);
+  ctx.lineTo(1038, 225);
+  ctx.stroke();
+
+
+  /* TABLE LAYOUT */
+
+  const groups = groupProducts();
+  const totalBrandHeadings = groups.length;
+
+  const contentTop = 270;
+  const footerTop = 1795;
+  const available = footerTop - contentTop;
+  const rowCount = allProducts.length;
+
+  const headingReserve = totalBrandHeadings * 24;
+
+  const rowHeight = Math.max(
+    11,
+    Math.min(
+      43,
+      (available - headingReserve) / Math.max(1, rowCount)
+    )
+  );
+
+  const titleSize = Math.max(
+    12,
+    Math.min(21, rowHeight * 0.62)
+  );
+
+  const smallSize = Math.max(
+    9,
+    Math.min(15, rowHeight * 0.40)
+  );
+
+  const left = 38;
+  const right = 1042;
+  const tableW = right - left;
+
+  const cols = [
+    { label: "MODEL",   x: left + 8,   w: 205, align: "left" },
+    { label: "VARIANT", x: left + 220, w: 110, align: "left" },
+    { label: "PRICE",   x: left + 340, w: 132, align: "right" },
+    { label: "ADVANCE", x: left + 485, w: 132, align: "right" },
+    { label: "3M",      x: left + 635, w: 116, align: "right" },
+    { label: "6M",      x: left + 760, w: 116, align: "right" },
+    { label: "9M",      x: left + 885, w: 108, align: "right" }
+  ];
+
+  let y = contentTop;
+
+  /* COLUMN TITLES */
+
+  ctx.fillStyle = "#EAEAEA";
+  ctx.fillRect(left, y, tableW, 25);
+
+  cols.forEach(col => {
+    canvasText(
+      ctx,
+      col.label,
+      col.align === "right" ? col.x + col.w : col.x,
+      y + 17,
+      12,
+      "700",
+      "#333333",
+      col.align
+    );
+  });
+
+  y += 25;
+
+
+  /* BRAND GROUPS AND PRODUCT ROWS */
+
+  groups.forEach(([brand, products]) => {
+    if (y + 16 >= footerTop) return;
+
+    ctx.fillStyle = "#292929";
+    ctx.fillRect(left, y, tableW, 19);
+
+    canvasText(
+      ctx,
+      brand.toUpperCase(),
+      left + 8,
+      y + 14,
+      12,
+      "700",
+      "#FFFFFF"
+    );
+
+    y += 19;
+
+    products.forEach((product, index) => {
+      if (y + rowHeight > footerTop) return;
+
+      if (index % 2 === 0) {
+        ctx.fillStyle = "#FFFFFF";
+        ctx.fillRect(left, y, tableW, rowHeight);
+      }
+
+      const plans = getPlans(product.price);
+
+      const values = [
+        {
+          text: product.model,
+          x: cols[0].x,
+          w: cols[0].w,
+          align: "left",
+          weight: "700"
+        },
+        {
+          text: fmtVar(product.variant) || "-",
+          x: cols[1].x,
+          w: cols[1].w,
+          align: "left",
+          weight: "400"
+        },
+        {
+          text: formatPrice(product.price),
+          x: cols[2].x,
+          w: cols[2].w,
+          align: "right",
+          weight: "700"
+        },
+        {
+          text: formatPrice(plans.advance),
+          x: cols[3].x,
+          w: cols[3].w,
+          align: "right",
+          weight: "700"
+        },
+        {
+          text: formatPrice(plans.three),
+          x: cols[4].x,
+          w: cols[4].w,
+          align: "right",
+          weight: "700"
+        },
+        {
+          text: formatPrice(plans.six),
+          x: cols[5].x,
+          w: cols[5].w,
+          align: "right",
+          weight: "700"
+        },
+        {
+          text: formatPrice(plans.nine),
+          x: cols[6].x,
+          w: cols[6].w,
+          align: "right",
+          weight: "700"
+        }
+      ];
+
+      values.forEach(value => {
+        const baseSize =
+          value.weight === "700" ? titleSize : smallSize;
+
+        const fontSize = fitTextSize(
+          ctx,
+          value.text,
+          value.w - 4,
+          baseSize,
+          Math.min(8, baseSize),
+          value.weight
+        );
+
+        canvasText(
+          ctx,
+          value.text,
+          value.align === "right"
+            ? value.x + value.w
+            : value.x,
+          y + Math.max(9, (rowHeight + fontSize * 0.34) / 2),
+          fontSize,
+          value.weight,
+          "#171717",
+          value.align
+        );
+      });
+
+      ctx.strokeStyle = "#E5E5E5";
+      ctx.lineWidth = 0.6;
+      ctx.beginPath();
+      ctx.moveTo(left, y + rowHeight);
+      ctx.lineTo(right, y + rowHeight);
+      ctx.stroke();
+
+      y += rowHeight;
+    });
+  });
+
+
+  /* FOOTER */
+
+  ctx.fillStyle = "#FFFFFF";
+  ctx.fillRect(0, 1795, 1080, 125);
+
+  ctx.strokeStyle = "#DCDCDC";
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.moveTo(42, 1795);
+  ctx.lineTo(1038, 1795);
+  ctx.stroke();
+
+  canvasText(
+    ctx,
+    "ADEEL MOBILE OFFICIAL",
+    540,
+    1824,
+    19,
+    "700",
+    "#171717",
+    "center"
+  );
+
+  canvasText(
+    ctx,
+    "Adeel Mobile Shalimar Link Road Waly",
+    540,
+    1848,
+    16,
+    "400",
+    "#555555",
+    "center"
+  );
+
+  canvasText(
+    ctx,
+    "BOOK ORDER ON WHATSAPP",
+    540,
+    1872,
+    16,
+    "700",
+    "#171717",
+    "center"
+  );
+
+  canvasText(
+    ctx,
+    WHATSAPP_DISPLAY || WHATSAPP_NUMBER,
+    540,
+    1895,
+    17,
+    "700",
+    "#171717",
+    "center"
+  );
+}
+
+
+async function downloadPricePosters() {
+  if (!allProducts.length) {
+    alert("Pehle products load hone dein.");
+    return;
+  }
+
+  downloadButton.disabled = true;
+
+  const originalText = downloadButton.textContent;
+  downloadButton.textContent = "Preparing Image...";
+
+  try {
+    const logoImage = await loadLogoForPoster();
+
+    const canvas = document.createElement("canvas");
+    canvas.width = 1080;
+    canvas.height = 1920;
+
+    const ctx = canvas.getContext("2d");
+
+    drawPoster(ctx, logoImage);
+
+    const blob = await new Promise(resolve => {
+      canvas.toBlob(resolve, "image/png");
+    });
+
+    if (!blob) {
+      throw new Error("Poster image could not be created.");
+    }
+
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+
+    link.href = url;
+    link.download = "Adeel-Mobile-Installments-Price-List.png";
+
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+
+    setTimeout(() => URL.revokeObjectURL(url), 30000);
+
+    alert("Ek price-list image download ke liye tayyar hai.");
+
+  } catch (error) {
+    console.error("Poster Error:", error);
+    alert("Poster download nahi ho saka. Dobara try karein.");
+
+  } finally {
+    downloadButton.disabled = false;
+    downloadButton.textContent = originalText;
+  }
+}
+
+
+refreshButton.addEventListener("click", loadPriceList);
+downloadButton.addEventListener("click", downloadPricePosters);
+
+loadPriceList();
+</script>
+</body>
+</html>

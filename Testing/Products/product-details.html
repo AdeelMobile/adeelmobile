@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4f4f4">
+  <title>Product Details | Adeel Mobile</title>
+  <link rel="stylesheet" href="products.css">
+  <link rel="stylesheet" href="product-details.css">
+</head>
+<body>
+  <header class="products-header">
+    <button type="button" onclick="history.back()">← Back</button>
+    <h1>Product Details</h1>
+    <p>Adeel Mobile</p>
+  </header>
+
+  <main class="products-container">
+    <div id="details-loading">Loading product details...</div>
+
+    <section id="product-details" hidden>
+      <img id="detail-image" class="product-image" src="" alt="Product image">
+
+      <div class="product-info">
+        <h2 id="detail-brand"></h2>
+        <h3 id="detail-model"></h3>
+
+        <div class="product-detail">
+          <span>Variant</span>
+          <strong id="detail-variant"></strong>
+        </div>
+
+        <div class="product-detail">
+          <span>Price</span>
+          <strong id="detail-price"></strong>
+        </div>
+
+        <div class="product-detail">
+          <span>Advance</span>
+          <strong id="detail-advance">Installment plan ke mutabiq</strong>
+        </div>
+
+        <div class="product-profit">
+          Your Profit: <span id="detail-profit">Calculating...</span>
+        </div>
+
+        <p id="detail-message"></p>
+      </div>
+    </section>
+
+    <div id="details-error" hidden>
+      Product details load nahi ho sake. Products page par wapas jayein.
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+  <script src="../../js/supabase-config.js"></script>
+  <script src="product-profit.js"></script>
+  <script src="product-details.js"></script>
+</body>
+</html>

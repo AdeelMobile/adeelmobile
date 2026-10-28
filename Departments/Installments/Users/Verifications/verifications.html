@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Adeel Mobile - Verifications</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../../../../css/theme.css">
+  <link rel="stylesheet" href="../../../../css/layout.css">
+  <link rel="stylesheet" href="verifications.css">
+</head>
+<body>
+  <main id="page-content" class="v-page">
+    
+    <header class="v-header">
+      <h2>Verifications Management</h2>
+      <div class="v-icons">👤 🔔</div>
+    </header>
+
+    <!-- Summary Cards -->
+    <section class="v-summary">
+      <div class="v-card" onclick="filterByStatus('pending', this)">
+        <div class="v-icon-bg pending-bg">⏳</div>
+        <div class="v-label">Pending</div>
+        <div class="v-value" id="countPending">0</div>
+      </div>
+
+      <div class="v-card" onclick="filterByStatus('approved', this)">
+        <div class="v-icon-bg approved-bg">✔️</div>
+        <div class="v-label">Approved</div>
+        <div class="v-value" id="countApproved">0</div>
+      </div>
+
+      <div class="v-card" onclick="filterByStatus('rejected', this)">
+        <div class="v-icon-bg rejected-bg">❌</div>
+        <div class="v-label">Rejected</div>
+        <div class="v-value" id="countRejected">0</div>
+      </div>
+    </section>
+
+    <!-- Search Bar -->
+    <div class="v-search-wrap">
+      <span class="v-search-icon">🔍</span>
+      <input type="text" id="searchInput" class="v-search-input" placeholder="Search customer, product, or agent...">
+    </div>
+
+    <!-- Verifications List -->
+    <section id="verificationList" class="v-list">
+      <p style="text-align:center; color:#999;">Loading forms...</p>
+    </section>
+
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+  <script src="../../../../js/supabase-config.js"></script>
+  <script src="../../../../js/auth.js"></script>
+  <script src="../../../../js/sidebar.js" data-root="../../../../" data-active="inst-users"></script>
+  
+  <script src="verifications.js"></script>
+</body>
+</html>

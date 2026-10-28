@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>User Sales Reports</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../../../css/theme.css">
+<link rel="stylesheet" href="../../../../css/layout.css">
+<link rel="stylesheet" href="user-sales-reports.css">
+</head>
+<body>
+
+<main id="page-content">
+  <a class="sr-back" id="backLink" href="../users.html">⬅️ Back</a>
+  <h1 class="sr-title">📊 User Sales Report</h1>
+  <div class="sr-user" id="srUser"></div>
+
+  <div id="srMsg" class="sr-empty">⏳ Loading...</div>
+
+  <div id="srBox" hidden>
+    <div class="sr-dates">
+      <div>
+        <label class="sr-lbl" for="dFrom">📅 From</label>
+        <input class="sr-input" id="dFrom" type="date">
+      </div>
+      <div>
+        <label class="sr-lbl" for="dTo">📅 To</label>
+        <input class="sr-input" id="dTo" type="date">
+      </div>
+    </div>
+    <button class="sr-clear" id="clearBtn" type="button">🔄 Clear Dates</button>
+
+    <div class="sr-stats">
+      <div class="sr-stat"><span>🛒 Total Sales</span><b id="sumSales">Rs 0</b></div>
+      <div class="sr-stat"><span>💰 Total Incentive</span><b id="sumInc">Rs 0</b></div>
+      <div class="sr-stat"><span>✅ Paid</span><b id="sumPaid">Rs 0</b></div>
+      <div class="sr-stat"><span>⏳ Unpaid</span><b id="sumUnpaid">Rs 0</b></div>
+    </div>
+
+    <div id="srList"></div>
+  </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script src="../../../../js/supabase-config.js"></script>
+<script src="../../../../js/auth.js"></script>
+<script src="../../../../js/sidebar.js" data-root="../../../../" data-active="inst-users"></script>
+<script src="user-sales-reports.js"></script>
+</body>
+</html>

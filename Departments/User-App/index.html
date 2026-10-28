@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4f4f4">
+  <title>User Dashboard | Adeel Mobile</title>
+
+  <link rel="stylesheet" href="user-app.css">
+
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+  <style>
+    .app-header {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 12px;
+    }
+
+    .header-top-row {
+      display: grid;
+      grid-template-columns: 39px minmax(0, 1.3fr) minmax(0, 0.9fr);
+      align-items: center;
+      gap: 8px;
+      width: 100%;
+    }
+
+    .header-user-info {
+      display: flex;
+      min-width: 0;
+      flex-direction: column;
+      gap: 6px;
+      font-family: Roboto, sans-serif;
+      line-height: 1.3;
+    }
+
+    .header-user-info > div {
+      display: flex;
+      min-width: 0;
+      flex-wrap: wrap;
+      align-items: baseline;
+      column-gap: 4px;
+      row-gap: 1px;
+    }
+
+    .header-info-label {
+      flex-shrink: 0;
+      color: #666;
+      font-size: 11px;
+      font-weight: 500;
+    }
+
+    .header-user-info strong {
+      min-width: 0;
+      color: #222;
+      font-size: 13px;
+      font-weight: 700;
+      overflow-wrap: anywhere;
+    }
+
+    #header-user-name {
+      font-size: 15px;
+      font-weight: 900;
+    }
+
+    #customer-count,
+    #referral-code {
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .header-logo {
+      display: flex;
+      min-width: 0;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      perspective: 800px;
+    }
+
+    .header-logo img {
+      display: block;
+      width: 100%;
+      height: auto;
+      max-width: 195px;
+      max-height: 85px;
+      object-fit: contain;
+      object-position: center;
+      transform-origin: center;
+      backface-visibility: visible;
+      animation: logoRotate 4s linear infinite;
+      will-change: transform;
+    }
+
+    @keyframes logoRotate {
+      from { transform: rotateY(0deg); }
+      to { transform: rotateY(360deg); }
+    }
+
+    .header-action-buttons {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      width: 100%;
+    }
+
+    .header-action-button {
+      display: flex;
+      min-width: 0;
+      min-height: 68px;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      padding: 9px 4px;
+      color: #222;
+      background: #e9e9e9;
+      border: 1px solid #dedede;
+      border-radius: 9px;
+      font-family: Roboto, sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1.3;
+      text-align: center;
+      overflow-wrap: anywhere;
+      cursor: pointer;
+    }
+
+    .header-action-button:active {
+      background: #dcdcdc;
+    }
+
+    .header-action-icon {
+      font-size: 23px;
+      line-height: 1;
+    }
+
+    .header-action-button span:last-child {
+      display: block;
+    }
+
+    /* Buttons below Target Progress */
+
+    .dashboard-shortcuts {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      width: 100%;
+      margin-top: 12px;
+    }
+
+    .dashboard-shortcut-button {
+      display: flex;
+      min-width: 0;
+      min-height: 68px;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      padding: 9px 4px;
+      color: #222;
+      background: #e9e9e9;
+      border: 1px solid #dedede;
+      border-radius: 9px;
+      font-family: Roboto, sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1.3;
+      text-align: center;
+      overflow-wrap: anywhere;
+    }
+
+    .dashboard-shortcut-icon {
+      font-size: 23px;
+      line-height: 1;
+    }
+
+    @media (max-width: 360px) {
+      .header-top-row {
+        grid-template-columns: 35px minmax(0, 1.3fr) minmax(0, 0.8fr);
+        gap: 5px;
+      }
+
+      .header-user-info {
+        gap: 5px;
+      }
+
+      .header-info-label {
+        font-size: 10px;
+      }
+
+      .header-user-info strong {
+        font-size: 12px;
+      }
+
+      #header-user-name {
+        font-size: 13px;
+      }
+
+      #customer-count,
+      #referral-code {
+        font-size: 11px;
+      }
+
+      .header-logo img {
+        max-width: 155px;
+        max-height: 58px;
+      }
+
+      .header-action-buttons {
+        gap: 5px;
+      }
+
+      .header-action-button {
+        min-height: 66px;
+        padding: 7px 2px;
+        font-size: 11px;
+        gap: 6px;
+      }
+
+      .header-action-icon {
+        font-size: 21px;
+      }
+
+      .dashboard-shortcuts {
+        gap: 5px;
+      }
+
+      .dashboard-shortcut-button {
+        min-height: 66px;
+        padding: 7px 2px;
+        font-size: 11px;
+        gap: 6px;
+      }
+
+      .dashboard-shortcut-icon {
+        font-size: 21px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .header-logo img {
+        animation: none;
+        transform: none;
+        will-change: auto;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <section id="app-screen" class="app-screen hidden">
+
+    <header class="app-header">
+
+      <div class="header-top-row">
+
+        <button id="menu-toggle"
+          class="secondary-button"
+          type="button"
+          aria-label="Open menu"
+          aria-expanded="false"
+          aria-controls="side-menu">☰</button>
+
+        <div class="header-user-info">
+          <div>
+            <span class="header-info-label">User Name:</span>
+            <strong id="header-user-name">User</strong>
+          </div>
+
+          <div>
+            <span class="header-info-label">Total Customers:</span>
+            <strong id="customer-count">—</strong>
+          </div>
+
+          <div>
+            <span class="header-info-label">Referral Code:</span>
+            <strong id="referral-code">—</strong>
+          </div>
+        </div>
+
+        <div class="header-logo">
+          <img
+            src="https://nqihozwbdrvpyalctwbc.supabase.co/storage/v1/object/public/logos/main-logo.png"
+            alt="Adeel Mobile Logo"
+            loading="eager"
+            onerror="this.style.display='none'">
+        </div>
+
+      </div>
+
+      <div class="header-action-buttons">
+
+        <button id="my-profits-list-button"
+          class="header-action-button"
+          type="button">
+          <span class="header-action-icon" aria-hidden="true">
+            <i class="fa-solid fa-wallet"></i>
+          </span>
+          <span>My Profits</span>
+        </button>
+
+        <button id="open-website-button"
+          class="header-action-button"
+          type="button">
+          <span class="header-action-icon" aria-hidden="true">
+            <i class="fa-solid fa-globe"></i>
+          </span>
+          <span>Open Website</span>
+        </button>
+
+        <button id="share-website-button"
+          class="header-action-button"
+          type="button">
+          <span class="header-action-icon" aria-hidden="true">
+            <i class="fa-solid fa-share-nodes"></i>
+          </span>
+          <span>Share Website</span>
+        </button>
+
+      </div>
+
+    </header>
+
+    <div id="menu-overlay" class="menu-overlay hidden"></div>
+
+    <aside id="side-menu" class="side-menu" aria-label="User menu">
+      <div class="side-menu-header">
+        <strong id="menu-user-name">User</strong>
+        <button id="menu-close" type="button" class="text-button">Close</button>
+      </div>
+
+      <button type="button"
+        class="side-menu-item active"
+        data-page="home">📊 Overview</button>
+
+      <div class="side-menu-bottom">
+        <button id="logout-button"
+          class="secondary-button"
+          type="button">Logout</button>
+      </div>
+    </aside>
+
+    <main class="page-content">
+      <section class="welcome-card">
+        <p class="muted small">Welcome back</p>
+        <h1 id="user-name">User</h1>
+
+        <div class="welcome-wallet">
+          <span>Wallet Balance</span>
+          <strong id="welcome-wallet-balance">Rs. 0</strong>
+        </div>
+      </section>
+
+      <div id="app-message"
+        class="message"
+        role="status"
+        aria-live="polite"></div>
+
+      <section id="tab-home" class="tab-page">
+        <section class="panel">
+          <h2>📊 Overview Reports</h2>
+
+          <div class="stats-grid">
+            <article class="stat-card">
+              <p>📈 This Month Sale</p>
+              <strong id="monthly-sales">Rs. 0</strong>
+            </article>
+
+            <article class="stat-card">
+              <p>💰 Today Sale</p>
+              <strong id="today-sales">Rs. 0</strong>
+            </article>
+
+            <article class="stat-card">
+              <p>👛 My Wallet Balance</p>
+              <strong id="wallet-balance">Rs. 0</strong>
+            </article>
+
+            <article class="stat-card">
+              <p>⏳ Pending Verifications</p>
+              <strong id="pending-verifications">0</strong>
+            </article>
+
+            <article class="stat-card">
+              <p>❌ Rejected Verifications</p>
+              <strong id="rejected-verifications">0</strong>
+            </article>
+
+            <article class="stat-card">
+              <p>✅ Approved Verifications</p>
+              <strong id="approved-verifications">0</strong>
+            </article>
+          </div>
+        </section>
+
+        <section id="target-progress-panel" class="panel">
+          <div class="panel-heading">
+            <h2>🎯 Target Progress</h2>
+            <strong id="target-percent">0%</strong>
+          </div>
+
+          <div class="progress-track">
+            <div id="target-progress" class="progress-fill"></div>
+          </div>
+
+          <p id="target-caption" class="muted small">
+            Monthly sales progress
+          </p>
+
+          <p class="small">
+            Monthly Target:
+            <strong id="monthly-target">Rs. 0</strong>
+          </p>
+        </section>
+
+        <!-- New Dashboard Buttons -->
+
+        <div class="dashboard-shortcuts">
+
+          <button
+            id="customers-button"
+            class="dashboard-shortcut-button"
+            type="button">
+            <span class="dashboard-shortcut-icon" aria-hidden="true">
+              <i class="fa-solid fa-users"></i>
+            </span>
+            <span>Customers</span>
+          </button>
+
+          <button
+            id="verifications-button"
+            class="dashboard-shortcut-button"
+            type="button">
+            <span class="dashboard-shortcut-icon" aria-hidden="true">
+              <i class="fa-solid fa-shield-halved"></i>
+            </span>
+            <span>Verifications</span>
+          </button>
+
+          <button
+            id="accounts-button"
+            class="dashboard-shortcut-button"
+            type="button">
+            <span class="dashboard-shortcut-icon" aria-hidden="true">
+              <i class="fa-solid fa-book-open"></i>
+            </span>
+            <span>Accounts</span>
+          </button>
+
+        </div>
+
+      </section>
+    </main>
+  </section>
+
+  <div id="loading-screen" style="padding:24px;text-align:center;">
+    Loading your account...
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+  <script src="../../js/supabase-config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js"></script>
+  <script src="../Website-Preview/js/poster.js"></script>
+  <script src="user-app.js"></script>
+
+  <script>
+    (function () {
+      const menu = document.getElementById("side-menu");
+      const overlay = document.getElementById("menu-overlay");
+      const closeButton = document.getElementById("menu-close");
+      const toggle = document.getElementById("menu-toggle");
+
+      function closeMenu() {
+        if (menu) menu.classList.remove("open", "active");
+
+        if (overlay) {
+          overlay.classList.add("hidden");
+          overlay.classList.remove("show");
+          overlay.style.display = "none";
+        }
+
+        if (toggle) {
+          toggle.setAttribute("aria-expanded", "false");
+        }
+      }
+
+      closeButton?.addEventListener("click", closeMenu);
+    })();
+  </script>
+</body>
+</html>

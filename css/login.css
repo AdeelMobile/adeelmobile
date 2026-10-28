@@ -1,0 +1,205 @@
+/* Adeel Mobile - Login Design */
+
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  box-sizing: border-box;
+  background: var(--surface);
+}
+
+.login-card {
+  width: 100%;
+  max-width: 400px;
+  box-sizing: border-box;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 28px 24px;
+}
+
+.login-head {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+/* Logo Size + Smooth Fade and Zoom Animation */
+
+.login-head .brand-logo {
+  display: block;
+  width: min(100%, 320px);
+  max-height: 145px;
+  height: auto;
+  object-fit: contain;
+  object-position: center;
+  margin: 0 auto 18px;
+
+  opacity: 0;
+  transform: scale(0.92);
+  animation: logoFadeZoom 1s ease-out forwards;
+}
+
+@keyframes logoFadeZoom {
+  from {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Login Heading */
+
+.login-head h1 {
+  margin-bottom: 4px;
+}
+
+.login-head p,
+.login-footer {
+  color: var(--text-soft);
+}
+
+.login-footer {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 13px;
+}
+
+/* Input Fields */
+
+.field {
+  margin-bottom: 16px;
+}
+
+.field label {
+  display: block;
+  margin-bottom: 6px;
+}
+
+.pass-wrap {
+  position: relative;
+}
+
+.pass-wrap input {
+  padding-right: 68px;
+}
+
+/* Show Password Button */
+
+.eye {
+  position: absolute;
+  right: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  min-width: 52px;
+  height: 36px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+  font-size: 14px;
+}
+
+/* Login Button */
+
+.login-card .btn {
+  width: 100%;
+  margin-top: 4px;
+}
+
+/* Forgot Password - Premium Outlined Button */
+
+.forgot-password {
+  text-align: center;
+  margin: 18px 0 0;
+}
+
+.forgot-password a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  padding: 0 20px;
+  box-sizing: border-box;
+
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--text);
+
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.forgot-password a:hover {
+  border-color: var(--text-soft);
+  transform: translateY(-1px);
+}
+
+.forgot-password a:active {
+  transform: scale(0.98);
+}
+
+.forgot-password a:focus-visible {
+  outline: 2px solid var(--text);
+  outline-offset: 3px;
+}
+
+/* Messages */
+
+.msg {
+  display: none;
+  margin-bottom: 16px;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  font-size: 14px;
+}
+
+.msg.show {
+  display: block;
+}
+
+/* Small Screen Adjustment */
+
+@media (max-width: 360px) {
+  .login-page {
+    padding: 12px;
+  }
+
+  .login-card {
+    padding: 24px 18px;
+  }
+
+  .login-head .brand-logo {
+    width: min(100%, 260px);
+    max-height: 115px;
+  }
+}
+
+/* Respect Reduced Motion Settings */
+
+@media (prefers-reduced-motion: reduce) {
+  .login-head .brand-logo {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+
+  .forgot-password a {
+    transition: none;
+  }
+}

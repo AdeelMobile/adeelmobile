@@ -1,0 +1,16 @@
+/* User Login & Access */
+.lg-back { display: inline-block; font-size: 16px; color: #111; text-decoration: none; margin-bottom: 10px; }
+.lg-title { font-size: 22px; font-weight: 700; color: #111; margin: 0 0 6px; }
+.lg-sub { font-size: 18px; font-weight: 700; color: #111; margin: 0 0 8px; }
+.lg-user { font-size: 16px; color: #555; margin-bottom: 12px; }
+.lg-card { background: #fff; border: 1px solid #ddd; border-radius: 12px; padding: 14px; margin-bottom: 12px; }
+.lg-lbl { display: block; font-size: 15px; color: #555; margin: 10px 0 6px; }
+.lg-input { width: 100%; box-sizing: border-box; font-family: Roboto, sans-serif; font-size: 16px; padding: 10px; border: 1px solid #ccc; border-radius: 8px; background: #fff; color: #111; }
+.lg-main-btn { width: 100%; margin-top: 14px; font-family: Roboto, sans-serif; font-size: 16px; font-weight: 500; padding: 12px; border: 0; border-radius: 8px; background: #111; color: #fff; cursor: pointer; }
+.lg-main-btn:disabled { background: #888; }
+.lg-btn { width: 100%; margin-top: 12px; font-family: Roboto, sans-serif; font-size: 16px; padding: 12px; border: 1px solid #ccc; border-radius: 8px; background: #fff; color: #111; cursor: pointer; }
+.lg-btn:disabled { color: #888; }
+.lg-line { font-size: 16px; color: #333; margin-top: 4px; }
+.lg-note { font-size: 15px; color: #555; margin-top: 4px; }
+.lg-empty { background: #f2f2f2; color: #333; border-radius: 10px; padding: 16px; font-size: 16px; text-align: center; }
+.lg-toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); background: #111; color: #fff; font-size: 16px; padding: 12px 18px; border-radius: 10px; z-index: 9999; max-width: 90%; text-align: center; }

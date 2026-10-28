@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Adeel Mobile - Create New User</title>
+  
+  <!-- Roboto aur Inter Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../../../../css/theme.css">
+  <link rel="stylesheet" href="../../../../css/layout.css">
+  <link rel="stylesheet" href="create-new-user.css">
+  
+  <style>
+    /* Brand Section Styling (Fonts matched with form) */
+    .brand-incentive-box {
+      margin-top: 24px;
+      border-top: 1px solid #eee;
+      padding-top: 20px;
+    }
+    .brand-incentive-title {
+      font-family: 'Roboto', sans-serif;
+      font-weight: 500;
+      font-size: 16px;
+      color: #111;
+      margin-bottom: 6px;
+    }
+    .brand-incentive-sub {
+      font-family: 'Roboto', sans-serif;
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 16px;
+      font-weight: 400;
+    }
+    .brand-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      padding: 12px 16px;
+      background: #f8f9fa;
+      border-radius: 10px;
+      border: 1px solid #eee;
+    }
+    .brand-row label {
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      font-size: 15px;
+      font-weight: 500;
+      color: #333;
+    }
+    .brand-row input {
+      width: 90px !important;
+      margin: 0 !important;
+      padding: 10px !important;
+      text-align: center;
+      font-family: 'Roboto', sans-serif;
+      font-size: 15px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      background: #fff;
+      outline: none;
+    }
+    .brand-row input:focus {
+      border-color: #2563eb;
+    }
+  </style>
+</head>
+<body>
+  <main id="page-content" class="cu-page">
+    <h2 class="cu-title">Create New User</h2>
+
+    <section class="cu-box">
+      <form id="userForm">
+        <label class="cu-label">Name *
+          <input class="cu-input" id="fName" type="text" required maxlength="100">
+        </label>
+
+        <label class="cu-label">Father Name *
+          <input class="cu-input" id="fFather" type="text" required maxlength="100">
+        </label>
+
+        <label class="cu-label">WhatsApp Number *
+          <input class="cu-input" id="fWhatsapp" type="tel" inputmode="tel" required>
+        </label>
+
+        <label class="cu-label">Address
+          <input class="cu-input" id="fAddress" type="text" maxlength="250">
+        </label>
+
+        <label class="cu-label">Monthly Sale Target (Rs)
+          <input class="cu-input" id="fTarget" type="number" min="0" step="1" value="0">
+        </label>
+
+        <label class="cu-label">Username *
+          <input class="cu-input" id="fUsername" type="text" required minlength="3" maxlength="30" pattern="[A-Za-z0-9._]+">
+        </label>
+
+        <label class="cu-label">Password *
+          <input class="cu-input" id="fPassword" type="password" required minlength="6">
+        </label>
+
+        <!-- Brand Wise Profit Settings -->
+        <div class="brand-incentive-box">
+            <div class="brand-incentive-title">Brand-Wise Profit Settings (%)</div>
+            <div class="brand-incentive-sub">Har brand ke sath apna incentive % likhein.</div>
+            <div id="brandListContainer">
+                <p style="font-size: 14px; color: #999;">Loading brands...</p>
+            </div>
+        </div>
+
+        <button class="cu-save" id="saveBtn" type="submit" style="margin-top: 24px;">Create User</button>
+      </form>
+
+      <!-- Result Box (Link Show Karne Ke Liye) -->
+      <div id="resultBox" hidden style="margin-top:18px;padding:14px;background:#E8F5E9;border:1px solid #C8E6C9;border-radius:10px;">
+        <h3 style="margin-top:0; color: #2E7D32;">✅ User Created Successfully</h3>
+        <p style="font-size:14px; color: #333;">Yeh Login Link user ko bhejein taake wo login kar sake:</p>
+        
+        <div style="display:flex; gap:10px; align-items:center; margin-top:10px;">
+            <input type="text" id="loginLinkInput" readonly style="flex:1; padding:10px; border:1px solid #ccc; border-radius:8px; font-size:14px; background:#fff;">
+            <button class="cu-save" id="copyLinkBtn" type="button" style="width:auto; padding: 10px 15px; margin:0; background:#2E7D32;">Copy</button>
+        </div>
+      </div>
+
+      <p id="formMessage" role="status" style="margin-top:12px;"></p>
+
+      <a class="cu-link" href="../users.html">← Back to Users List</a>
+    </section>
+  </main>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+  <script src="../../../../js/supabase-config.js"></script>
+  <script src="../../../../js/auth.js"></script>
+  <script src="../../../../js/sidebar.js" data-root="../../../../" data-active="inst-users"></script>
+  <script src="create-new-user.js"></script>
+</body>
+</html>

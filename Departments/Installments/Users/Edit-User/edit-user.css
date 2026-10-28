@@ -1,0 +1,10 @@
+.cu-page { padding: 16px; max-width: 700px; font-family: 'Roboto', sans-serif; font-size: 16px; color: #111; margin: auto; }
+.cu-title { font-size: 24px; font-weight: 700; margin: 4px 0 14px; }
+
+.cu-box { border: 1px solid #e2e2e2; border-radius: 12px; padding: 14px; background: #fff; }
+.cu-label { display: block; font-size: 15px; font-weight: 500; color: #333; margin-bottom: 12px; }
+.cu-input { display: block; width: 100%; margin-top: 6px; font-family: inherit; font-size: 16px; padding: 12px 14px; border: 1px solid #ccc; border-radius: 10px; background: #f7f7f7; color: #111; box-sizing: border-box;}
+.cu-input:focus { outline: 2px solid #111; background: #fff; }
+.cu-save { width: 100%; font-family: inherit; font-size: 16px; font-weight: 700; padding: 14px; border: 0; border-radius: 10px; background: #111; color: #fff; cursor: pointer; margin-top: 10px; }
+.cu-save:disabled { background: #999; cursor: not-allowed; }
+.cu-link { display: block; text-align: center; margin-top: 14px; font-size: 16px; color: #111; text-decoration: none; }

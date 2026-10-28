@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Adeel Mobile - Edit User</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  
+  <!-- CSS Paths -->
+  <link rel="stylesheet" href="../../../../css/theme.css">
+  <link rel="stylesheet" href="../../../../css/layout.css">
+  <link rel="stylesheet" href="edit-user.css">
+  
+  <style>
+    /* Brand Section ki styling */
+    .brand-incentive-box { margin-top: 20px; border-top: 1px solid #ddd; padding-top: 15px; }
+    .brand-incentive-title { font-weight: 700; margin-bottom: 10px; font-size: 15px; color: #333; }
+    .brand-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; padding: 8px; background: #f9f9f9; border-radius: 6px; }
+    .brand-row label { margin: 0; font-size: 14px; }
+    .brand-row input { width: 80px !important; margin: 0 !important; padding: 6px !important; text-align: center; border: 1px solid #ccc; border-radius: 4px; }
+  </style>
+</head>
+<body>
+  <main id="page-content" class="cu-page">
+    <h2 class="cu-title">Edit User</h2>
+
+    <section class="cu-box">
+      <form id="userForm">
+        <input type="hidden" id="editUserId">
+
+        <label class="cu-label">Name *
+          <input class="cu-input" id="fName" type="text" required>
+        </label>
+
+        <label class="cu-label">Father Name *
+          <input class="cu-input" id="fFather" type="text" required>
+        </label>
+
+        <label class="cu-label">WhatsApp Number *
+          <input class="cu-input" id="fWhatsapp" type="tel" required>
+        </label>
+
+        <label class="cu-label">Address
+          <input class="cu-input" id="fAddress" type="text">
+        </label>
+
+        <label class="cu-label">Monthly Sale Target (Rs)
+          <input class="cu-input" id="fTarget" type="number" value="0">
+        </label>
+
+        <!-- Username & Password Section -->
+        <div style="background:#fdf5e6; padding:12px; border-radius:8px; margin-bottom:15px; border: 1px solid #f4d03f;">
+            <p style="margin:0 0 10px 0; font-size:13px; color:#a0522d; font-weight:bold;">Login Details (Change if needed)</p>
+            <label class="cu-label">Username
+              <input class="cu-input" id="fUsername" type="text" required minlength="3">
+            </label>
+            <label class="cu-label" style="margin-bottom: 0;">New Password (Leave blank to keep same)
+              <input class="cu-input" id="fPassword" type="password" minlength="6" placeholder="Enter new password">
+            </label>
+        </div>
+
+        <!-- Brand Wise Section -->
+        <div class="brand-incentive-box">
+            <div class="brand-incentive-title">Brand-Wise Profit Settings (%)</div>
+            <p style="font-size: 12px; color: #666; margin-bottom: 10px;">Har brand ke sath apna incentive % likhein.</p>
+            <div id="brandListContainer">
+                <p style="font-size: 12px; color: #999;">Loading brands...</p>
+            </div>
+        </div>
+
+        <button class="cu-save" id="saveBtn" type="submit" style="margin-top: 20px;">Update User</button>
+      </form>
+      
+      <p id="formMessage" style="margin-top:12px;"></p>
+      <a class="cu-link" href="../All-Users-List/all-users.html">← Back to Users List</a>
+    </section>
+  </main>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+  <script src="../../../../js/supabase-config.js"></script>
+  <script src="../../../../js/auth.js"></script>
+  <script src="../../../../js/sidebar.js" data-root="../../../../" data-active="inst-users"></script>
+  <script src="edit-user.js"></script>
+</body>
+</html>

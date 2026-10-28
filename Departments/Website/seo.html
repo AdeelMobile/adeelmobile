@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SEO & Sharing - Adeel Mobile</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../../css/theme.css">
+  <link rel="stylesheet" href="../../css/layout.css">
+  
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      visibility: hidden;
+      font-family: 'Roboto', sans-serif;
+      background-color: #F8F9FA;
+      color: #111;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .topbar, .app-header { display: none !important; }
+
+    /* Top Bar */
+    .custom-top-bar {
+      position: fixed; top: 0; left: 0; right: 0;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 12px 16px; background: #fff;
+      border-bottom: 1px solid #E5E7EB; gap: 10px; z-index: 100;
+    }
+
+    .left-section { display: flex; align-items: center; gap: 10px; flex: 1; min-width: 0; }
+
+    .back-btn {
+        display: flex; align-items: center; justify-content: center;
+        width: 40px; height: 40px;
+        background: #fff; border: 1px solid #E5E7EB; 
+        border-radius: 10px; cursor: pointer; color: #111; flex-shrink: 0;
+        text-decoration: none; font-size: 20px;
+    }
+    .back-btn:hover { background: #F3F4F6; }
+
+    .title-area {
+      font-family: 'Inter', sans-serif; 
+      font-size: 20px;
+      font-weight: 700; 
+      color: #111; 
+      white-space: nowrap;
+      overflow: hidden; 
+      text-overflow: ellipsis;
+    }
+
+    /* Main Layout */
+    .page { 
+      padding: 85px 16px 40px; 
+      max-width: 720px; margin: auto; min-height: 100vh; 
+    }
+
+    /* Header Box (Grey) */
+    .header-box {
+      background: #E5E7EB;
+      color: #111111;
+      border-radius: 12px;
+      padding: 20px 16px;
+      margin-bottom: 20px;
+    }
+    
+    .header-box .title-row {
+      display: flex; align-items: center; gap: 10px; margin-bottom: 6px;
+    }
+
+    .header-box svg { width: 28px; height: 28px; stroke: #111; }
+    
+    .header-box h1 {
+      font-family: 'Inter', sans-serif;
+      font-size: 24px; font-weight: 700; letter-spacing: -0.5px; color: #111;
+    }
+
+    .header-box p {
+      font-size: 14px; color: #555555; font-weight: 400;
+      margin-left: 38px; 
+    }
+
+    /* 2-Column Grid */
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    /* Card Styling */
+    .web-card {
+      background: #FFFFFF;
+      border: 1px solid #E5E7EB;
+      border-radius: 14px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.2s ease;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    }
+    
+    .web-card:active { transform: scale(0.98); }
+
+    .card-icon {
+      color: #555555;
+      margin-bottom: 16px;
+    }
+    
+    .card-icon svg { width: 24px; height: 24px; stroke-width: 2; }
+
+    .web-card h3 {
+      font-family: 'Inter', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: #111;
+      line-height: 1.3;
+      margin-bottom: 8px;
+    }
+
+    .web-card p {
+      font-size: 13px;
+      color: #6B7280;
+      line-height: 1.4;
+      font-weight: 400;
+    }
+
+    @media (max-width: 359px) {
+      .grid-container { gap: 8px; }
+      .web-card { padding: 12px; }
+      .web-card h3 { font-size: 16px; }
+      .header-box h1 { font-size: 22px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="custom-top-bar">
+    <div class="left-section">
+      <a href="index.html" class="back-btn">←</a>
+      <div class="title-area">Website Management</div>
+    </div>
+  </header>
+
+  <main id="page-content" class="page">
+    
+    <!-- Grey Header -->
+    <div class="header-box">
+      <div class="title-row">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <h1>SEO & Sharing</h1>
+      </div>
+      <p>Optimize website for search engines and social media</p>
+    </div>
+
+    <div class="grid-container">
+      
+      <!-- 1. General SEO Settings -->
+      <a href="#" class="web-card">
+        <div class="card-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        </div>
+        <h3>General SEO</h3>
+        <p>Title, meta, keywords, indexing</p>
+      </a>
+
+      <!-- 2. Website-wise SEO -->
+      <a href="#" class="web-card">
+        <div class="card-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path><circle cx="12" cy="12" r="10"></circle></svg>
+        </div>
+        <h3>Website-wise SEO</h3>
+        <p>Installment & Cash separate SEO</p>
+      </a>
+
+      <!-- 3. Product SEO Settings -->
+      <a href="#" class="web-card">
+        <div class="card-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+        </div>
+        <h3>Product SEO</h3>
+        <p>Product title, meta, URL, alt text</p>
+      </a>
+
+      <!-- 4. Social Media Sharing -->
+      <a href="#" class="web-card">
+        <div class="card-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+        </div>
+        <h3>Social Sharing</h3>
+        <p>Facebook, WhatsApp, Instagram</p>
+      </a>
+
+      <!-- 5. Sharing Image Settings -->
+      <a href="#" class="web-card">
+        <div class="card-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+        </div>
+        <h3>Sharing Images</h3>
+        <p>Default, product, logo preview</p>
+      </a>
+
+      <!-- 6. WhatsApp Sharing -->
+      <a href="#" class="web-card">
+        <div class="card-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+        </div>
+        <h3>WhatsApp Sharing</h3>
+        <p>Message templates, contact link</p>
+      </a>
+
+      <!-- 7. Referral Link Settings -->
+      <a href="#" class="web-card">
+        <div class="card-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
+        </div>
+        <h3>Referral Links</h3>
+        <p>Code support, URL, tracking</p>
+      </a>
+
+      <!-- 8. Search Engine Tools -->
+      <a href="#" class="web-card">
+        <div class="card-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        </div>
+        <h3>SEO Tools</h3>
+        <p>Sitemap, robots, indexing status</p>
+      </a>
+
+      <!-- 9. Social Media Links -->
+      <a href="#" class="web-card">
+        <div class="card-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+        </div>
+        <h3>Social Links</h3>
+        <p>Facebook, IG, TikTok, YouTube</p>
+      </a>
+
+      <!-- 10. SEO Preview -->
+      <a href="#" class="web-card">
+        <div class="card-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+        </div>
+        <h3>Preview</h3>
+        <p>Search, social, mobile previews</p>
+      </a>
+
+      <!-- 11. SEO Performance -->
+      <a href="#" class="web-card">
+        <div class="card-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+        </div>
+        <h3>SEO Performance</h3>
+        <p>Indexed pages, clicks, impressions</p>
+      </a>
+
+      <!-- 12. Save & Publish -->
+      <a href="#" class="web-card">
+        <div class="card-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+        </div>
+        <h3>Save & Publish</h3>
+        <p>Save, publish, restore, validation</p>
+      </a>
+
+    </div>
+  </main>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+  <script src="../../js/supabase-config.js"></script>
+  <script src="../../js/auth.js"></script>
+
+  <script>
+    (async function () {
+      try {
+        if (typeof db === 'undefined' || !db?.auth) {
+          window.location.replace('../../index.html');
+          return;
+        }
+        if (typeof requireLogin !== 'function') {
+          window.location.replace('../../index.html');
+          return;
+        }
+        const session = await requireLogin();
+        if (!session) return;
+
+        document.body.style.visibility = 'visible';
+
+        // Load Sidebar
+        function loadScript(src, attributes = {}) {
+          return new Promise((resolve, reject) => {
+            const script = document.createElement('script');
+            script.src = src;
+            Object.entries(attributes).forEach(([key, value]) => {
+              script.setAttribute(key, value);
+            });
+            script.onload = resolve;
+            script.onerror = () => reject(new Error('Script load failed: ' + src));
+            document.body.appendChild(script);
+          });
+        }
+
+        await loadScript('../../js/sidebar.js', {
+          'data-root': '../../',
+          'data-active': 'website'
+        });
+
+        setTimeout(() => {
+            const oldMenuBtn = document.getElementById('menuBtn');
+            const container = document.getElementById('sidebar-toggle-container');
+            if (oldMenuBtn && container) {
+                container.appendChild(oldMenuBtn);
+            }
+        }, 100);
+
+      } catch (error) {
+        console.error('SEO & Sharing security check failed:', error);
+        window.location.replace('../../index.html');
+      }
+    })();
+  </script>
+</body>
+</html>

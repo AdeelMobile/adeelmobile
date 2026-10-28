@@ -1,10 +1,9 @@
-/* Shared Layout - sidebar + top bar */
+/* Shared Layout - sidebar + top bar (Floating Small Panels) */
 (function () {
   var script = document.currentScript;
   var ROOT = script.getAttribute('data-root') || '';
   var ACTIVE = script.getAttribute('data-active') || '';
 
-  // Naye Icons (SVG) - Grey Black theme
   var ICONS = {
     dashboard: '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>',
     installments: '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2" ry="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg>',
@@ -17,7 +16,7 @@
   var MENU = [
     { key: 'dashboard', label: 'Dashboard', href: 'Departments/Main-Dashboard/main-dashboard.html', icon: 'dashboard' },
     {
-      key: 'installments', label: 'Installment', href: null, icon: 'installments',
+      key: 'installments', label: 'Installments', href: null, icon: 'installments',
       children: [
         { key: 'inst-plans', label: 'Plans & Rules', href: 'Departments/Installments/Installment-Plans-Rules/installment-plans-rules.html' },
         { key: 'inst-customers', label: 'Customers', href: null },
@@ -39,7 +38,9 @@
         { key: 'inst-reports', label: 'Reports', href: null }
       ]
     },
-    { key: 'website', label: 'Website', href: null, icon: 'website' },
+    // Website ab seedha naye page par jayega
+    { key: 'website', label: 'Website', href: 'Departments/Website/index.html', icon: 'website' },
+    
     { key: 'social-media', label: 'Social Media', href: null, icon: 'social-media' },
     { key: 'database', label: 'Database', href: 'Departments/Products-Database/index.html', icon: 'database' }
   ];
@@ -52,63 +53,38 @@
     setTimeout(function () { t.remove(); }, 2000);
   }
 
-  function linkHtml(m, extraCls) {
-    var cls = 'sb-item' + (extraCls ? ' ' + extraCls : '') + (m.key === ACTIVE ? ' active' : '');
-    var href = m.href ? ROOT + m.href : '#';
-    var soon = m.href ? ' target="_blank"' : ' data-soon="1"';
+  function renderMainItem(m) {
     var iconSvg = ICONS[m.icon || 'default'];
+    var hasChildren = !!m.children;
+    var arrow = hasChildren ? '<span class="sb-arrow">›</span>' : '<span class="sb-arrow empty"></span>';
+    var href = m.href ? ROOT + m.href : 'javascript:void(0)';
+    var target = m.href ? 'target="_blank"' : '';
 
-    return '<a class="' + cls + '" href="' + href + '"' + soon + '>' +
-      '<span class="sb-item-left">' +
+    return '<div class="sb-main-item" data-id="' + m.key + '">' +
+      '<a class="sb-link" href="' + href + '" ' + target + '>' +
         '<span class="sb-icon">' + iconSvg + '</span>' +
-        '<span>' + m.label + '</span>' +
-      '</span>' +
-      '<span class="sb-arrow">▾</span>' +
-    '</a>';
+        '<span class="sb-label">' + m.label + '</span>' +
+        arrow +
+      '</a>' +
+    '</div>';
   }
 
-  function itemHtml(m) {
-    if (m.children) {
-      var hasActiveSub = m.key === ACTIVE || m.children.some(function (c) {
-        return c.key === ACTIVE || (c.children && c.children.some(function(sc){ return sc.key === ACTIVE; }));
-      });
+  function renderSubItem(item) {
+    var hasChildren = !!item.children;
+    var arrow = hasChildren ? '<span class="sb-arrow">›</span>' : '<span class="sb-arrow empty"></span>';
+    var href = item.href ? ROOT + item.href : 'javascript:void(0)';
+    var target = item.href ? 'target="_blank"' : '';
 
-      var kids = m.children.map(function (c) {
-         if (c.children) {
-            var subKids = c.children.map(function(sc){ return linkHtml(sc); }).join('');
-            var hasActiveSubSub = c.key === ACTIVE || c.children.some(function(sc){ return sc.key === ACTIVE; });
-            
-            return '<div class="sb-group-sub' + (hasActiveSubSub ? ' open' : '') + '">' +
-              '<a class="sb-item sb-parent" href="#" data-parent-sub="1">' +
-                '<span>' + c.label + '</span><span class="sb-arrow">▾</span>' +
-              '</a>' +
-              '<div class="sb-sub-sub">' + subKids + '</div>' +
-            '</div>';
-         } else {
-            return linkHtml(c);
-         }
-      }).join('');
-
-      var iconSvg = ICONS[m.icon || 'default'];
-
-      return '<div class="sb-group' + (hasActiveSub ? ' open' : '') + '">' +
-        '<a class="sb-item sb-parent' + (hasActiveSub ? ' has-active' : '') + '" href="#" data-parent="1">' +
-          '<span class="sb-item-left">' +
-            '<span class="sb-icon">' + iconSvg + '</span>' +
-            '<span>' + m.label + '</span>' +
-          '</span>' +
-          '<span class="sb-arrow">▾</span>' +
-        '</a>' +
-        '<div class="sb-sub">' + kids + '</div>' +
-      '</div>';
-    }
-
-    return linkHtml(m);
+    return '<div class="sb-panel-item" data-id="' + item.key + '">' +
+      '<a class="sb-panel-link" href="' + href + '" ' + target + '>' +
+        '<span>' + item.label + '</span>' +
+        arrow +
+      '</a>' +
+    '</div>';
   }
 
   function build() {
     var content = document.getElementById('page-content');
-    var items = MENU.map(itemHtml).join('');
 
     var shell = document.createElement('div');
     shell.className = 'app-shell';
@@ -117,130 +93,127 @@
     style.textContent = `
       :root {
         --sb-bg: #FFFFFF;
-        --sb-border: #E1E5EB;
-        --sb-text: #000000;
-        --sb-text-light: #555555; 
-        --sb-active-bg: #F0F0F0; 
-        --sb-active-text: #000000; 
-        --sb-hover-bg: #F8F9FA;
-        --sb-radius: 10px;
+        --sb-border: #E5E7EB;
+        --sb-text: #202020;
+        --sb-hover-bg: #F5F5F5;
+        --sb-radius: 8px;
       }
 
       .app-shell { font-family: 'Roboto', sans-serif; }
 
       .sb-overlay {
-        position: fixed; inset: 0; background: rgba(0,0,0,0.5);
+        position: fixed; inset: 0; background: rgba(0,0,0,0.3);
         opacity: 0; visibility: hidden; z-index: 999; transition: 0.3s;
       }
       .sb-overlay.show { opacity: 1; visibility: visible; }
 
       .sidebar {
-        position: fixed; top: 0; left: 0; bottom: 0; width: 100%; 
-        background: var(--sb-bg); border-right: 1px solid var(--sb-border);
-        z-index: 1000; overflow-y: auto; padding: 20px 12px;
+        position: fixed; top: 0; left: 0; bottom: 0; 
+        width: 70%; 
+        max-width: 280px;
+        background: #FFFFFF;
+        z-index: 1000; display: flex; flex-direction: column;
         transform: translateX(-100%); transition: transform 0.3s ease;
-        box-shadow: 2px 0 8px rgba(0,0,0,0.02);
+        box-shadow: 2px 0 12px rgba(0,0,0,0.1);
       }
       .sidebar.open { transform: translateX(0); }
 
-      .sb-brand {
-        font-size: 22px; font-weight: 800; color: #000;
-        margin-bottom: 24px; padding-left: 12px;
+      .sb-header {
+        padding: 20px 16px; border-bottom: 1px solid var(--sb-border);
+        font-size: 20px; font-weight: 700; color: #202020;
         font-family: 'Inter', sans-serif;
+        background: #FFFFFF;
       }
 
-      .sb-nav { display: flex; flex-direction: column; gap: 4px; }
-
-      .sb-item {
-        display: flex; justify-content: space-between; align-items: center;
-        padding: 14px 16px; border-radius: var(--sb-radius);
-        color: var(--sb-text); text-decoration: none; 
-        font-size: 17px; 
-        font-weight: 500; 
-        transition: background 0.2s, color 0.2s; cursor: pointer;
-      }
-      .sb-item:hover { background: var(--sb-hover-bg); color: #000; }
-
-      .sb-item-left { display: flex; align-items: center; gap: 12px; }
-      .sb-icon { display: flex; align-items: center; justify-content: center; color: #555555; }
-      .sb-icon svg { width: 22px; height: 22px; stroke-width: 2; }
-
-      .sb-item.sb-parent { background: var(--sb-hover-bg); font-weight: 500; }
-      .sb-item.sb-parent.has-active { color: #000000; }
-
-      .sb-item.active {
-        background: var(--sb-active-bg) !important; 
-        color: var(--sb-active-text) !important; 
-        font-weight: 600; 
+      .sb-main-menu {
+        flex: 1; overflow-y: auto; padding: 8px;
+        display: flex; flex-direction: column; gap: 2px;
+        background: #FFFFFF;
       }
 
+      .sb-main-item .sb-link {
+        display: flex; align-items: center; gap: 12px;
+        padding: 14px 12px; 
+        border-radius: var(--sb-radius);
+        text-decoration: none; color: var(--sb-text);
+        font-size: 15px; 
+        font-weight: 500; transition: background 0.2s;
+      }
+      .sb-main-item .sb-link:hover, .sb-main-item .sb-link.active-parent {
+        background: var(--sb-hover-bg);
+      }
+      .sb-main-item .sb-icon { display: flex; color: #555555; }
+      .sb-main-item .sb-icon svg { width: 22px; height: 22px; }
+      .sb-main-item .sb-label { flex: 1; }
+      
       .sb-arrow {
-        font-size: 18px; 
-        color: var(--sb-text);
-        transition: transform 0.3s ease;
+        font-size: 18px; color: #888; font-weight: bold;
+        display: flex; align-items: center;
       }
-      .sb-group.open > .sb-item .sb-arrow,
-      .sb-group-sub.open > .sb-item .sb-arrow {
-        transform: rotate(180deg);
+      .sb-arrow.empty { visibility: hidden; }
+
+      .sub-panel {
+        position: absolute; 
+        top: 60px; 
+        left: 10px; 
+        right: 10px; 
+        width: auto; 
+        max-height: 70vh; 
+        background: #FFFFFF;
+        z-index: 1001;
+        border-radius: 12px;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+        border: 1px solid var(--sb-border);
+        overflow-y: auto;
+        transform: scale(0.95);
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.2s ease;
+      }
+      .sub-panel.open { 
+        transform: scale(1);
+        opacity: 1;
+        visibility: visible;
       }
 
-      /* Sub-menu Containers */
-      .sb-sub, .sb-sub-sub {
-        display: none; flex-direction: column;
-        margin-top: 4px; 
-        padding-left: 0; 
-        margin-left: 0;
-        list-style: none !important;
-      }
-      .sb-group.open > .sb-sub,
-      .sb-group-sub.open > .sb-sub-sub {
-        display: flex;
+      .sub-panel.level-3 {
+        top: 80px; 
+        z-index: 1002;
+        background: #FFFFFF;
       }
 
-      /* Sub-item Card Styling (Grey Background & No Dots) */
-      .sb-sub .sb-item, .sb-sub-sub .sb-item {
-        font-size: 16px; 
-        font-weight: 400; 
+      .sb-panel-header {
         padding: 12px 16px; 
-        color: var(--sb-text);
-        background-color: #F8F9FA; /* Default Grey Background */
-        margin-bottom: 6px; 
-        border-radius: 8px; 
-        list-style-type: none !important; 
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        border: 1px solid #E1E5EB;
+        border-bottom: 1px solid var(--sb-border);
+        font-size: 16px; 
+        font-weight: 600; color: #202020;
+        display: flex; align-items: center; gap: 8px;
+        background: #F9FAFB;
+        border-top-left-radius: 12px;
+        border-top-right-radius: 12px;
+        position: sticky; top: 0; z-index: 2;
       }
-      
-      /* Open State Color (Dark Grey) */
-      .sb-group.open > .sb-item.sb-parent,
-      .sb-group-sub.open > .sb-item.sb-parent {
-        background-color: #E5E7EB !important; /* Open Color */
-        font-weight: 600;
+      .sb-back-btn {
+        cursor: pointer; font-size: 20px; color: #333;
+        font-weight: bold; padding: 0 4px;
+        display: flex; align-items: center; justify-content: center;
       }
 
-      /* Sub-item open state */
-      .sb-sub .sb-item.open,
-      .sb-sub-sub .sb-item.open {
-         background-color: #E5E7EB !important;
-      }
-      
-      .sb-sub .sb-item:hover, .sb-sub-sub .sb-item:hover {
-        color: #000;
-        background: #F0F0F0; 
-      }
-      
-      .sb-sub .sb-item.active, .sb-sub-sub .sb-item.active {
-         background: var(--sb-active-bg) !important;
-         color: var(--sb-active-text) !important;
-         font-weight: 600;
+      .sb-panel-content {
+        padding: 8px;
+        display: flex; flex-direction: column; gap: 4px;
       }
 
-      .sidebar::-webkit-scrollbar { width: 6px; }
-      .sidebar::-webkit-scrollbar-track { background: transparent; }
-      .sidebar::-webkit-scrollbar-thumb {
-        background: var(--sb-border); border-radius: 4px;
+      .sb-panel-item .sb-panel-link {
+        display: flex; align-items: center; justify-content: space-between;
+        padding: 12px 12px; 
+        border-radius: 8px;
+        text-decoration: none; color: var(--sb-text);
+        font-size: 15px; 
+        font-weight: 500; transition: background 0.2s;
+      }
+      .sb-panel-item .sb-panel-link:hover, .sb-panel-item .sb-panel-link.active-parent {
+        background: var(--sb-hover-bg);
       }
 
       .lay-toast {
@@ -255,21 +228,30 @@
     oldTopbar.textContent = `.topbar, .app-header { display: none !important; }`;
     document.head.appendChild(oldTopbar);
 
+    var mainMenuHtml = MENU.map(renderMainItem).join('');
+
     shell.innerHTML =
       '<div class="sb-overlay" id="sbOverlay"></div>' +
+      
       '<aside class="sidebar" id="sidebar">' +
-        '<div class="sb-brand">Adeel Mobile</div>' +
-        '<nav class="sb-nav">' + items + '</nav>' +
+        '<div class="sb-header">Adeel Mobile</div>' +
+        '<nav class="sb-main-menu" id="mainMenu">' + mainMenuHtml + '</nav>' +
+        
+        '<div class="sub-panel" id="panelL2">' +
+          '<div class="sb-panel-header"><span class="sb-back-btn" id="backL2">‹</span> <span id="titleL2">Menu</span></div>' +
+          '<div class="sb-panel-content" id="contentL2"></div>' +
+        '</div>' +
+        
+        '<div class="sub-panel level-3" id="panelL3">' +
+          '<div class="sb-panel-header"><span class="sb-back-btn" id="backL3">‹</span> <span id="titleL3">Sub Menu</span></div>' +
+          '<div class="sb-panel-content" id="contentL3"></div>' +
+        '</div>' +
+        
       '</aside>' +
+      
       '<div class="app-main">' +
         '<header class="topbar">' +
           '<button class="menu-btn" id="menuBtn">☰</button>' +
-          '<input class="search-box" id="searchBox" type="text" placeholder="Search...">' +
-          '<div class="top-right">' +
-            '<button class="icon-btn" id="bellBtn">Notifications</button>' +
-            '<div class="user-chip"><span class="uname" id="userName"></span></div>' +
-            '<button class="lay-btn" id="layLogout">Logout</button>' +
-          '</div>' +
         '</header>' +
         '<div class="app-content" id="appContent"></div>' +
       '</div>';
@@ -279,48 +261,106 @@
 
     var sidebar = document.getElementById('sidebar');
     var overlay = document.getElementById('sbOverlay');
+    var panelL2 = document.getElementById('panelL2');
+    var panelL3 = document.getElementById('panelL3');
+    var contentL2 = document.getElementById('contentL2');
+    var contentL3 = document.getElementById('contentL3');
 
-    function closeMenu() {
+    function closeAll() {
       sidebar.classList.remove('open');
       overlay.classList.remove('show');
+      panelL2.classList.remove('open');
+      panelL3.classList.remove('open');
     }
 
     document.getElementById('menuBtn').addEventListener('click', function () {
       sidebar.classList.toggle('open');
       overlay.classList.toggle('show');
-    });
-
-    overlay.addEventListener('click', closeMenu);
-
-    sidebar.addEventListener('click', function (e) {
-      var a = e.target.closest('.sb-item');
-      if (!a) return;
-
-      if (a.getAttribute('data-parent') || a.getAttribute('data-parent-sub')) {
-        e.preventDefault();
-        a.parentNode.classList.toggle('open');
-        return;
+      if (!sidebar.classList.contains('open')) {
+        panelL2.classList.remove('open');
+        panelL3.classList.remove('open');
       }
+    });
 
-      if (a.getAttribute('data-soon')) {
+    overlay.addEventListener('click', closeAll);
+
+    document.getElementById('mainMenu').addEventListener('click', function(e) {
+      var link = e.target.closest('.sb-link');
+      if (!link) return;
+      
+      var itemDiv = link.parentNode;
+      var id = itemDiv.getAttribute('data-id');
+      var m = MENU.find(function(x) { return x.key === id; });
+
+      if (m && m.children) {
         e.preventDefault();
-        toast('This page is coming soon');
-        return; 
+        document.querySelectorAll('.sb-link').forEach(function(el) { el.classList.remove('active-parent'); });
+        link.classList.add('active-parent');
+        
+        var subHtml = m.children.map(renderSubItem).join('');
+        contentL2.innerHTML = subHtml;
+        document.getElementById('titleL2').textContent = m.label;
+        
+        panelL2.classList.add('open');
+        panelL3.classList.remove('open');
+      } else {
+        closeAll();
       }
-
-      closeMenu();
     });
 
-    document.getElementById('bellBtn').addEventListener('click', function () {
-      toast('No notifications yet');
+    contentL2.addEventListener('click', function(e) {
+      var link = e.target.closest('.sb-panel-link');
+      if (!link) return;
+      
+      var itemDiv = link.parentNode;
+      var id = itemDiv.getAttribute('data-id');
+      
+      var parentM = MENU.find(function(x) { 
+        return x.children && x.children.find(function(c){ return c.key === id; }); 
+      });
+      var subM = parentM.children.find(function(c) { return c.key === id; });
+
+      if (subM && subM.children) {
+        e.preventDefault();
+        contentL2.querySelectorAll('.sb-panel-link').forEach(function(el) { el.classList.remove('active-parent'); });
+        link.classList.add('active-parent');
+
+        var subSubHtml = subM.children.map(renderSubItem).join('');
+        contentL3.innerHTML = subSubHtml;
+        document.getElementById('titleL3').textContent = subM.label;
+        
+        panelL3.classList.add('open');
+      } else {
+        closeAll();
+      }
     });
 
-    document.getElementById('searchBox').addEventListener('keydown', function (e) {
-      if (e.key === 'Enter') toast('Search is coming soon');
+    document.getElementById('backL2').addEventListener('click', function() {
+      panelL2.classList.remove('open');
+      document.querySelectorAll('.sb-link').forEach(function(el) { el.classList.remove('active-parent'); });
     });
 
-    document.getElementById('layLogout').addEventListener('click', function () {
-      if (typeof logoutUser === 'function') logoutUser();
+    document.getElementById('backL3').addEventListener('click', function() {
+      panelL3.classList.remove('open');
+    });
+
+    contentL3.addEventListener('click', function(e) {
+      var link = e.target.closest('.sb-panel-link');
+      if (link && link.getAttribute('href') !== 'javascript:void(0)') {
+        closeAll();
+      }
+    });
+    
+    document.querySelectorAll('.sb-link, .sb-panel-link').forEach(function(link) {
+      var href = link.getAttribute('href');
+      if (href === 'javascript:void(0)') {
+        link.addEventListener('click', function(e) {
+          if (!link.querySelector('.sb-arrow:not(.empty)')) {
+            e.preventDefault();
+            toast('This page is coming soon');
+          }
+        });
+      }
     });
 
     if (typeof getSession === 'function') {

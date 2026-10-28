@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,7 +11,7 @@
   <meta property="og:description" content="Easy installment phones, no guarantor needed">
   <meta property="og:image" content="https://nqihozwbdrvpyalctwbc.supabase.co/storage/v1/object/public/logos/main-logo.png">
 
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700;800&family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
 
   <style>
@@ -167,34 +166,43 @@
       white-space: nowrap;
     }
 
-    /* LIVE Label */
-    .live-label-row {
+    /* =========================================
+       NEW LIVE TICKER STYLE (Screenshot Match)
+       ========================================= */
+    
+    /* Wrapper for the whole row */
+    .live-ticker-wrapper {
       display: flex;
-      align-items: center;
+      align-items: stretch;
       max-width: 720px;
       margin: 10px auto 0;
-      padding: 0 2px;
+      background: #1c1c1c; /* Dark background */
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      height: 48px; /* Fixed height for the row */
     }
 
-    .live-label {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      padding: 6px 10px;
+    /* Red LIVE Badge */
+    .live-badge {
       background: #d90000;
       color: #ffffff;
-      border-radius: 5px;
-      font-size: 11px;
-      font-weight: 900;
-      letter-spacing: 0.8px;
-      line-height: 1;
-      box-shadow: 0 2px 5px rgba(217, 0, 0, 0.18);
+      font-family: 'Poppins', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      padding: 0 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      flex-shrink: 0;
+      z-index: 2; /* Keeps badge above scrolling text */
     }
 
-    .live-label-dot {
-      width: 7px;
-      height: 7px;
-      flex: 0 0 7px;
+    /* White Blinking Dot */
+    .live-badge .live-dot {
+      width: 8px;
+      height: 8px;
       background: #ffffff;
       border-radius: 50%;
       animation: livePulse 1.2s ease-in-out infinite;
@@ -205,73 +213,51 @@
       50% { opacity: 0.35; }
     }
 
-    /* Live Prices Ticker */
-    .live-prices {
-      max-width: 720px;
-      margin: 5px auto 0;
+    /* Container for the sliding text */
+    .live-ticker-container {
+      flex: 1;
       overflow: hidden;
-      background: #242424;
-      color: #ffffff;
-      border-radius: 10px;
-    }
-
-    .live-prices-heading {
+      position: relative;
       display: flex;
       align-items: center;
-      gap: 7px;
-      padding: 8px 12px 4px;
-      font-size: 12px;
-      letter-spacing: 0.3px;
     }
 
-    .live-dot {
-      width: 7px;
-      height: 7px;
-      flex: 0 0 7px;
-      background: #49d88a;
-      border-radius: 50%;
-      box-shadow: 0 0 7px rgba(73, 216, 138, 0.6);
-    }
-
-    .ticker-window {
-      width: 100%;
-      overflow: hidden;
-      padding: 7px 0 11px;
-    }
-
-    .ticker-track {
+    /* The scrolling track */
+    .live-ticker-container .ticker-track {
       display: flex;
       align-items: center;
-      gap: 28px;
-      width: max-content;
-      padding-left: 100%;
+      gap: 24px;
       white-space: nowrap;
-      animation: mobilePriceTicker 300s linear infinite;
-      font-size: 12px;
-      will-change: transform;
+      padding-left: 100%;
+      animation: mobilePriceTicker 300s linear infinite; /* Speed set to 300s */
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      color: #d1d5db; /* Light grey text for details */
     }
 
-    .ticker-track:hover {
+    /* Pause animation on hover */
+    .live-ticker-container .ticker-track:hover {
       animation-play-state: paused;
     }
 
-    .ticker-item {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
+    /* Text styling inside ticker */
+    .ticker-item strong {
+      color: #ffffff; /* White for mobile name */
+      font-weight: 600;
     }
 
-    .ticker-item strong {
-      color: #ffffff;
+    .ticker-item .price-cash {
+      color: #fbbf24; /* Yellow for Cash Price */
       font-weight: 700;
     }
 
     .ticker-item span {
-      color: #d4d4d4;
+      color: #9ca3af;
     }
 
+    /* Separator dot */
     .ticker-separator {
-      color: #777777;
+      color: #4b5563;
     }
 
     @keyframes mobilePriceTicker {
@@ -288,7 +274,7 @@
       min-height: 240px;
       box-sizing: border-box;
       margin: 12px auto 0;
-      padding: 15px;
+      padding: 18px;
       overflow: hidden;
       border: 1px solid #e2e2e2;
       border-radius: 14px;
@@ -304,30 +290,34 @@
     }
 
     .promo-banner-heading {
-      margin-bottom: 12px;
+      margin-bottom: 15px;
     }
 
     .promo-kicker {
       display: inline-block;
-      margin-bottom: 5px;
+      margin-bottom: 6px;
       color: #d90000;
-      font-size: 10px;
-      font-weight: 900;
-      letter-spacing: 1.4px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
     }
 
     .promo-banner h2 {
       margin: 0;
-      color: #222222;
-      font-size: 19px;
-      line-height: 1.3;
-      font-weight: 900;
+      color: #111111;
+      font-family: 'Poppins', sans-serif;
+      font-size: 22px;
+      line-height: 1.2;
+      font-weight: 800;
     }
 
     .promo-banner-subtitle {
-      margin: 4px 0 0;
-      color: #666666;
-      font-size: 12px;
+      margin: 6px 0 0;
+      color: #555555;
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
     }
 
     .promo-slide-window {
@@ -369,36 +359,40 @@
 
     .promo-slide-brand {
       display: block;
-      margin-bottom: 3px;
+      margin-bottom: 4px;
       color: #777777;
+      font-family: 'Poppins', sans-serif;
       font-size: 11px;
-      font-weight: 700;
+      font-weight: 600;
       text-transform: uppercase;
     }
 
     .promo-slide-model {
       display: block;
       overflow: hidden;
-      color: #222222;
-      font-size: 16px;
-      font-weight: 900;
+      color: #111111;
+      font-family: 'Poppins', sans-serif;
+      font-size: 17px;
+      font-weight: 700;
       line-height: 1.3;
       text-overflow: ellipsis;
     }
 
     .promo-slide-spec {
       display: block;
-      margin-top: 3px;
-      color: #777777;
-      font-size: 11px;
+      margin-top: 4px;
+      color: #666666;
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
     }
 
     .promo-slide-price {
       display: block;
-      margin-top: 7px;
+      margin-top: 8px;
       color: #d90000;
-      font-size: 16px;
-      font-weight: 900;
+      font-family: 'Poppins', sans-serif;
+      font-size: 18px;
+      font-weight: 800;
     }
 
     .promo-slide-count {
@@ -513,11 +507,11 @@
 
       .promo-banner {
         min-height: 210px;
-        padding: 12px;
+        padding: 14px;
       }
 
       .promo-banner h2 {
-        font-size: 18px;
+        font-size: 20px;
       }
 
       .promo-slide {
@@ -536,17 +530,26 @@
       }
 
       .promo-slide-model {
-        font-size: 14px;
+        font-size: 15px;
       }
 
       .promo-slide-price {
-        font-size: 14px;
+        font-size: 16px;
       }
 
       .price-list-button {
         min-height: 62px;
         padding: 7px 2px;
         font-size: 10px;
+      }
+      
+      .live-badge {
+        font-size: 12px;
+        padding: 0 10px;
+      }
+      .live-ticker-container .ticker-track {
+        font-size: 12px;
+        gap: 15px;
       }
     }
 
@@ -558,7 +561,7 @@
         will-change: auto;
       }
 
-      .ticker-track {
+      .live-ticker-container .ticker-track {
         animation: none;
         padding-left: 12px;
         width: auto;
@@ -566,7 +569,7 @@
         flex-wrap: wrap;
       }
 
-      .live-label-dot {
+      .live-badge .live-dot {
         animation: none;
       }
 
@@ -625,27 +628,17 @@
     <div id="pakistan-time">Loading time...</div>
   </div>
 
-  <!-- LIVE Label -->
-  <div class="live-label-row">
-    <span class="live-label">
-      <span class="live-label-dot"></span>
-      LIVE
-    </span>
-  </div>
-
-  <!-- Live Mobile Prices -->
-  <section class="live-prices" aria-label="Live mobile prices">
-    <div class="live-prices-heading">
-      <span class="live-dot"></span>
-      <strong>LIVE MOBILE PRICES</strong>
+  <!-- NEW LIVE TICKER (Combined Row) -->
+  <div class="live-ticker-wrapper">
+    <div class="live-badge">
+      <span class="live-dot"></span> LIVE
     </div>
-
-    <div class="ticker-window">
+    <div class="live-ticker-container">
       <div id="live-prices-track" class="ticker-track">
         <span>Loading mobile prices...</span>
       </div>
     </div>
-  </section>
+  </div>
 
   <!-- Featured Product Slider -->
   <section class="promo-banner" aria-label="Featured mobile phones">
@@ -712,7 +705,7 @@
   <script src="js/poster.js"></script>
   <script src="js/home.js"></script>
 
-  <!-- Pakistan Date and Clock -->
+  <!-- Pakistan Date and Clock (Full Month Name) -->
   <script>
     (function () {
       const dateElement = document.getElementById('pakistan-date');
@@ -721,11 +714,12 @@
       function updatePakistanDateTime() {
         const now = new Date();
 
+        // Date format: Day, DD Month YYYY (e.g., Wed, 28 October 2026)
         dateElement.textContent = new Intl.DateTimeFormat('en-PK', {
           timeZone: 'Asia/Karachi',
           weekday: 'short',
           day: '2-digit',
-          month: 'short',
+          month: 'long', // 'long' use karne se poora month name aata hai
           year: 'numeric'
         }).format(now);
 

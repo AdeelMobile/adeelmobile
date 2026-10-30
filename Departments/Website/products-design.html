@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Products Design - Design Studio</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&family=Roboto:wght@400;500;700&family=Poppins:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../../css/theme.css">
+  <link rel="stylesheet" href="../../css/layout.css">
+  
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      visibility: hidden;
+      font-family: 'Roboto', sans-serif;
+      background-color: #F8F9FA;
+      color: #111;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .topbar, .app-header { display: none !important; }
+
+    /* Top Bar */
+    .custom-top-bar {
+      position: fixed; top: 0; left: 0; right: 0;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 12px 16px; background: #fff;
+      border-bottom: 1px solid #E5E7EB; gap: 10px; z-index: 100;
+    }
+
+    .left-section { display: flex; align-items: center; gap: 10px; flex: 1; min-width: 0; }
+
+    .back-btn {
+        display: flex; align-items: center; justify-content: center;
+        width: 40px; height: 40px;
+        background: #fff; border: 1px solid #E5E7EB; 
+        border-radius: 10px; cursor: pointer; color: #111; flex-shrink: 0;
+        text-decoration: none; font-size: 20px;
+    }
+    .back-btn:hover { background: #F3F4F6; }
+
+    .title-area {
+      font-family: 'Inter', sans-serif; font-size: 20px;
+      font-weight: 700; color: #111; white-space: nowrap;
+      overflow: hidden; text-overflow: ellipsis;
+    }
+
+    /* Main Layout */
+    .page { 
+      padding: 85px 16px 40px; 
+      max-width: 720px; margin: auto; min-height: 100vh; 
+    }
+
+    /* Header Box (Grey) */
+    .header-box {
+      background: #E5E7EB;
+      color: #111111;
+      border-radius: 12px;
+      padding: 20px 16px;
+      margin-bottom: 20px;
+    }
+    
+    .header-box .title-row {
+      display: flex; align-items: center; gap: 10px; margin-bottom: 6px;
+    }
+
+    .header-box svg { width: 28px; height: 28px; stroke: #111; }
+    
+    .header-box h1 {
+      font-family: 'Inter', sans-serif;
+      font-size: 24px; font-weight: 700; letter-spacing: -0.5px; color: #111;
+    }
+
+    .header-box p {
+      font-size: 14px; color: #555555; font-weight: 400;
+      margin-left: 38px; 
+    }
+
+    /* Scope Selector */
+    .scope-container { margin-bottom: 20px; }
+
+    .scope-select {
+      width: 100%; padding: 12px 16px;
+      border: 1px solid #E5E7EB; border-radius: 10px;
+      font-size: 14px; font-weight: 600;
+      font-family: 'Inter', sans-serif;
+      outline: none; background: #fff; cursor: pointer;
+    }
+
+    /* Accordion Styling */
+    .accordion-container {
+      display: flex; flex-direction: column; gap: 10px;
+    }
+
+    .accordion-item {
+      background: #FFFFFF; border: 1px solid #E5E7EB;
+      border-radius: 12px; overflow: hidden;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    }
+
+    .accordion-header {
+      padding: 16px; display: flex;
+      justify-content: space-between; align-items: center;
+      cursor: pointer; background: #FFFFFF;
+      transition: background 0.2s;
+    }
+
+    .accordion-header:hover { background: #F9FAFB; }
+
+    .accordion-header-left {
+      display: flex; align-items: center; gap: 12px;
+      font-family: 'Inter', sans-serif;
+      font-size: 15px; font-weight: 600; color: #111;
+    }
+
+    .accordion-icon {
+      width: 22px; height: 22px;
+      stroke: #555555; flex-shrink: 0;
+    }
+
+    .accordion-arrow {
+      font-size: 14px; color: #888;
+      transition: transform 0.3s ease;
+    }
+
+    .accordion-item.active .accordion-arrow {
+      transform: rotate(180deg);
+    }
+
+    .accordion-content {
+      display: none; padding: 16px;
+      border-top: 1px solid #E5E7EB;
+      background: #F9FAFB;
+    }
+
+    .accordion-item.active .accordion-content {
+      display: block;
+    }
+
+    /* Form Fields */
+    .form-group { margin-bottom: 14px; }
+    .form-group:last-child { margin-bottom: 0; }
+    .form-label { display: block; font-size: 13px; font-weight: 600; color: #333; margin-bottom: 6px; }
+    
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+    .form-input, .form-select, .form-color {
+      width: 100%; padding: 10px 12px;
+      border: 1px solid #D1D5DB; border-radius: 8px;
+      font-size: 14px; outline: none; background: #FFF;
+    }
+    .form-color { padding: 4px; height: 42px; cursor: pointer; }
+
+    /* Button Group */
+    .btn-group {
+      display: flex; gap: 10px; margin-top: 16px;
+    }
+
+    .save-btn, .reset-btn {
+      flex: 1; padding: 12px; border: none;
+      border-radius: 8px; font-size: 14px;
+      font-weight: 600; font-family: 'Inter', sans-serif;
+      cursor: pointer;
+    }
+    .save-btn { background: #1C1C1C; color: #FFF; }
+    .save-btn:hover { background: #333; }
+    .reset-btn { background: #F3F4F6; color: #333; border: 1px solid #E5E7EB; }
+    .reset-btn:hover { background: #E5E7EB; }
+
+  </style>
+</head>
+<body>
+
+  <header class="custom-top-bar">
+    <div class="left-section">
+      <a href="design-studio.html" class="back-btn">←</a>
+      <div class="title-area">Design Studio</div>
+    </div>
+  </header>
+
+  <main id="page-content" class="page">
+    
+    <!-- Grey Header -->
+    <div class="header-box">
+      <div class="title-row">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+        <h1>Products Design</h1>
+      </div>
+      <p>Customize product cards, grids, details, and media</p>
+    </div>
+
+    <!-- Scope Selector -->
+    <div class="scope-container">
+      <select id="scopeSelect" class="scope-select">
+        <option value="both">Both Websites</option>
+        <option value="installment">Installment Website</option>
+        <option value="cash">Cash Website</option>
+      </select>
+    </div>
+
+    <!-- 5 Accordions -->
+    <div class="accordion-container">
+      
+      <!-- 1. Product Card Design -->
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <div class="accordion-header-left">
+            <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line></svg>
+            Product Card Design
+          </div>
+          <span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-content">
+          
+          <div class="form-group">
+            <label class="form-label">Card Style</label>
+            <select class="form-select" id="prodCardStyle">
+              <option value="standard">Standard</option>
+              <option value="bordered">Bordered</option>
+              <option value="shadow">Shadow</option>
+              <option value="minimal">Minimal</option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Image Ratio</label>
+              <select class="form-select" id="prodImageRatio">
+                <option value="1:1">1:1 (Square)</option>
+                <option value="4:3">4:3</option>
+                <option value="3:4">3:4 (Portrait)</option>
+                <option value="16:9">16:9</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Title Size (px)</label>
+              <input type="number" class="form-input" id="prodTitleSize" value="15" min="10" max="30">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Price Size (px)</label>
+              <input type="number" class="form-input" id="prodPriceSize" value="18" min="10" max="40">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Button Style</label>
+              <select class="form-select" id="prodBtnStyle">
+                <option value="icon">Icon Only</option>
+                <option value="text">Text Button</option>
+                <option value="full">Full Width</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="btn-group">
+            <button class="save-btn" onclick="saveCardSettings()">Save</button>
+            <button class="reset-btn" onclick="resetCardSettings()">Reset</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. Product Details Page -->
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <div class="accordion-header-left">
+            <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+            Product Details Page
+          </div>
+          <span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-content">
+          
+          <div class="form-group">
+            <label class="form-label">Gallery Style</label>
+            <select class="form-select" id="prodGalleryStyle">
+              <option value="slider">Slider</option>
+              <option value="grid">Grid</option>
+              <option value="thumbnail">Thumbnail</option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Show Description</label>
+              <select class="form-select" id="prodShowDesc">
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Show Specs</label>
+              <select class="form-select" id="prodShowSpecs">
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Show Reviews</label>
+            <select class="form-select" id="prodShowReviews">
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+            </select>
+          </div>
+
+          <div class="btn-group">
+            <button class="save-btn" onclick="saveDetailsSettings()">Save</button>
+            <button class="reset-btn" onclick="resetDetailsSettings()">Reset</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. Product Grid & Listing -->
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <div class="accordion-header-left">
+            <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+            Product Grid & Listing
+          </div>
+          <span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-content">
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Products Per Row</label>
+              <select class="form-select" id="prodPerRow">
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Grid Gap (px)</label>
+              <input type="number" class="form-input" id="prodGridGap" value="12" min="0" max="40">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Listing Style</label>
+            <select class="form-select" id="prodListingStyle">
+              <option value="grid">Grid</option>
+              <option value="list">List View</option>
+              <option value="masonry">Masonry</option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Sort Dropdown</label>
+              <select class="form-select" id="prodSort">
+                <option value="yes">Show</option>
+                <option value="no">Hide</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Pagination</label>
+              <select class="form-select" id="prodPagination">
+                <option value="numbers">Numbers</option>
+                <option value="loadmore">Load More</option>
+                <option value="infinite">Infinite Scroll</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="btn-group">
+            <button class="save-btn" onclick="saveGridSettings()">Save</button>
+            <button class="reset-btn" onclick="resetGridSettings()">Reset</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. Badges, Labels & Status -->
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <div class="accordion-header-left">
+            <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
+            Badges, Labels & Status
+          </div>
+          <span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-content">
+          
+          <div class="form-group">
+            <label class="form-label">Badge Shape</label>
+            <select class="form-select" id="prodBadgeShape">
+              <option value="pill">Pill (Rounded)</option>
+              <option value="square">Square</option>
+              <option value="circle">Circle</option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Sale Badge Color</label>
+              <input type="color" class="form-color" id="prodSaleColor" value="#C62828">
+            </div>
+            <div class="form-group">
+              <label class="form-label">New Badge Color</label>
+              <input type="color" class="form-color" id="prodNewColor" value="#2E7D32">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Out of Stock Text</label>
+              <input type="text" class="form-input" id="prodOutStockText" value="Out of Stock">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Show Stock Status</label>
+              <select class="form-select" id="prodShowStock">
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="btn-group">
+            <button class="save-btn" onclick="saveBadgeSettings()">Save</button>
+            <button class="reset-btn" onclick="resetBadgeSettings()">Reset</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. Images, Icons & Media -->
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <div class="accordion-header-left">
+            <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+            Images, Icons & Media
+          </div>
+          <span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-content">
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Image Fit</label>
+              <select class="form-select" id="prodImgFit">
+                <option value="cover">Cover</option>
+                <option value="contain">Contain</option>
+                <option value="fill">Fill</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Border Radius (px)</label>
+              <input type="number" class="form-input" id="prodImgRadius" value="8" min="0" max="50">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Hover Effect</label>
+            <select class="form-select" id="prodHoverEffect">
+              <option value="zoom">Zoom In</option>
+              <option value="shadow">Add Shadow</option>
+              <option value="opacity">Reduce Opacity</option>
+              <option value="none">None</option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Show Icons</label>
+              <select class="form-select" id="prodShowIcons">
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Icon Size (px)</label>
+              <input type="number" class="form-input" id="prodIconSize" value="18" min="12" max="40">
+            </div>
+          </div>
+
+          <div class="btn-group">
+            <button class="save-btn" onclick="saveMediaSettings()">Save</button>
+            <button class="reset-btn" onclick="resetMediaSettings()">Reset</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+  <script src="../../js/supabase-config.js"></script>
+  <script src="../../js/auth.js"></script>
+
+  <script>
+    (async function () {
+      try {
+        if (typeof db === 'undefined' || !db?.auth) { window.location.replace('../../index.html'); return; }
+        if (typeof requireLogin !== 'function') { window.location.replace('../../index.html'); return; }
+        const session = await requireLogin();
+        if (!session) return;
+
+        document.body.style.visibility = 'visible';
+
+        function loadScript(src, attributes = {}) {
+          return new Promise((resolve, reject) => {
+            const script = document.createElement('script');
+            script.src = src;
+            Object.entries(attributes).forEach(([key, value]) => { script.setAttribute(key, value); });
+            script.onload = resolve;
+            script.onerror = () => reject(new Error('Script load failed: ' + src));
+            document.body.appendChild(script);
+          });
+        }
+
+        await loadScript('../../js/sidebar.js', { 'data-root': '../../', 'data-active': 'website' });
+
+        setTimeout(() => {
+            const oldMenuBtn = document.getElementById('menuBtn');
+            const container = document.getElementById('sidebar-toggle-container');
+            if (oldMenuBtn && container) { container.appendChild(oldMenuBtn); }
+        }, 100);
+
+        // ==== Accordion ====
+        window.toggleAccordion = function(header) {
+          const item = header.parentNode;
+          const isActive = item.classList.contains('active');
+          document.querySelectorAll('.accordion-item').forEach(el => el.classList.remove('active'));
+          if (!isActive) item.classList.add('active');
+        };
+
+        // ==== Load All Settings ====
+        async function loadAllSettings() {
+          const scope = document.getElementById('scopeSelect').value;
+          const { data, error } = await db.from('store_settings')
+            .select('setting_key, setting_value')
+            .or(`scope.eq.both,scope.eq.${scope}`);
+          
+          if (error) { console.error(error); return; }
+          
+          const settings = {};
+          if (data) data.forEach(item => { settings[item.setting_key] = item.setting_value; });
+
+          // Card Design
+          if (settings['prod_card_style']) document.getElementById('prodCardStyle').value = settings['prod_card_style'];
+          if (settings['prod_image_ratio']) document.getElementById('prodImageRatio').value = settings['prod_image_ratio'];
+          if (settings['prod_title_size']) document.getElementById('prodTitleSize').value = settings['prod_title_size'];
+          if (settings['prod_price_size']) document.getElementById('prodPriceSize').value = settings['prod_price_size'];
+          if (settings['prod_btn_style']) document.getElementById('prodBtnStyle').value = settings['prod_btn_style'];
+
+          // Details Page
+          if (settings['prod_gallery_style']) document.getElementById('prodGalleryStyle').value = settings['prod_gallery_style'];
+          if (settings['prod_show_desc']) document.getElementById('prodShowDesc').value = settings['prod_show_desc'];
+          if (settings['prod_show_specs']) document.getElementById('prodShowSpecs').value = settings['prod_show_specs'];
+          if (settings['prod_show_reviews']) document.getElementById('prodShowReviews').value = settings['prod_show_reviews'];
+
+          // Grid & Listing
+          if (settings['prod_per_row']) document.getElementById('prodPerRow').value = settings['prod_per_row'];
+          if (settings['prod_grid_gap']) document.getElementById('prodGridGap').value = settings['prod_grid_gap'];
+          if (settings['prod_listing_style']) document.getElementById('prodListingStyle').value = settings['prod_listing_style'];
+          if (settings['prod_sort']) document.getElementById('prodSort').value = settings['prod_sort'];
+          if (settings['prod_pagination']) document.getElementById('prodPagination').value = settings['prod_pagination'];
+
+          // Badges
+          if (settings['prod_badge_shape']) document.getElementById('prodBadgeShape').value = settings['prod_badge_shape'];
+          if (settings['prod_sale_color']) document.getElementById('prodSaleColor').value = settings['prod_sale_color'];
+          if (settings['prod_new_color']) document.getElementById('prodNewColor').value = settings['prod_new_color'];
+          if (settings['prod_out_stock_text']) document.getElementById('prodOutStockText').value = settings['prod_out_stock_text'];
+          if (settings['prod_show_stock']) document.getElementById('prodShowStock').value = settings['prod_show_stock'];
+
+          // Media
+          if (settings['prod_img_fit']) document.getElementById('prodImgFit').value = settings['prod_img_fit'];
+          if (settings['prod_img_radius']) document.getElementById('prodImgRadius').value = settings['prod_img_radius'];
+          if (settings['prod_hover_effect']) document.getElementById('prodHoverEffect').value = settings['prod_hover_effect'];
+          if (settings['prod_show_icons']) document.getElementById('prodShowIcons').value = settings['prod_show_icons'];
+          if (settings['prod_icon_size']) document.getElementById('prodIconSize').value = settings['prod_icon_size'];
+        }
+
+        // ==== Save Functions ====
+        window.saveCardSettings = async function() {
+          const scope = document.getElementById('scopeSelect').value;
+          const dataToSave = [
+            { setting_key: 'prod_card_style', setting_value: document.getElementById('prodCardStyle').value, scope: scope },
+            { setting_key: 'prod_image_ratio', setting_value: document.getElementById('prodImageRatio').value, scope: scope },
+            { setting_key: 'prod_title_size', setting_value: document.getElementById('prodTitleSize').value, scope: scope },
+            { setting_key: 'prod_price_size', setting_value: document.getElementById('prodPriceSize').value, scope: scope },
+            { setting_key: 'prod_btn_style', setting_value: document.getElementById('prodBtnStyle').value, scope: scope }
+          ];
+          const { error } = await db.from('store_settings').upsert(dataToSave, { onConflict: 'setting_key,scope' });
+          if (error) alert('Error: ' + error.message);
+          else alert('Product Card settings saved for ' + scope + '!');
+        };
+
+        window.saveDetailsSettings = async function() {
+          const scope = document.getElementById('scopeSelect').value;
+          const dataToSave = [
+            { setting_key: 'prod_gallery_style', setting_value: document.getElementById('prodGalleryStyle').value, scope: scope },
+            { setting_key: 'prod_show_desc', setting_value: document.getElementById('prodShowDesc').value, scope: scope },
+            { setting_key: 'prod_show_specs', setting_value: document.getElementById('prodShowSpecs').value, scope: scope },
+            { setting_key: 'prod_show_reviews', setting_value: document.getElementById('prodShowReviews').value, scope: scope }
+          ];
+          const { error } = await db.from('store_settings').upsert(dataToSave, { onConflict: 'setting_key,scope' });
+          if (error) alert('Error: ' + error.message);
+          else alert('Product Details settings saved for ' + scope + '!');
+        };
+
+        window.saveGridSettings = async function() {
+          const scope = document.getElementById('scopeSelect').value;
+          const dataToSave = [
+            { setting_key: 'prod_per_row', setting_value: document.getElementById('prodPerRow').value, scope: scope },
+            { setting_key: 'prod_grid_gap', setting_value: document.getElementById('prodGridGap').value, scope: scope },
+            { setting_key: 'prod_listing_style', setting_value: document.getElementById('prodListingStyle').value, scope: scope },
+            { setting_key: 'prod_sort', setting_value: document.getElementById('prodSort').value, scope: scope },
+            { setting_key: 'prod_pagination', setting_value: document.getElementById('prodPagination').value, scope: scope }
+          ];
+          const { error } = await db.from('store_settings').upsert(dataToSave, { onConflict: 'setting_key,scope' });
+          if (error) alert('Error: ' + error.message);
+          else alert('Product Grid settings saved for ' + scope + '!');
+        };
+
+        window.saveBadgeSettings = async function() {
+          const scope = document.getElementById('scopeSelect').value;
+          const dataToSave = [
+            { setting_key: 'prod_badge_shape', setting_value: document.getElementById('prodBadgeShape').value, scope: scope },
+            { setting_key: 'prod_sale_color', setting_value: document.getElementById('prodSaleColor').value, scope: scope },
+            { setting_key: 'prod_new_color', setting_value: document.getElementById('prodNewColor').value, scope: scope },
+            { setting_key: 'prod_out_stock_text', setting_value: document.getElementById('prodOutStockText').value, scope: scope },
+            { setting_key: 'prod_show_stock', setting_value: document.getElementById('prodShowStock').value, scope: scope }
+          ];
+          const { error } = await db.from('store_settings').upsert(dataToSave, { onConflict: 'setting_key,scope' });
+          if (error) alert('Error: ' + error.message);
+          else alert('Badges settings saved for ' + scope + '!');
+        };
+
+        window.saveMediaSettings = async function() {
+          const scope = document.getElementById('scopeSelect').value;
+          const dataToSave = [
+            { setting_key: 'prod_img_fit', setting_value: document.getElementById('prodImgFit').value, scope: scope },
+            { setting_key: 'prod_img_radius', setting_value: document.getElementById('prodImgRadius').value, scope: scope },
+            { setting_key: 'prod_hover_effect', setting_value: document.getElementById('prodHoverEffect').value, scope: scope },
+            { setting_key: 'prod_show_icons', setting_value: document.getElementById('prodShowIcons').value, scope: scope },
+            { setting_key: 'prod_icon_size', setting_value: document.getElementById('prodIconSize').value, scope: scope }
+          ];
+          const { error } = await db.from('store_settings').upsert(dataToSave, { onConflict: 'setting_key,scope' });
+          if (error) alert('Error: ' + error.message);
+          else alert('Media settings saved for ' + scope + '!');
+        };
+
+        // ==== Reset Functions ====
+        window.resetCardSettings = function() {
+          document.getElementById('prodCardStyle').value = 'standard';
+          document.getElementById('prodImageRatio').value = '1:1';
+          document.getElementById('prodTitleSize').value = '15';
+          document.getElementById('prodPriceSize').value = '18';
+          document.getElementById('prodBtnStyle').value = 'icon';
+        };
+
+        window.resetDetailsSettings = function() {
+          document.getElementById('prodGalleryStyle').value = 'slider';
+          document.getElementById('prodShowDesc').value = 'yes';
+          document.getElementById('prodShowSpecs').value = 'yes';
+          document.getElementById('prodShowReviews').value = 'no';
+        };
+
+        window.resetGridSettings = function() {
+          document.getElementById('prodPerRow').value = '2';
+          document.getElementById('prodGridGap').value = '12';
+          document.getElementById('prodListingStyle').value = 'grid';
+          document.getElementById('prodSort').value = 'yes';
+          document.getElementById('prodPagination').value = 'loadmore';
+        };
+
+        window.resetBadgeSettings = function() {
+          document.getElementById('prodBadgeShape').value = 'pill';
+          document.getElementById('prodSaleColor').value = '#C62828';
+          document.getElementById('prodNewColor').value = '#2E7D32';
+          document.getElementById('prodOutStockText').value = 'Out of Stock';
+          document.getElementById('prodShowStock').value = 'yes';
+        };
+
+        window.resetMediaSettings = function() {
+          document.getElementById('prodImgFit').value = 'cover';
+          document.getElementById('prodImgRadius').value = '8';
+          document.getElementById('prodHoverEffect').value = 'zoom';
+          document.getElementById('prodShowIcons').value = 'yes';
+          document.getElementById('prodIconSize').value = '18';
+        };
+
+        // Load on start and scope change
+        loadAllSettings();
+        document.getElementById('scopeSelect').addEventListener('change', loadAllSettings);
+
+      } catch (error) {
+        console.error('Products Design error:', error);
+        window.location.replace('../../index.html');
+      }
+    })();
+  </script>
+</body>
+</html>

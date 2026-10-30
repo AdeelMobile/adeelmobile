@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Design Studio - Adeel Mobile</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../../css/theme.css">
+  <link rel="stylesheet" href="../../css/layout.css">
+  
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      visibility: hidden;
+      font-family: 'Roboto', sans-serif;
+      background-color: #F8F9FA;
+      color: #111;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .topbar, .app-header { display: none !important; }
+
+    /* Top Bar */
+    .custom-top-bar {
+      position: fixed; top: 0; left: 0; right: 0;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 12px 16px; background: #fff;
+      border-bottom: 1px solid #E5E7EB; gap: 10px; z-index: 100;
+    }
+
+    .left-section { display: flex; align-items: center; gap: 10px; flex: 1; min-width: 0; }
+
+    .back-btn {
+        display: flex; align-items: center; justify-content: center;
+        width: 40px; height: 40px;
+        background: #fff; border: 1px solid #E5E7EB; 
+        border-radius: 10px; cursor: pointer; color: #111; flex-shrink: 0;
+        text-decoration: none; font-size: 20px;
+    }
+    .back-btn:hover { background: #F3F4F6; }
+
+    .title-area {
+      font-family: 'Inter', sans-serif; font-size: 20px;
+      font-weight: 700; color: #111; white-space: nowrap;
+      overflow: hidden; text-overflow: ellipsis;
+    }
+
+    /* Main Layout */
+    .page { 
+      padding: 85px 16px 40px; 
+      max-width: 720px; margin: auto; min-height: 100vh; 
+    }
+
+    /* Header Box (Grey) */
+    .header-box {
+      background: #E5E7EB;
+      color: #111111;
+      border-radius: 12px;
+      padding: 20px 16px;
+      margin-bottom: 20px;
+    }
+    
+    .header-box .title-row {
+      display: flex; align-items: center; gap: 10px; margin-bottom: 6px;
+    }
+
+    .header-box svg { width: 28px; height: 28px; stroke: #111; }
+    
+    .header-box h1 {
+      font-family: 'Inter', sans-serif;
+      font-size: 24px; font-weight: 700; letter-spacing: -0.5px; color: #111;
+    }
+
+    .header-box p {
+      font-size: 14px; color: #555555; font-weight: 400;
+      margin-left: 38px; 
+    }
+
+    /* List Style Container */
+    .list-container {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    /* Each List Item */
+    .list-item {
+      background: #FFFFFF;
+      border: 1px solid #E5E7EB;
+      border-radius: 14px;
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    }
+    
+    .list-item:active { transform: scale(0.98); }
+    .list-item:hover { box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+
+    .item-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .item-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #555555;
+    }
+    .item-icon svg { width: 26px; height: 26px; stroke-width: 1.8; }
+
+    .item-text h3 {
+      font-family: 'Inter', sans-serif;
+      font-size: 17px;
+      font-weight: 700;
+      color: #111;
+      margin-bottom: 2px;
+    }
+
+    .item-text p {
+      font-size: 13px;
+      color: #6B7280;
+      font-weight: 400;
+    }
+
+    .item-arrow {
+      font-size: 22px;
+      color: #888;
+      font-weight: bold;
+      margin-left: 10px;
+    }
+
+    @media (max-width: 359px) {
+      .item-text h3 { font-size: 15px; }
+      .item-text p { font-size: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="custom-top-bar">
+    <div class="left-section">
+      <a href="index.html" class="back-btn">←</a>
+      <div class="title-area">Website Management</div>
+    </div>
+  </header>
+
+  <main id="page-content" class="page">
+    
+    <!-- Grey Header -->
+    <div class="header-box">
+      <div class="title-row">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path></svg>
+        <h1>Design Studio</h1>
+      </div>
+      <p>Choose a group to customize your website</p>
+    </div>
+
+    <!-- 5 Groups List -->
+    <div class="list-container">
+      
+      <!-- Group 1: Look & Theme -->
+      <a href="look-theme.html" class="list-item">
+        <div class="item-left">
+          <div class="item-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="13.5" cy="6.5" r=".5"></circle><circle cx="17.5" cy="10.5" r=".5"></circle><circle cx="8.5" cy="7.5" r=".5"></circle><circle cx="6.5" cy="12.5" r=".5"></circle><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"></path></svg>
+          </div>
+          <div class="item-text">
+            <h3>Look & Theme</h3>
+            <p>Colors, fonts, and basic design</p>
+          </div>
+        </div>
+        <span class="item-arrow">›</span>
+      </a>
+
+      <!-- Group 2: Header & Layout (Link Fixed) -->
+      <a href="header-layout.html" class="list-item">
+        <div class="item-left">
+          <div class="item-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="3" y1="15" x2="21" y2="15"></line></svg>
+          </div>
+          <div class="item-text">
+            <h3>Header & Layout</h3>
+            <p>Menu, header, footer, and structure</p>
+          </div>
+        </div>
+        <span class="item-arrow">›</span>
+      </a>
+
+      <!-- Group 3 -->
+      <a href="products-design.html" class="list-item">
+        <div class="item-left">
+          <div class="item-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+          </div>
+          <div class="item-text">
+            <h3>Products Design</h3>
+            <p>Cards, images, grid, and badges</p>
+          </div>
+        </div>
+        <span class="item-arrow">›</span>
+      </a>
+
+      <!-- Group 4 -->
+      <a href="buttons-forms.html" class="list-item">
+        <div class="item-left">
+          <div class="item-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+          </div>
+          <div class="item-text">
+            <h3>Buttons & Forms</h3>
+            <p>Buttons, inputs, filters, and effects</p>
+          </div>
+        </div>
+        <span class="item-arrow">›</span>
+      </a>
+
+      <!-- Group 5 -->
+      <a href="responsive-advanced.html" class="list-item">
+        <div class="item-left">
+          <div class="item-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+          </div>
+          <div class="item-text">
+            <h3>Responsive & Advanced</h3>
+            <p>Mobile, desktop, and advanced styling</p>
+          </div>
+        </div>
+        <span class="item-arrow">›</span>
+      </a>
+
+    </div>
+  </main>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+  <script src="../../js/supabase-config.js"></script>
+  <script src="../../js/auth.js"></script>
+
+  <script>
+    (async function () {
+      try {
+        if (typeof db === 'undefined' || !db?.auth) { window.location.replace('../../index.html'); return; }
+        if (typeof requireLogin !== 'function') { window.location.replace('../../index.html'); return; }
+        const session = await requireLogin();
+        if (!session) return;
+
+        document.body.style.visibility = 'visible';
+
+        // Load Sidebar
+        function loadScript(src, attributes = {}) {
+          return new Promise((resolve, reject) => {
+            const script = document.createElement('script');
+            script.src = src;
+            Object.entries(attributes).forEach(([key, value]) => { script.setAttribute(key, value); });
+            script.onload = resolve;
+            script.onerror = () => reject(new Error('Script load failed: ' + src));
+            document.body.appendChild(script);
+          });
+        }
+
+        await loadScript('../../js/sidebar.js', { 'data-root': '../../', 'data-active': 'website' });
+
+        setTimeout(() => {
+            const oldMenuBtn = document.getElementById('menuBtn');
+            const container = document.getElementById('sidebar-toggle-container');
+            if (oldMenuBtn && container) { container.appendChild(oldMenuBtn); }
+        }, 100);
+
+      } catch (error) {
+        console.error('Design Studio error:', error);
+        window.location.replace('../../index.html');
+      }
+    })();
+  </script>
+</body>
+</html>

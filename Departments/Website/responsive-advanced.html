@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Responsive & Advanced - Design Studio</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&family=Roboto:wght@400;500;700&family=Poppins:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../../css/theme.css">
+  <link rel="stylesheet" href="../../css/layout.css">
+  
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      visibility: hidden;
+      font-family: 'Roboto', sans-serif;
+      background-color: #F8F9FA;
+      color: #111;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .topbar, .app-header { display: none !important; }
+
+    /* Top Bar */
+    .custom-top-bar {
+      position: fixed; top: 0; left: 0; right: 0;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 12px 16px; background: #fff;
+      border-bottom: 1px solid #E5E7EB; gap: 10px; z-index: 100;
+    }
+
+    .left-section { display: flex; align-items: center; gap: 10px; flex: 1; min-width: 0; }
+
+    .back-btn {
+        display: flex; align-items: center; justify-content: center;
+        width: 40px; height: 40px;
+        background: #fff; border: 1px solid #E5E7EB; 
+        border-radius: 10px; cursor: pointer; color: #111; flex-shrink: 0;
+        text-decoration: none; font-size: 20px;
+    }
+    .back-btn:hover { background: #F3F4F6; }
+
+    .title-area {
+      font-family: 'Inter', sans-serif; font-size: 20px;
+      font-weight: 700; color: #111; white-space: nowrap;
+      overflow: hidden; text-overflow: ellipsis;
+    }
+
+    /* Main Layout */
+    .page { 
+      padding: 85px 16px 40px; 
+      max-width: 720px; margin: auto; min-height: 100vh; 
+    }
+
+    /* Header Box (Grey) */
+    .header-box {
+      background: #E5E7EB;
+      color: #111111;
+      border-radius: 12px;
+      padding: 20px 16px;
+      margin-bottom: 20px;
+    }
+    
+    .header-box .title-row {
+      display: flex; align-items: center; gap: 10px; margin-bottom: 6px;
+    }
+
+    .header-box svg { width: 28px; height: 28px; stroke: #111; }
+    
+    .header-box h1 {
+      font-family: 'Inter', sans-serif;
+      font-size: 24px; font-weight: 700; letter-spacing: -0.5px; color: #111;
+    }
+
+    .header-box p {
+      font-size: 14px; color: #555555; font-weight: 400;
+      margin-left: 38px; 
+    }
+
+    /* Scope Selector */
+    .scope-container { margin-bottom: 20px; }
+
+    .scope-select {
+      width: 100%; padding: 12px 16px;
+      border: 1px solid #E5E7EB; border-radius: 10px;
+      font-size: 14px; font-weight: 600;
+      font-family: 'Inter', sans-serif;
+      outline: none; background: #fff; cursor: pointer;
+    }
+
+    /* Accordion Styling */
+    .accordion-container {
+      display: flex; flex-direction: column; gap: 10px;
+    }
+
+    .accordion-item {
+      background: #FFFFFF; border: 1px solid #E5E7EB;
+      border-radius: 12px; overflow: hidden;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    }
+
+    .accordion-header {
+      padding: 16px; display: flex;
+      justify-content: space-between; align-items: center;
+      cursor: pointer; background: #FFFFFF;
+      transition: background 0.2s;
+    }
+
+    .accordion-header:hover { background: #F9FAFB; }
+
+    .accordion-header-left {
+      display: flex; align-items: center; gap: 12px;
+      font-family: 'Inter', sans-serif;
+      font-size: 15px; font-weight: 600; color: #111;
+    }
+
+    .accordion-icon {
+      width: 22px; height: 22px;
+      stroke: #555555; flex-shrink: 0;
+    }
+
+    .accordion-arrow {
+      font-size: 14px; color: #888;
+      transition: transform 0.3s ease;
+    }
+
+    .accordion-item.active .accordion-arrow {
+      transform: rotate(180deg);
+    }
+
+    .accordion-content {
+      display: none; padding: 16px;
+      border-top: 1px solid #E5E7EB;
+      background: #F9FAFB;
+    }
+
+    .accordion-item.active .accordion-content {
+      display: block;
+    }
+
+    /* Form Fields */
+    .form-group { margin-bottom: 14px; }
+    .form-group:last-child { margin-bottom: 0; }
+    .form-label { display: block; font-size: 13px; font-weight: 600; color: #333; margin-bottom: 6px; }
+    
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+    .form-input, .form-select, .form-color {
+      width: 100%; padding: 10px 12px;
+      border: 1px solid #D1D5DB; border-radius: 8px;
+      font-size: 14px; outline: none; background: #FFF;
+    }
+    .form-color { padding: 4px; height: 42px; cursor: pointer; }
+
+    /* Button Group */
+    .btn-group {
+      display: flex; gap: 10px; margin-top: 16px;
+    }
+
+    .save-btn, .reset-btn {
+      flex: 1; padding: 12px; border: none;
+      border-radius: 8px; font-size: 14px;
+      font-weight: 600; font-family: 'Inter', sans-serif;
+      cursor: pointer;
+    }
+    .save-btn { background: #1C1C1C; color: #FFF; }
+    .save-btn:hover { background: #333; }
+    .reset-btn { background: #F3F4F6; color: #333; border: 1px solid #E5E7EB; }
+    .reset-btn:hover { background: #E5E7EB; }
+
+  </style>
+</head>
+<body>
+
+  <header class="custom-top-bar">
+    <div class="left-section">
+      <a href="design-studio.html" class="back-btn">←</a>
+      <div class="title-area">Design Studio</div>
+    </div>
+  </header>
+
+  <main id="page-content" class="page">
+    
+    <!-- Grey Header -->
+    <div class="header-box">
+      <div class="title-row">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+        <h1>Responsive & Advanced</h1>
+      </div>
+      <p>Mobile, desktop, and advanced styling</p>
+    </div>
+
+    <!-- Scope Selector -->
+    <div class="scope-container">
+      <select id="scopeSelect" class="scope-select">
+        <option value="both">Both Websites</option>
+        <option value="installment">Installment Website</option>
+        <option value="cash">Cash Website</option>
+      </select>
+    </div>
+
+    <!-- 3 Accordions -->
+    <div class="accordion-container">
+      
+      <!-- 1. Responsive & Device Design -->
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <div class="accordion-header-left">
+            <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
+            Responsive & Device Design
+          </div>
+          <span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-content">
+          
+          <div class="form-group">
+            <label class="form-label">Mobile Menu Style</label>
+            <select class="form-select" id="advMobileMenu">
+              <option value="hamburger">Hamburger</option>
+              <option value="bottom">Bottom Nav Bar</option>
+              <option value="floating">Floating Button</option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Tablet View Columns</label>
+              <select class="form-select" id="advTabletCols">
+                <option value="2">2 Columns</option>
+                <option value="3">3 Columns</option>
+                <option value="4">4 Columns</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Desktop View Columns</label>
+              <select class="form-select" id="advDesktopCols">
+                <option value="3">3 Columns</option>
+                <option value="4">4 Columns</option>
+                <option value="5">5 Columns</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="btn-group">
+            <button class="save-btn" onclick="saveResponsiveSettings()">Save</button>
+            <button class="reset-btn" onclick="resetResponsiveSettings()">Reset</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. Advanced Styling -->
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <div class="accordion-header-left">
+            <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M12 2l3 6 6 1-4 4 1 6-6-3-6 3 1-6-4-4 6-1z"></path></svg>
+            Advanced Styling
+          </div>
+          <span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-content">
+          
+          <div class="form-group">
+            <label class="form-label">Page Load Animation</label>
+            <select class="form-select" id="advLoadAnim">
+              <option value="fade">Fade In</option>
+              <option value="slide">Slide Up</option>
+              <option value="zoom">Zoom In</option>
+              <option value="none">None</option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Enable Dark Mode Toggle</label>
+              <select class="form-select" id="advDarkToggle">
+                <option value="no">No</option>
+                <option value="yes">Yes</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Scroll to Top Button</label>
+              <select class="form-select" id="advScrollTop">
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Custom CSS / Code</label>
+            <textarea class="form-input" id="advCustomCSS" rows="3" placeholder="Paste custom CSS here..."></textarea>
+          </div>
+
+          <div class="btn-group">
+            <button class="save-btn" onclick="saveAdvancedSettings()">Save</button>
+            <button class="reset-btn" onclick="resetAdvancedSettings()">Reset</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. Live Preview & Design Management -->
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <div class="accordion-header-left">
+            <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+            Live Preview & Design Management
+          </div>
+          <span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-content">
+          
+          <div class="form-group">
+            <label class="form-label">Preview Target</label>
+            <select class="form-select" id="advPreviewTarget">
+              <option value="installment">Installment Website</option>
+              <option value="cash">Cash Website</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Design Version</label>
+            <input type="text" class="form-input" id="advDesignVersion" value="v1.0" readonly style="background: #F3F4F6; color: #666;">
+          </div>
+
+          <div class="btn-group">
+            <button class="save-btn" onclick="savePreviewSettings()">Save</button>
+            <button class="reset-btn" onclick="resetPreviewSettings()">Reset</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+  <script src="../../js/supabase-config.js"></script>
+  <script src="../../js/auth.js"></script>
+
+  <script>
+    (async function () {
+      try {
+        if (typeof db === 'undefined' || !db?.auth) { window.location.replace('../../index.html'); return; }
+        if (typeof requireLogin !== 'function') { window.location.replace('../../index.html'); return; }
+        const session = await requireLogin();
+        if (!session) return;
+
+        document.body.style.visibility = 'visible';
+
+        function loadScript(src, attributes = {}) {
+          return new Promise((resolve, reject) => {
+            const script = document.createElement('script');
+            script.src = src;
+            Object.entries(attributes).forEach(([key, value]) => { script.setAttribute(key, value); });
+            script.onload = resolve;
+            script.onerror = () => reject(new Error('Script load failed: ' + src));
+            document.body.appendChild(script);
+          });
+        }
+
+        await loadScript('../../js/sidebar.js', { 'data-root': '../../', 'data-active': 'website' });
+
+        setTimeout(() => {
+            const oldMenuBtn = document.getElementById('menuBtn');
+            const container = document.getElementById('sidebar-toggle-container');
+            if (oldMenuBtn && container) { container.appendChild(oldMenuBtn); }
+        }, 100);
+
+        // ==== Accordion ====
+        window.toggleAccordion = function(header) {
+          const item = header.parentNode;
+          const isActive = item.classList.contains('active');
+          document.querySelectorAll('.accordion-item').forEach(el => el.classList.remove('active'));
+          if (!isActive) item.classList.add('active');
+        };
+
+        // ==== Load All Settings ====
+        async function loadAllSettings() {
+          const scope = document.getElementById('scopeSelect').value;
+          const { data, error } = await db.from('store_settings')
+            .select('setting_key, setting_value')
+            .or(`scope.eq.both,scope.eq.${scope}`);
+          
+          if (error) { console.error(error); return; }
+          
+          const settings = {};
+          if (data) data.forEach(item => { settings[item.setting_key] = item.setting_value; });
+
+          // Responsive
+          if (settings['adv_mobile_menu']) document.getElementById('advMobileMenu').value = settings['adv_mobile_menu'];
+          if (settings['adv_tablet_cols']) document.getElementById('advTabletCols').value = settings['adv_tablet_cols'];
+          if (settings['adv_desktop_cols']) document.getElementById('advDesktopCols').value = settings['adv_desktop_cols'];
+
+          // Advanced
+          if (settings['adv_load_anim']) document.getElementById('advLoadAnim').value = settings['adv_load_anim'];
+          if (settings['adv_dark_toggle']) document.getElementById('advDarkToggle').value = settings['adv_dark_toggle'];
+          if (settings['adv_scroll_top']) document.getElementById('advScrollTop').value = settings['adv_scroll_top'];
+          if (settings['adv_custom_css']) document.getElementById('advCustomCSS').value = settings['adv_custom_css'];
+
+          // Preview
+          if (settings['adv_preview_target']) document.getElementById('advPreviewTarget').value = settings['adv_preview_target'];
+          if (settings['adv_design_version']) document.getElementById('advDesignVersion').value = settings['adv_design_version'];
+        }
+
+        // ==== Save Functions ====
+        window.saveResponsiveSettings = async function() {
+          const scope = document.getElementById('scopeSelect').value;
+          const dataToSave = [
+            { setting_key: 'adv_mobile_menu', setting_value: document.getElementById('advMobileMenu').value, scope: scope },
+            { setting_key: 'adv_tablet_cols', setting_value: document.getElementById('advTabletCols').value, scope: scope },
+            { setting_key: 'adv_desktop_cols', setting_value: document.getElementById('advDesktopCols').value, scope: scope }
+          ];
+          const { error } = await db.from('store_settings').upsert(dataToSave, { onConflict: 'setting_key,scope' });
+          if (error) alert('Error: ' + error.message);
+          else alert('Responsive settings saved for ' + scope + '!');
+        };
+
+        window.saveAdvancedSettings = async function() {
+          const scope = document.getElementById('scopeSelect').value;
+          const dataToSave = [
+            { setting_key: 'adv_load_anim', setting_value: document.getElementById('advLoadAnim').value, scope: scope },
+            { setting_key: 'adv_dark_toggle', setting_value: document.getElementById('advDarkToggle').value, scope: scope },
+            { setting_key: 'adv_scroll_top', setting_value: document.getElementById('advScrollTop').value, scope: scope },
+            { setting_key: 'adv_custom_css', setting_value: document.getElementById('advCustomCSS').value, scope: scope }
+          ];
+          const { error } = await db.from('store_settings').upsert(dataToSave, { onConflict: 'setting_key,scope' });
+          if (error) alert('Error: ' + error.message);
+          else alert('Advanced settings saved for ' + scope + '!');
+        };
+
+        window.savePreviewSettings = async function() {
+          const scope = document.getElementById('scopeSelect').value;
+          const dataToSave = [
+            { setting_key: 'adv_preview_target', setting_value: document.getElementById('advPreviewTarget').value, scope: scope },
+            { setting_key: 'adv_design_version', setting_value: document.getElementById('advDesignVersion').value, scope: scope }
+          ];
+          const { error } = await db.from('store_settings').upsert(dataToSave, { onConflict: 'setting_key,scope' });
+          if (error) alert('Error: ' + error.message);
+          else alert('Preview settings saved for ' + scope + '!');
+        };
+
+        // ==== Reset Functions ====
+        window.resetResponsiveSettings = function() {
+          document.getElementById('advMobileMenu').value = 'hamburger';
+          document.getElementById('advTabletCols').value = '2';
+          document.getElementById('advDesktopCols').value = '4';
+        };
+
+        window.resetAdvancedSettings = function() {
+          document.getElementById('advLoadAnim').value = 'fade';
+          document.getElementById('advDarkToggle').value = 'no';
+          document.getElementById('advScrollTop').value = 'yes';
+          document.getElementById('advCustomCSS').value = '';
+        };
+
+        window.resetPreviewSettings = function() {
+          document.getElementById('advPreviewTarget').value = 'installment';
+        };
+
+        // Load on start and scope change
+        loadAllSettings();
+        document.getElementById('scopeSelect').addEventListener('change', loadAllSettings);
+
+      } catch (error) {
+        console.error('Responsive & Advanced error:', error);
+        window.location.replace('../../index.html');
+      }
+    })();
+  </script>
+</body>
+</html>

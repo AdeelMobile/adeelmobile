@@ -14,198 +14,57 @@
   
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      visibility: hidden;
-      font-family: 'Roboto', sans-serif;
-      background-color: #F8F9FA;
-      color: #111;
-      -webkit-font-smoothing: antialiased;
-    }
-
+    body { visibility: hidden; font-family: 'Roboto', sans-serif; background-color: #F8F9FA; color: #111; -webkit-font-smoothing: antialiased; }
     .topbar, .app-header { display: none !important; }
 
     /* Top Bar */
-    .custom-top-bar {
-      position: fixed; top: 0; left: 0; right: 0;
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 12px 16px; background: #fff;
-      border-bottom: 1px solid #E5E7EB; gap: 10px; z-index: 100;
-    }
-
+    .custom-top-bar { position: fixed; top: 0; left: 0; right: 0; display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; background: #fff; border-bottom: 1px solid #E5E7EB; gap: 10px; z-index: 100; }
     .left-section { display: flex; align-items: center; gap: 10px; flex: 1; min-width: 0; }
-
-    .back-btn {
-        display: flex; align-items: center; justify-content: center;
-        width: 40px; height: 40px;
-        background: #fff; border: 1px solid #E5E7EB; 
-        border-radius: 10px; cursor: pointer; color: #111; flex-shrink: 0;
-        text-decoration: none; font-size: 20px;
-    }
+    .back-btn { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; background: #fff; border: 1px solid #E5E7EB; border-radius: 10px; cursor: pointer; color: #111; flex-shrink: 0; text-decoration: none; font-size: 20px; }
     .back-btn:hover { background: #F3F4F6; }
-
-    .title-area {
-      font-family: 'Inter', sans-serif; 
-      font-size: 20px;
-      font-weight: 700; 
-      color: #111; 
-      white-space: nowrap;
-      overflow: hidden; 
-      text-overflow: ellipsis;
-    }
+    .title-area { font-family: 'Inter', sans-serif; font-size: 20px; font-weight: 700; color: #111; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
     /* Main Layout */
-    .page { 
-      padding: 85px 16px 40px; 
-      max-width: 720px; margin: auto; min-height: 100vh; 
-    }
+    .page { padding: 85px 16px 40px; max-width: 720px; margin: auto; min-height: 100vh; }
 
-    /* Header Box (Grey) */
-    .header-box {
-      background: #E5E7EB;
-      color: #111111;
-      border-radius: 12px;
-      padding: 20px 16px;
-      margin-bottom: 20px;
-    }
-    
-    .header-box .title-row {
-      display: flex; align-items: center; gap: 10px; margin-bottom: 6px;
-    }
-
+    /* Header Box */
+    .header-box { background: #E5E7EB; color: #111111; border-radius: 12px; padding: 20px 16px; margin-bottom: 20px; }
+    .header-box .title-row { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
     .header-box svg { width: 28px; height: 28px; stroke: #111; }
-    
-    .header-box h1 {
-      font-family: 'Inter', sans-serif;
-      font-size: 24px; font-weight: 700; letter-spacing: -0.5px; color: #111;
-    }
+    .header-box h1 { font-family: 'Inter', sans-serif; font-size: 24px; font-weight: 700; letter-spacing: -0.5px; color: #111; }
+    .header-box p { font-size: 14px; color: #555555; font-weight: 400; margin-left: 38px; }
 
-    .header-box p {
-      font-size: 14px; color: #555555; font-weight: 400;
-      margin-left: 38px; 
-    }
+    /* List Style Container */
+    .list-container { display: flex; flex-direction: column; gap: 12px; }
 
-    /* Accordion Styling */
-    .accordion-container {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .accordion-item {
+    /* List Item (Card) */
+    .list-item {
       background: #FFFFFF;
       border: 1px solid #E5E7EB;
-      border-radius: 12px;
-      overflow: hidden;
+      border-radius: 14px;
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
       box-shadow: 0 2px 4px rgba(0,0,0,0.02);
     }
+    .list-item:active { transform: scale(0.98); }
+    .list-item:hover { box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
 
-    .accordion-header {
-      padding: 16px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      cursor: pointer;
-      background: #FFFFFF;
-      transition: background 0.2s;
-    }
+    .item-left { display: flex; align-items: center; gap: 14px; }
+    .item-icon { display: flex; align-items: center; justify-content: center; color: #555555; }
+    .item-icon svg { width: 26px; height: 26px; stroke-width: 1.8; }
 
-    .accordion-header:hover {
-      background: #F9FAFB;
-    }
-
-    .accordion-header-left {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-family: 'Inter', sans-serif;
-      font-size: 16px; /* Font size barhaya */
-      font-weight: 600;
-      color: #111;
-    }
-
-    /* Icons styling */
-    .accordion-icon {
-      width: 22px;
-      height: 22px;
-      stroke: #555555;
-      flex-shrink: 0;
-    }
-
-    .accordion-arrow {
-      font-size: 14px; color: #888;
-      transition: transform 0.3s ease;
-    }
-
-    .accordion-item.active .accordion-arrow {
-      transform: rotate(180deg);
-    }
-
-    .accordion-content {
-      display: none;
-      padding: 16px;
-      border-top: 1px solid #E5E7EB;
-      background: #F9FAFB;
-    }
-
-    .accordion-item.active .accordion-content {
-      display: block;
-    }
-
-    /* Form Styling */
-    .form-group {
-      margin-bottom: 16px;
-    }
-    .form-group:last-child { margin-bottom: 0; }
-
-    .form-label {
-      display: block;
-      font-size: 14px; /* Font size barhaya */
-      font-weight: 600;
-      color: #333;
-      margin-bottom: 8px;
-    }
-
-    .form-input, .form-select {
-      width: 100%;
-      padding: 12px 14px;
-      border: 1px solid #D1D5DB;
-      border-radius: 8px;
-      font-size: 15px; /* Font size barhaya */
-      font-family: 'Roboto', sans-serif;
-      outline: none;
-      background: #FFF;
-      color: #111;
-    }
-
-    .form-input:focus, .form-select:focus {
-      border-color: #111;
-    }
-
-    .form-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
-
-    .save-btn {
-      padding: 12px 20px;
-      background: #1C1C1C;
-      color: #FFF;
-      border: none;
-      border-radius: 8px;
-      font-size: 15px; /* Font size barhaya */
-      font-weight: 600;
-      font-family: 'Inter', sans-serif;
-      cursor: pointer;
-      margin-top: 10px;
-      width: 100%;
-      transition: background 0.2s;
-    }
-    .save-btn:hover { background: #333; }
+    .item-text h3 { font-family: 'Inter', sans-serif; font-size: 17px; font-weight: 700; color: #111; margin-bottom: 2px; }
+    .item-text p { font-size: 13px; color: #6B7280; font-weight: 400; }
+    .item-arrow { font-size: 22px; color: #888; font-weight: bold; margin-left: 10px; }
 
     @media (max-width: 359px) {
-      .form-row { grid-template-columns: 1fr; }
+      .item-text h3 { font-size: 15px; }
+      .item-text p { font-size: 12px; }
     }
   </style>
 </head>
@@ -220,275 +79,76 @@
 
   <main id="page-content" class="page">
     
-    <!-- Grey Header -->
     <div class="header-box">
       <div class="title-row">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
         <h1>Website Settings</h1>
       </div>
-      <p>Manage all 15 settings in one place</p>
+      <p>Manage website configuration and preferences</p>
     </div>
 
-    <div class="accordion-container">
+    <!-- 4 Categories List -->
+    <div class="list-container">
       
-      <!-- 1. Website Identity & Branding -->
-      <div class="accordion-item">
-        <div class="accordion-header" onclick="toggleAccordion(this)">
-          <div class="accordion-header-left">
-            <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
-            Website Identity & Branding
+      <!-- 1. Basic Settings -->
+      <a href="basic-settings.html" class="list-item">
+        <div class="item-left">
+          <div class="item-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg>
           </div>
-          <span class="accordion-arrow">▼</span>
+          <div class="item-text">
+            <h3>Basic Settings</h3>
+            <p>Identity, contact, and social media</p>
+          </div>
         </div>
-        <div class="accordion-content">
-          <div class="form-group"><label class="form-label">Website Name</label><input type="text" class="form-input" placeholder="Adeel Mobile"></div>
-          <div class="form-group"><label class="form-label">Tagline</label><input type="text" class="form-input" placeholder="Asaan Mahana Iqsaat Par"></div>
-          <div class="form-group"><label class="form-label">Logo URL</label><input type="url" class="form-input" placeholder="https://..."></div>
-          <button class="save-btn">Save Branding</button>
-        </div>
-      </div>
+        <span class="item-arrow">›</span>
+      </a>
 
-      <!-- 2. Contact Information -->
-      <div class="accordion-item">
-        <div class="accordion-header" onclick="toggleAccordion(this)">
-          <div class="accordion-header-left">
-            <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-            Contact Information
+      <!-- 2. Preferences & Layout -->
+      <a href="preferences-settings.html" class="list-item">
+        <div class="item-left">
+          <div class="item-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line><line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line><line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line><line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line><line x1="17" y1="16" x2="23" y2="16"></line></svg>
           </div>
-          <span class="accordion-arrow">▼</span>
+          <div class="item-text">
+            <h3>Preferences & Layout</h3>
+            <p>General, header, and footer configuration</p>
+          </div>
         </div>
-        <div class="accordion-content">
-          <div class="form-group"><label class="form-label">Primary Phone</label><input type="tel" class="form-input" placeholder="03001234567"></div>
-          <div class="form-group"><label class="form-label">Email Address</label><input type="email" class="form-input" placeholder="info@example.com"></div>
-          <div class="form-group"><label class="form-label">Shop Address</label><input type="text" class="form-input" placeholder="Main Bazar, Lahore"></div>
-          <button class="save-btn">Save Contact Info</button>
-        </div>
-      </div>
+        <span class="item-arrow">›</span>
+      </a>
 
-      <!-- 3. WhatsApp & Contact Actions -->
-      <div class="accordion-item">
-        <div class="accordion-header" onclick="toggleAccordion(this)">
-          <div class="accordion-header-left">
-            <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
-            WhatsApp & Contact Actions
+      <!-- 3. Website Info & Legal -->
+      <a href="info-settings.html" class="list-item">
+        <div class="item-left">
+          <div class="item-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
           </div>
-          <span class="accordion-arrow">▼</span>
+          <div class="item-text">
+            <h3>Website Info & Legal</h3>
+            <p>Policies, messages, sharing, and behaviour</p>
+          </div>
         </div>
-        <div class="accordion-content">
-          <div class="form-group"><label class="form-label">WhatsApp Number</label><input type="tel" class="form-input" placeholder="03001234567"></div>
-          <div class="form-group"><label class="form-label">Default WhatsApp Message</label><input type="text" class="form-input" placeholder="Salam! Mujhe details chahiye..."></div>
-          <button class="save-btn">Save WhatsApp</button>
-        </div>
-      </div>
+        <span class="item-arrow">›</span>
+      </a>
 
-      <!-- 4. Social Media Accounts -->
-      <div class="accordion-item">
-        <div class="accordion-header" onclick="toggleAccordion(this)">
-          <div class="accordion-header-left">
-            <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
-            Social Media Accounts
+      <!-- 4. Security & Backup -->
+      <a href="security-settings.html" class="list-item">
+        <div class="item-left">
+          <div class="item-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
           </div>
-          <span class="accordion-arrow">▼</span>
-        </div>
-        <div class="accordion-content">
-          <div class="form-group"><label class="form-label">Facebook Link</label><input type="url" class="form-input" placeholder="https://facebook.com/..."></div>
-          <div class="form-group"><label class="form-label">Instagram Link</label><input type="url" class="form-input" placeholder="https://instagram.com/..."></div>
-          <div class="form-group"><label class="form-label">TikTok Link</label><input type="url" class="form-input" placeholder="https://tiktok.com/..."></div>
-          <div class="form-group"><label class="form-label">YouTube Link</label><input type="url" class="form-input" placeholder="https://youtube.com/..."></div>
-          <button class="save-btn">Save Social Links</button>
-        </div>
-      </div>
-
-      <!-- 5. Website Status & Availability -->
-      <div class="accordion-item">
-        <div class="accordion-header" onclick="toggleAccordion(this)">
-          <div class="accordion-header-left">
-            <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M18.36 6.64a9 9 0 1 1-12.73 0"></path><line x1="12" y1="2" x2="12" y2="12"></line></svg>
-            Website Status & Availability
+          <div class="item-text">
+            <h3>Security & Backup</h3>
+            <p>Access, performance, and settings backup</p>
           </div>
-          <span class="accordion-arrow">▼</span>
         </div>
-        <div class="accordion-content">
-          <div class="form-group">
-            <label class="form-label">Current Status</label>
-            <select class="form-select">
-              <option value="active">Active (Live)</option>
-              <option value="maintenance">Maintenance Mode</option>
-            </select>
-          </div>
-          <button class="save-btn">Save Status</button>
-        </div>
-      </div>
-
-      <!-- 6. General Preferences -->
-      <div class="accordion-item">
-        <div class="accordion-header" onclick="toggleAccordion(this)">
-          <div class="accordion-header-left">
-            <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line><line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line><line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line><line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line><line x1="17" y1="16" x2="23" y2="16"></line></svg>
-            General Preferences
-          </div>
-          <span class="accordion-arrow">▼</span>
-        </div>
-        <div class="accordion-content">
-          <div class="form-group">
-            <label class="form-label">Language</label>
-            <select class="form-select"><option>Urdu</option><option>English</option></select>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Currency</label>
-            <select class="form-select"><option>PKR (Rs.)</option><option>USD ($)</option></select>
-          </div>
-          <button class="save-btn">Save Preferences</button>
-        </div>
-      </div>
-
-      <!-- 7. Header Configuration -->
-      <div class="accordion-item">
-        <div class="accordion-header" onclick="toggleAccordion(this)">
-          <div class="accordion-header-left">
-            <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="3" y1="15" x2="21" y2="15"></line></svg>
-            Header Configuration
-          </div>
-          <span class="accordion-arrow">▼</span>
-        </div>
-        <div class="accordion-content">
-          <div class="form-group"><label class="form-label">Header Background Color</label><input type="color" class="form-input" value="#ffffff"></div>
-          <div class="form-group"><label class="form-label">Show Search Bar</label><select class="form-select"><option>Yes</option><option>No</option></select></div>
-          <button class="save-btn">Save Header</button>
-        </div>
-      </div>
-
-      <!-- 8. Footer Configuration -->
-      <div class="accordion-item">
-        <div class="accordion-header" onclick="toggleAccordion(this)">
-          <div class="accordion-header-left">
-            <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="3" y1="15" x2="21" y2="15"></line></svg>
-            Footer Configuration
-          </div>
-          <span class="accordion-arrow">▼</span>
-        </div>
-        <div class="accordion-content">
-          <div class="form-group"><label class="form-label">Footer Text</label><input type="text" class="form-input" placeholder="Adeel Mobile"></div>
-          <div class="form-group"><label class="form-label">Copyright Text</label><input type="text" class="form-input" placeholder="© 2026 Adeel Mobile"></div>
-          <button class="save-btn">Save Footer</button>
-        </div>
-      </div>
-
-      <!-- 9. Legal & Customer Information -->
-      <div class="accordion-item">
-        <div class="accordion-header" onclick="toggleAccordion(this)">
-          <div class="accordion-header-left">
-            <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-            Legal & Customer Information
-          </div>
-          <span class="accordion-arrow">▼</span>
-        </div>
-        <div class="accordion-content">
-          <div class="form-group"><label class="form-label">Privacy Policy Link</label><input type="url" class="form-input" placeholder="https://..."></div>
-          <div class="form-group"><label class="form-label">Terms & Conditions Link</label><input type="url" class="form-input" placeholder="https://..."></div>
-          <button class="save-btn">Save Legal Info</button>
-        </div>
-      </div>
-
-      <!-- 10. Notifications & Messages -->
-      <div class="accordion-item">
-        <div class="accordion-header" onclick="toggleAccordion(this)">
-          <div class="accordion-header-left">
-            <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
-            Notifications & Messages
-          </div>
-          <span class="accordion-arrow">▼</span>
-        </div>
-        <div class="accordion-content">
-          <div class="form-group"><label class="form-label">Welcome Message</label><input type="text" class="form-input" placeholder="Welcome to Adeel Mobile"></div>
-          <div class="form-group"><label class="form-label">Maintenance Message</label><input type="text" class="form-input" placeholder="We will be back soon!"></div>
-          <button class="save-btn">Save Messages</button>
-        </div>
-      </div>
-
-      <!-- 11. Sharing & Website Links -->
-      <div class="accordion-item">
-        <div class="accordion-header" onclick="toggleAccordion(this)">
-          <div class="accordion-header-left">
-            <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
-            Sharing & Website Links
-          </div>
-          <span class="accordion-arrow">▼</span>
-        </div>
-        <div class="accordion-content">
-          <div class="form-group"><label class="form-label">Website Share Link</label><input type="url" class="form-input" placeholder="https://adeelmobile.netlify.app"></div>
-          <div class="form-group"><label class="form-label">Enable Referral System</label><select class="form-select"><option>Enabled</option><option>Disabled</option></select></div>
-          <button class="save-btn">Save Sharing</button>
-        </div>
-      </div>
-
-      <!-- 12. Default Website Behaviour -->
-      <div class="accordion-item">
-        <div class="accordion-header" onclick="toggleAccordion(this)">
-          <div class="accordion-header-left">
-            <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-            Default Website Behaviour
-          </div>
-          <span class="accordion-arrow">▼</span>
-        </div>
-        <div class="accordion-content">
-          <div class="form-group"><label class="form-label">Default Page on Load</label><select class="form-select"><option>Homepage</option><option>Installments</option><option>Cash Website</option></select></div>
-          <button class="save-btn">Save Behaviour</button>
-        </div>
-      </div>
-
-      <!-- 13. Website Access & Security -->
-      <div class="accordion-item">
-        <div class="accordion-header" onclick="toggleAccordion(this)">
-          <div class="accordion-header-left">
-            <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-            Website Access & Security
-          </div>
-          <span class="accordion-arrow">▼</span>
-        </div>
-        <div class="accordion-content">
-          <div class="form-group"><label class="form-label">Admin Login URL</label><input type="text" class="form-input" placeholder="/admin"></div>
-          <div class="form-group"><label class="form-label">Enable 2FA</label><select class="form-select"><option>Enabled</option><option>Disabled</option></select></div>
-          <button class="save-btn">Save Security</button>
-        </div>
-      </div>
-
-      <!-- 14. Website Performance & Technical Settings -->
-      <div class="accordion-item">
-        <div class="accordion-header" onclick="toggleAccordion(this)">
-          <div class="accordion-header-left">
-            <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
-            Website Performance & Technical
-          </div>
-          <span class="accordion-arrow">▼</span>
-        </div>
-        <div class="accordion-content">
-          <div class="form-group"><label class="form-label">Image Optimization</label><select class="form-select"><option>Auto</option><option>Manual</option></select></div>
-          <div class="form-group"><label class="form-label">Caching</label><select class="form-select"><option>Enabled</option><option>Disabled</option></select></div>
-          <button class="save-btn">Save Performance</button>
-        </div>
-      </div>
-
-      <!-- 15. Settings Management & Backup -->
-      <div class="accordion-item">
-        <div class="accordion-header" onclick="toggleAccordion(this)">
-          <div class="accordion-header-left">
-            <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-            Settings Management & Backup
-          </div>
-          <span class="accordion-arrow">▼</span>
-        </div>
-        <div class="accordion-content">
-          <div class="form-group"><label class="form-label">Export Settings</label><button class="save-btn" style="background:#4CAF50; margin-top:0;">Download Backup (JSON)</button></div>
-          <div class="form-group"><label class="form-label">Import Settings</label><input type="file" class="form-input"></div>
-          <button class="save-btn" style="background:#C62828;">Reset All Settings</button>
-        </div>
-      </div>
+        <span class="item-arrow">›</span>
+      </a>
 
     </div>
   </main>
 
-  <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
   <script src="../../js/supabase-config.js"></script>
   <script src="../../js/auth.js"></script>
@@ -503,7 +163,6 @@
 
         document.body.style.visibility = 'visible';
 
-        // Load Sidebar
         function loadScript(src, attributes = {}) {
           return new Promise((resolve, reject) => {
             const script = document.createElement('script');
@@ -522,20 +181,6 @@
             const container = document.getElementById('sidebar-toggle-container');
             if (oldMenuBtn && container) { container.appendChild(oldMenuBtn); }
         }, 100);
-
-        // ==== Accordion Logic ====
-        window.toggleAccordion = function(header) {
-          const item = header.parentNode;
-          const isActive = item.classList.contains('active');
-          
-          // Close all
-          document.querySelectorAll('.accordion-item').forEach(el => el.classList.remove('active'));
-          
-          // Open clicked if not already open
-          if (!isActive) {
-            item.classList.add('active');
-          }
-        };
 
       } catch (error) {
         console.error('Settings error:', error);

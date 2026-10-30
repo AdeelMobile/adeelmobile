@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Website Info & Legal - Website Settings</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../../css/theme.css">
+  <link rel="stylesheet" href="../../css/layout.css">
+  
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { visibility: hidden; font-family: 'Roboto', sans-serif; background-color: #F8F9FA; color: #111; -webkit-font-smoothing: antialiased; }
+    .topbar, .app-header { display: none !important; }
+
+    .custom-top-bar { position: fixed; top: 0; left: 0; right: 0; display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; background: #fff; border-bottom: 1px solid #E5E7EB; gap: 10px; z-index: 100; }
+    .left-section { display: flex; align-items: center; gap: 10px; flex: 1; min-width: 0; }
+    .back-btn { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; background: #fff; border: 1px solid #E5E7EB; border-radius: 10px; cursor: pointer; color: #111; flex-shrink: 0; text-decoration: none; font-size: 20px; }
+    .back-btn:hover { background: #F3F4F6; }
+    .title-area { font-family: 'Inter', sans-serif; font-size: 20px; font-weight: 700; color: #111; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+    .page { padding: 85px 16px 40px; max-width: 720px; margin: auto; min-height: 100vh; }
+
+    .header-box { background: #E5E7EB; color: #111111; border-radius: 12px; padding: 20px 16px; margin-bottom: 20px; }
+    .header-box .title-row { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
+    .header-box svg { width: 28px; height: 28px; stroke: #111; }
+    .header-box h1 { font-family: 'Inter', sans-serif; font-size: 24px; font-weight: 700; letter-spacing: -0.5px; color: #111; }
+    .header-box p { font-size: 14px; color: #555555; font-weight: 400; margin-left: 38px; }
+
+    .scope-container { margin-bottom: 20px; }
+    .scope-select { width: 100%; padding: 12px 16px; border: 1px solid #E5E7EB; border-radius: 10px; font-size: 14px; font-weight: 600; font-family: 'Inter', sans-serif; outline: none; background: #fff; cursor: pointer; }
+
+    .accordion-container { display: flex; flex-direction: column; gap: 10px; }
+    .accordion-item { background: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+    .accordion-header { padding: 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; background: #FFFFFF; transition: background 0.2s; }
+    .accordion-header:hover { background: #F9FAFB; }
+    .accordion-header-left { display: flex; align-items: center; gap: 12px; font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 600; color: #111; }
+    .accordion-icon { width: 22px; height: 22px; stroke: #555555; flex-shrink: 0; }
+    .accordion-arrow { font-size: 14px; color: #888; transition: transform 0.3s ease; }
+    .accordion-item.active .accordion-arrow { transform: rotate(180deg); }
+    .accordion-content { display: none; padding: 16px; border-top: 1px solid #E5E7EB; background: #F9FAFB; }
+    .accordion-item.active .accordion-content { display: block; }
+
+    .form-group { margin-bottom: 14px; }
+    .form-group:last-child { margin-bottom: 0; }
+    .form-label { display: block; font-size: 13px; font-weight: 600; color: #333; margin-bottom: 6px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .form-input, .form-select, .form-textarea { width: 100%; padding: 10px 12px; border: 1px solid #D1D5DB; border-radius: 8px; font-size: 14px; outline: none; background: #FFF; font-family: 'Roboto', sans-serif; }
+    .form-textarea { resize: vertical; min-height: 80px; }
+
+    .btn-group { display: flex; gap: 10px; margin-top: 16px; }
+    .save-btn, .reset-btn { flex: 1; padding: 12px; border: none; border-radius: 8px; font-size: 14px; font-weight: 600; font-family: 'Inter', sans-serif; cursor: pointer; }
+    .save-btn { background: #1C1C1C; color: #FFF; }
+    .save-btn:hover { background: #333; }
+    .reset-btn { background: #F3F4F6; color: #333; border: 1px solid #E5E7EB; }
+    .reset-btn:hover { background: #E5E7EB; }
+  </style>
+</head>
+<body>
+
+  <header class="custom-top-bar">
+    <div class="left-section">
+      <a href="website-settings.html" class="back-btn">←</a>
+      <div class="title-area">Website Settings</div>
+    </div>
+  </header>
+
+  <main id="page-content" class="page">
+    
+    <div class="header-box">
+      <div class="title-row">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+        <h1>Website Info & Legal</h1>
+      </div>
+      <p>Policies, messages, sharing, and behaviour</p>
+    </div>
+
+    <div class="scope-container">
+      <select id="scopeSelect" class="scope-select">
+        <option value="both">Both Websites</option>
+        <option value="installment">Installment Website</option>
+        <option value="cash">Cash Website</option>
+      </select>
+    </div>
+
+    <div class="accordion-container">
+      
+      <!-- 1. Legal & Customer Information -->
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <div class="accordion-header-left">
+            <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="M9 12l2 2 4-4"></path></svg>
+            Legal & Customer Information
+          </div>
+          <span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-content">
+          <div class="form-group">
+            <label class="form-label">Privacy Policy Text</label>
+            <textarea class="form-textarea" id="infoPrivacyText">We value your privacy. Your data is secure with us.</textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Terms & Conditions Text</label>
+            <textarea class="form-textarea" id="infoTermsText">By using this website, you agree to our terms and conditions.</textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Return Policy Text</label>
+            <textarea class="form-textarea" id="infoReturnText">Returns are accepted within 7 days of purchase with valid receipt.</textarea>
+          </div>
+          <div class="btn-group">
+            <button class="save-btn" onclick="saveLegalSettings()">Save</button>
+            <button class="reset-btn" onclick="resetLegalSettings()">Reset</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. Notifications & Messages -->
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <div class="accordion-header-left">
+            <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+            Notifications & Messages
+          </div>
+          <span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-content">
+          <div class="form-group">
+            <label class="form-label">Success Message</label>
+            <input type="text" class="form-input" id="infoSuccessMsg" value="Your order has been placed successfully!">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Error Message</label>
+            <input type="text" class="form-input" id="infoErrorMsg" value="Something went wrong. Please try again.">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Empty Cart Message</label>
+            <input type="text" class="form-input" id="infoEmptyCartMsg" value="Your cart is currently empty.">
+          </div>
+          <div class="btn-group">
+            <button class="save-btn" onclick="saveNotificationSettings()">Save</button>
+            <button class="reset-btn" onclick="resetNotificationSettings()">Reset</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. Sharing & Website Links -->
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <div class="accordion-header-left">
+            <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+            Sharing & Website Links
+          </div>
+          <span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-content">
+          <div class="form-group">
+            <label class="form-label">Share Title</label>
+            <input type="text" class="form-input" id="infoShareTitle" value="Adeel Mobile - Best Mobile Shop in Town">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Share Description</label>
+            <textarea class="form-textarea" id="infoShareDesc">Check out Adeel Mobile for the latest mobile phones at the best prices.</textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Share Image URL</label>
+            <input type="url" class="form-input" id="infoShareImg" value="https://adeelmobile.pages.dev/assets/share.jpg">
+          </div>
+          <div class="btn-group">
+            <button class="save-btn" onclick="saveSharingSettings()">Save</button>
+            <button class="reset-btn" onclick="resetSharingSettings()">Reset</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. Default Website Behaviour -->
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <div class="accordion-header-left">
+            <svg class="accordion-icon" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+            Default Website Behaviour
+          </div>
+          <span class="accordion-arrow">▼</span>
+        </div>
+        <div class="accordion-content">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Landing Page</label>
+              <select class="form-select" id="infoLandingPage">
+                <option value="home">Home</option>
+                <option value="shop">Shop</option>
+                <option value="installments">Installments</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Auto-play Sliders</label>
+              <select class="form-select" id="infoAutoPlaySlider">
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+              </select>
+            </div>
+          </div>
+          <div class="btn-group">
+            <button class="save-btn" onclick="saveBehaviourSettings()">Save</button>
+            <button class="reset-btn" onclick="resetBehaviourSettings()">Reset</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+  <script src="../../js/supabase-config.js"></script>
+  <script src="../../js/auth.js"></script>
+
+  <script>
+    (async function () {
+      try {
+        if (typeof db === 'undefined' || !db?.auth) { window.location.replace('../../index.html'); return; }
+        if (typeof requireLogin !== 'function') { window.location.replace('../../index.html'); return; }
+        const session = await requireLogin();
+        if (!session) return;
+
+        document.body.style.visibility = 'visible';
+
+        function loadScript(src, attributes = {}) {
+          return new Promise((resolve, reject) => {
+            const script = document.createElement('script');
+            script.src = src;
+            Object.entries(attributes).forEach(([key, value]) => { script.setAttribute(key, value); });
+            script.onload = resolve;
+            script.onerror = () => reject(new Error('Script load failed: ' + src));
+            document.body.appendChild(script);
+          });
+        }
+        await loadScript('../../js/sidebar.js', { 'data-root': '../../', 'data-active': 'website' });
+        setTimeout(() => {
+            const oldMenuBtn = document.getElementById('menuBtn');
+            const container = document.getElementById('sidebar-toggle-container');
+            if (oldMenuBtn && container) { container.appendChild(oldMenuBtn); }
+        }, 100);
+
+        window.toggleAccordion = function(header) {
+          const item = header.parentNode;
+          const isActive = item.classList.contains('active');
+          document.querySelectorAll('.accordion-item').forEach(el => el.classList.remove('active'));
+          if (!isActive) item.classList.add('active');
+        };
+
+        async function loadAllSettings() {
+          const scope = document.getElementById('scopeSelect').value;
+          const { data, error } = await db.from('store_settings').select('setting_key, setting_value').or(`scope.eq.both,scope.eq.${scope}`);
+          if (error) { console.error(error); return; }
+          const settings = {};
+          if (data) data.forEach(item => { settings[item.setting_key] = item.setting_value; });
+
+          if (settings['info_privacy_text']) document.getElementById('infoPrivacyText').value = settings['info_privacy_text'];
+          if (settings['info_terms_text']) document.getElementById('infoTermsText').value = settings['info_terms_text'];
+          if (settings['info_return_text']) document.getElementById('infoReturnText').value = settings['info_return_text'];
+          
+          if (settings['info_success_msg']) document.getElementById('infoSuccessMsg').value = settings['info_success_msg'];
+          if (settings['info_error_msg']) document.getElementById('infoErrorMsg').value = settings['info_error_msg'];
+          if (settings['info_empty_cart_msg']) document.getElementById('infoEmptyCartMsg').value = settings['info_empty_cart_msg'];
+          
+          if (settings['info_share_title']) document.getElementById('infoShareTitle').value = settings['info_share_title'];
+          if (settings['info_share_desc']) document.getElementById('infoShareDesc').value = settings['info_share_desc'];
+          if (settings['info_share_img']) document.getElementById('infoShareImg').value = settings['info_share_img'];
+          
+          if (settings['info_landing_page']) document.getElementById('infoLandingPage').value = settings['info_landing_page'];
+          if (settings['info_autoplay_slider']) document.getElementById('infoAutoPlaySlider').value = settings['info_autoplay_slider'];
+        }
+
+        window.saveLegalSettings = async function() {
+          const scope = document.getElementById('scopeSelect').value;
+          const dataToSave = [
+            { setting_key: 'info_privacy_text', setting_value: document.getElementById('infoPrivacyText').value, scope: scope },
+            { setting_key: 'info_terms_text', setting_value: document.getElementById('infoTermsText').value, scope: scope },
+            { setting_key: 'info_return_text', setting_value: document.getElementById('infoReturnText').value, scope: scope }
+          ];
+          await db.from('store_settings').upsert(dataToSave, { onConflict: 'setting_key,scope' });
+          alert('Legal info saved!');
+        };
+
+        window.saveNotificationSettings = async function() {
+          const scope = document.getElementById('scopeSelect').value;
+          const dataToSave = [
+            { setting_key: 'info_success_msg', setting_value: document.getElementById('infoSuccessMsg').value, scope: scope },
+            { setting_key: 'info_error_msg', setting_value: document.getElementById('infoErrorMsg').value, scope: scope },
+            { setting_key: 'info_empty_cart_msg', setting_value: document.getElementById('infoEmptyCartMsg').value, scope: scope }
+          ];
+          await db.from('store_settings').upsert(dataToSave, { onConflict: 'setting_key,scope' });
+          alert('Notifications saved!');
+        };
+
+        window.saveSharingSettings = async function() {
+          const scope = document.getElementById('scopeSelect').value;
+          const dataToSave = [
+            { setting_key: 'info_share_title', setting_value: document.getElementById('infoShareTitle').value, scope: scope },
+            { setting_key: 'info_share_desc', setting_value: document.getElementById('infoShareDesc').value, scope: scope },
+            { setting_key: 'info_share_img', setting_value: document.getElementById('infoShareImg').value, scope: scope }
+          ];
+          await db.from('store_settings').upsert(dataToSave, { onConflict: 'setting_key,scope' });
+          alert('Sharing settings saved!');
+        };
+
+        window.saveBehaviourSettings = async function() {
+          const scope = document.getElementById('scopeSelect').value;
+          const dataToSave = [
+            { setting_key: 'info_landing_page', setting_value: document.getElementById('infoLandingPage').value, scope: scope },
+            { setting_key: 'info_autoplay_slider', setting_value: document.getElementById('infoAutoPlaySlider').value, scope: scope }
+          ];
+          await db.from('store_settings').upsert(dataToSave, { onConflict: 'setting_key,scope' });
+          alert('Behaviour settings saved!');
+        };
+
+        window.resetLegalSettings = function() {
+          document.getElementById('infoPrivacyText').value = 'We value your privacy. Your data is secure with us.';
+          document.getElementById('infoTermsText').value = 'By using this website, you agree to our terms and conditions.';
+          document.getElementById('infoReturnText').value = 'Returns are accepted within 7 days of purchase with valid receipt.';
+        };
+        window.resetNotificationSettings = function() {
+          document.getElementById('infoSuccessMsg').value = 'Your order has been placed successfully!';
+          document.getElementById('infoErrorMsg').value = 'Something went wrong. Please try again.';
+          document.getElementById('infoEmptyCartMsg').value = 'Your cart is currently empty.';
+        };
+        window.resetSharingSettings = function() {
+          document.getElementById('infoShareTitle').value = 'Adeel Mobile - Best Mobile Shop in Town';
+          document.getElementById('infoShareDesc').value = 'Check out Adeel Mobile for the latest mobile phones at the best prices.';
+          document.getElementById('infoShareImg').value = 'https://adeelmobile.pages.dev/assets/share.jpg';
+        };
+        window.resetBehaviourSettings = function() {
+          document.getElementById('infoLandingPage').value = 'home';
+          document.getElementById('infoAutoPlaySlider').value = 'yes';
+        };
+
+        loadAllSettings();
+        document.getElementById('scopeSelect').addEventListener('change', loadAllSettings);
+
+      } catch (error) {
+        console.error('Info Settings error:', error);
+        window.location.replace('../../index.html');
+      }
+    })();
+  </script>
+</body>
+</html>

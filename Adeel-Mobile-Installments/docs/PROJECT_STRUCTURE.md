@@ -11,6 +11,9 @@ legacy project paths at repository root (including `Departments/`, `Testing/`,
 
 ## Verified project layout
 
+The tree below shows the key application paths; empty `.gitkeep` placeholders and their
+scaffolding-only subdirectories are omitted for readability.
+
 ```text
 Adeel-Mobile-Installments/
 ├── README.md

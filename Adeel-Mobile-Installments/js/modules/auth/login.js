@@ -60,7 +60,7 @@
       return;
     }
 
-    if (!/^\\d{4}$/.test(password)) {
+    if (!/^\d{4}$/.test(password)) {
       showMessage("Please enter exactly 4 numeric digits for your password.");
       passwordInput.focus();
       return;

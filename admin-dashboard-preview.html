@@ -1,0 +1,1298 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Adeel Mobile Admin Dashboard</title>
+
+<style>
+:root {
+  --font: Arial, sans-serif;
+  --heading-size: 22px;
+  --subheading-size: 16px;
+  --body-size: 14px;
+  --small-size: 12px;
+  --bg: #f4f4f4;
+  --card: #ffffff;
+  --dark: #171717;
+  --text: #222222;
+  --muted: #777777;
+  --border: #e8e8e8;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  font-size: var(--body-size);
+}
+
+button, input, select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+.app {
+  min-height: 100vh;
+}
+
+/* HEADER */
+
+.header {
+  height: 65px;
+  background: var(--dark);
+  color: white;
+  display: flex;
+  align-items: center;
+  padding: 0 18px;
+  gap: 15px;
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+
+.menu-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 25px;
+}
+
+.logo {
+  width: 37px;
+  height: 37px;
+  border-radius: 9px;
+  background: white;
+  color: black;
+  display: grid;
+  place-items: center;
+  font-size: 21px;
+  font-weight: bold;
+}
+
+.header-title {
+  flex: 1;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.header-subtitle {
+  font-size: 11px;
+  color: #bdbdbd;
+  margin-top: 3px;
+}
+
+.header-icon {
+  font-size: 20px;
+}
+
+/* SIDEBAR */
+
+.sidebar {
+  position: fixed;
+  top: 65px;
+  left: -290px;
+  bottom: 0;
+  width: 275px;
+  background: white;
+  z-index: 30;
+  padding: 18px 12px;
+  overflow-y: auto;
+  transition: .25s;
+  box-shadow: 5px 0 20px #00000012;
+}
+
+.sidebar.open {
+  left: 0;
+}
+
+.sidebar-heading {
+  font-size: 11px;
+  color: #999;
+  font-weight: bold;
+  letter-spacing: 1px;
+  padding: 10px 12px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  width: 100%;
+  padding: 13px 12px;
+  border: none;
+  background: transparent;
+  text-align: left;
+  border-radius: 9px;
+  margin-bottom: 4px;
+  color: #333;
+  font-size: 14px;
+}
+
+.nav-item.active {
+  background: #eaeaea;
+  color: #111;
+  font-weight: bold;
+}
+
+.nav-icon {
+  width: 23px;
+  text-align: center;
+  font-size: 18px;
+}
+
+.sidebar-bottom {
+  border-top: 1px solid var(--border);
+  margin-top: 20px;
+  padding-top: 12px;
+}
+
+.overlay {
+  display: none;
+  position: fixed;
+  inset: 65px 0 0;
+  background: #00000055;
+  z-index: 25;
+}
+
+.overlay.show {
+  display: block;
+}
+
+/* MAIN */
+
+.main {
+  max-width: 1200px;
+  margin: auto;
+  padding: 24px 20px 50px;
+}
+
+.page-heading {
+  font-size: var(--heading-size);
+  font-weight: 750;
+  margin-bottom: 6px;
+}
+
+.page-description {
+  font-size: var(--body-size);
+  color: var(--muted);
+  margin-bottom: 23px;
+}
+
+.section-heading {
+  font-size: var(--subheading-size);
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+
+.section-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin: 24px 0 13px;
+}
+
+.primary-btn {
+  border: none;
+  background: var(--dark);
+  color: white;
+  padding: 10px 15px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.secondary-btn {
+  background: white;
+  border: 1px solid var(--border);
+  color: #222;
+  padding: 9px 13px;
+  border-radius: 8px;
+}
+
+/* CARDS */
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 13px;
+}
+
+.overview-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 13px;
+  padding: 16px;
+  min-height: 125px;
+  position: relative;
+  user-select: none;
+  touch-action: pan-y;
+  transition: .15s;
+}
+
+.overview-card.dragging {
+  opacity: .45;
+  border: 2px dashed #555;
+}
+
+.overview-card.drag-target {
+  outline: 2px solid #777;
+}
+
+.card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-icon {
+  width: 35px;
+  height: 35px;
+  border-radius: 9px;
+  display: grid;
+  place-items: center;
+  background: #eeeeee;
+  font-size: 18px;
+}
+
+.card-actions {
+  display: flex;
+  gap: 5px;
+}
+
+.card-actions button {
+  border: none;
+  background: #f1f1f1;
+  border-radius: 6px;
+  width: 27px;
+  height: 27px;
+  color: #555;
+}
+
+.card-value {
+  font-size: 23px;
+  font-weight: 750;
+  margin-top: 15px;
+}
+
+.card-name {
+  font-size: var(--body-size);
+  color: #555;
+  margin-top: 4px;
+}
+
+.drag-hint {
+  font-size: 10px;
+  color: #aaa;
+  margin-top: 8px;
+}
+
+/* REPORTS */
+
+.report-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+.report-item {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 15px;
+  border-radius: 11px;
+  background: white;
+  border: 1px solid var(--border);
+}
+
+.report-item .report-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 9px;
+  display: grid;
+  place-items: center;
+  background: #eeeeee;
+  font-size: 19px;
+}
+
+.report-info {
+  flex: 1;
+}
+
+.report-name {
+  font-weight: 700;
+  font-size: var(--body-size);
+}
+
+.report-desc {
+  color: var(--muted);
+  font-size: var(--small-size);
+  margin-top: 4px;
+}
+
+.report-arrow {
+  color: #888;
+  font-size: 20px;
+}
+
+/* PAGES */
+
+.hidden {
+  display: none !important;
+}
+
+.module-box {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 18px;
+  margin-top: 15px;
+}
+
+.module-option {
+  padding: 14px 5px;
+  border-bottom: 1px solid var(--border);
+  font-weight: 600;
+}
+
+.module-option:last-child {
+  border-bottom: none;
+}
+
+/* SETTINGS */
+
+.settings-section {
+  background: white;
+  padding: 17px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  margin-bottom: 15px;
+}
+
+.settings-section h3 {
+  font-size: 16px;
+  margin-bottom: 15px;
+}
+
+.setting-field {
+  margin-bottom: 15px;
+}
+
+.setting-field label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 7px;
+}
+
+.setting-field select,
+.setting-field input {
+  width: 100%;
+  padding: 11px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: white;
+  color: #222;
+}
+
+.setting-note {
+  color: #888;
+  font-size: 11px;
+  margin-top: 5px;
+}
+
+/* MODAL */
+
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: #00000066;
+  z-index: 50;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+}
+
+.modal.show {
+  display: flex;
+}
+
+.modal-box {
+  background: white;
+  width: 100%;
+  max-width: 440px;
+  max-height: 85vh;
+  overflow-y: auto;
+  border-radius: 15px;
+  padding: 20px;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 17px;
+}
+
+.modal-header h2 {
+  font-size: 19px;
+}
+
+.close-btn {
+  border: none;
+  background: #eee;
+  width: 30px;
+  height: 30px;
+  border-radius: 7px;
+  font-size: 18px;
+}
+
+.modal label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  margin: 13px 0 6px;
+}
+
+.modal input,
+.modal select {
+  width: 100%;
+  padding: 11px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 9px;
+  margin-top: 20px;
+}
+
+.modal-actions button {
+  flex: 1;
+}
+
+/* RESPONSIVE */
+
+@media (min-width: 750px) {
+  .cards-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .report-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .main {
+    padding: 30px;
+  }
+}
+
+@media (max-width: 380px) {
+  .main {
+    padding: 18px 13px 40px;
+  }
+
+  .overview-card {
+    padding: 12px;
+  }
+
+  .card-value {
+    font-size: 20px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <!-- HEADER -->
+  <header class="header">
+    <button class="menu-btn" onclick="toggleSidebar()">☰</button>
+
+    <div class="logo">A</div>
+
+    <div class="header-title">
+      ADEEL MOBILE
+      <div class="header-subtitle">Admin Panel</div>
+    </div>
+
+    <div class="header-icon">♧</div>
+  </header>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+
+    <div class="sidebar-heading">MAIN MENU</div>
+
+    <button class="nav-item active"
+      onclick="showPage('dashboard', this)">
+      <span class="nav-icon">▦</span>
+      Main Dashboard
+    </button>
+
+    <div class="sidebar-heading">DEPARTMENTS</div>
+
+    <button class="nav-item"
+      onclick="showPage('Installments', this)">
+      <span class="nav-icon">▣</span>
+      Installments
+      <span style="margin-left:auto">›</span>
+    </button>
+
+    <button class="nav-item"
+      onclick="showPage('Website', this)">
+      <span class="nav-icon">◎</span>
+      Website
+      <span style="margin-left:auto">›</span>
+    </button>
+
+    <button class="nav-item"
+      onclick="showPage('Database', this)">
+      <span class="nav-icon">▤</span>
+      Database
+      <span style="margin-left:auto">›</span>
+    </button>
+
+    <button class="nav-item"
+      onclick="showPage('User Management', this)">
+      <span class="nav-icon">♙</span>
+      User Management
+      <span style="margin-left:auto">›</span>
+    </button>
+
+    <button class="nav-item"
+      onclick="showPage('Social Media', this)">
+      <span class="nav-icon">◉</span>
+      Social Media
+      <span style="margin-left:auto">›</span>
+    </button>
+
+    <button class="nav-item"
+      onclick="showPage('Dropshipping', this)">
+      <span class="nav-icon">▧</span>
+      Dropshipping
+      <span style="margin-left:auto">›</span>
+    </button>
+
+    <button class="nav-item"
+      onclick="showPage('POS', this)">
+      <span class="nav-icon">▣</span>
+      POS
+      <span style="margin-left:auto">›</span>
+    </button>
+
+    <button class="nav-item"
+      onclick="showPage('AI Agents', this)">
+      <span class="nav-icon">✧</span>
+      AI Agents
+      <span style="margin-left:auto">›</span>
+    </button>
+
+    <div class="sidebar-bottom">
+      <button class="nav-item"
+        onclick="showPage('Settings', this)">
+        <span class="nav-icon">⚙</span>
+        Settings
+      </button>
+    </div>
+
+  </aside>
+
+  <div class="overlay" id="overlay"
+    onclick="toggleSidebar()"></div>
+
+  <!-- MAIN CONTENT -->
+  <main class="main">
+
+    <!-- DASHBOARD PAGE -->
+    <section id="dashboardPage">
+
+      <h1 class="page-heading">Main Dashboard</h1>
+      <p class="page-description">
+        Welcome to Adeel Mobile Admin Panel
+      </p>
+
+      <div class="section-row">
+        <h2 class="section-heading">Overview Cards</h2>
+
+        <button class="primary-btn" onclick="openAddModal()">
+          + Add
+        </button>
+      </div>
+
+      <div class="cards-grid" id="cardsGrid"></div>
+
+      <div class="section-row">
+        <h2 class="section-heading">All Reports</h2>
+      </div>
+
+      <div class="report-list" id="reportsList"></div>
+
+    </section>
+
+    <!-- DEPARTMENT PAGE -->
+    <section id="departmentPage" class="hidden">
+      <h1 class="page-heading" id="departmentTitle"></h1>
+      <p class="page-description">
+        Department Management
+      </p>
+
+      <div class="module-box" id="departmentOptions"></div>
+    </section>
+
+    <!-- SETTINGS PAGE -->
+    <section id="settingsPage" class="hidden">
+
+      <h1 class="page-heading">Settings</h1>
+      <p class="page-description">
+        Customize your dashboard appearance
+      </p>
+
+      <div class="settings-section">
+        <h3>Font Family</h3>
+
+        <div class="setting-field">
+          <label>Dashboard Font</label>
+          <select id="fontFamily" onchange="saveFontSettings()">
+            <option value="Arial, sans-serif">Arial / Sans-serif</option>
+            <option value="Roboto, Arial, sans-serif">Roboto</option>
+            <option value="'Roboto', Arial, sans-serif">Roboto Sans</option>
+            <option value="Poppins, Arial, sans-serif">Poppins</option>
+            <option value="'Google Sans', Arial, sans-serif">Google Sans Family</option>
+            <option value="Calibri, Arial, sans-serif">Calibri</option>
+            <option value="Lato, Arial, sans-serif">Lato</option>
+            <option value="Arial, sans-serif">Microsoft Arial</option>
+            <option value="'Segoe UI', Arial, sans-serif">Microsoft Segoe UI</option>
+            <option value="Tahoma, sans-serif">Microsoft Tahoma</option>
+            <option value="Verdana, sans-serif">Microsoft Verdana</option>
+            <option value="Georgia, serif">Georgia</option>
+            <option value="system-ui, sans-serif">System Sans Family</option>
+          </select>
+          <p class="setting-note">
+            Kuch fonts device mein available honay zaroori hain.
+            Google Fonts ko online load karna alag se zaroori ho sakta hai.
+          </p>
+        </div>
+      </div>
+
+      <div class="settings-section">
+        <h3>Heading-wise Font Sizes</h3>
+
+        <div class="setting-field">
+          <label>Main Heading Size</label>
+          <select id="headingSize" onchange="saveFontSettings()">
+            <option value="18px">18px</option>
+            <option value="20px">20px</option>
+            <option value="22px" selected>22px</option>
+            <option value="24px">24px</option>
+            <option value="26px">26px</option>
+            <option value="28px">28px</option>
+            <option value="30px">30px</option>
+          </select>
+        </div>
+
+        <div class="setting-field">
+          <label>Subheading Size</label>
+          <select id="subheadingSize" onchange="saveFontSettings()">
+            <option value="14px">14px</option>
+            <option value="16px" selected>16px</option>
+            <option value="18px">18px</option>
+            <option value="20px">20px</option>
+            <option value="22px">22px</option>
+          </select>
+        </div>
+
+        <div class="setting-field">
+          <label>Normal Text Size</label>
+          <select id="bodySize" onchange="saveFontSettings()">
+            <option value="12px">12px</option>
+            <option value="13px">13px</option>
+            <option value="14px" selected>14px</option>
+            <option value="15px">15px</option>
+            <option value="16px">16px</option>
+            <option value="18px">18px</option>
+          </select>
+        </div>
+
+        <div class="setting-field">
+          <label>Small Text Size</label>
+          <select id="smallSize" onchange="saveFontSettings()">
+            <option value="10px">10px</option>
+            <option value="11px">11px</option>
+            <option value="12px" selected>12px</option>
+            <option value="13px">13px</option>
+            <option value="14px">14px</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="settings-section">
+        <h3>Dashboard Settings</h3>
+        <p style="font-size:13px;color:#777;line-height:1.7">
+          Overview cards ko long press karke move karein.
+          Add button se naye cards add karein.
+          Har card ke Edit aur Delete options bhi available hain.
+        </p>
+        <br>
+        <button class="secondary-btn" onclick="resetSettings()">
+          Reset Font Settings
+        </button>
+      </div>
+
+    </section>
+
+  </main>
+</div>
+
+<!-- ADD / EDIT MODAL -->
+<div class="modal" id="cardModal">
+  <div class="modal-box">
+
+    <div class="modal-header">
+      <h2 id="modalTitle">Add Overview Card</h2>
+      <button class="close-btn" onclick="closeModal()">×</button>
+    </div>
+
+    <label>Select Available Report</label>
+    <select id="reportSelect" onchange="selectReport()"></select>
+
+    <label>Card Name</label>
+    <input id="cardName" placeholder="Enter card name">
+
+    <label>Card Value</label>
+    <input id="cardValue" placeholder="e.g. 0">
+
+    <label>Card Icon</label>
+    <input id="cardIcon" placeholder="e.g. 📊">
+
+    <div class="modal-actions">
+      <button class="secondary-btn" onclick="closeModal()">Cancel</button>
+      <button class="primary-btn" onclick="saveCard()">Save Card</button>
+    </div>
+
+  </div>
+</div>
+
+<script>
+
+/* AVAILABLE REPORTS */
+
+const availableReports = [
+  {id:"sales", name:"Total Sales", icon:"🛍", value:"Rs. 0", desc:"Overall sales overview"},
+  {id:"profit", name:"Total Profit", icon:"📈", value:"Rs. 0", desc:"Overall profit overview"},
+  {id:"users", name:"Total Users", icon:"♙", value:"0", desc:"Registered users"},
+  {id:"applications", name:"Applications", icon:"📄", value:"0", desc:"All customer applications"},
+  {id:"pending", name:"Pending Applications", icon:"◷", value:"0", desc:"Applications awaiting review"},
+  {id:"approved", name:"Approved Applications", icon:"✓", value:"0", desc:"Approved applications"},
+  {id:"orders", name:"Total Orders", icon:"📦", value:"0", desc:"All orders"},
+  {id:"customers", name:"Total Customers", icon:"👥", value:"0", desc:"Customer records"},
+  {id:"products", name:"Total Products", icon:"▤", value:"0", desc:"Products in database"},
+  {id:"website", name:"Website Submissions", icon:"◎", value:"0", desc:"Website form submissions"},
+  {id:"incentives", name:"User Incentives", icon:"٪", value:"Rs. 0", desc:"User profit and incentives"},
+  {id:"advance", name:"Advance Payments", icon:"₹", value:"Rs. 0", desc:"Advance payment records"},
+  {id:"active", name:"Active Installments", icon:"▣", value:"0", desc:"Active installment plans"}
+];
+
+/* DEFAULT DASHBOARD CARDS */
+
+const defaultCards = [
+  {id:"sales",name:"Total Sales",value:"Rs. 0",icon:"🛍"},
+  {id:"profit",name:"Total Profit",value:"Rs. 0",icon:"📈"},
+  {id:"users",name:"Total Users",value:"0",icon:"♙"},
+  {id:"applications",name:"Applications",value:"0",icon:"📄"}
+];
+
+const defaultReports = [
+  {id:"r1",name:"Installment Reports",icon:"▣",desc:"Applications, sales and installment plans"},
+  {id:"r2",name:"Website Reports",icon:"◎",desc:"Website activity and form submissions"},
+  {id:"r3",name:"User Performance",icon:"♙",desc:"Individual user sales and profit"},
+  {id:"r4",name:"Database Reports",icon:"▤",desc:"Brands, models and product records"},
+  {id:"r5",name:"Social Media Reports",icon:"◉",desc:"Posts and social media activity"}
+];
+
+let cards = loadData("adeel_cards", defaultCards);
+let reports = loadData("adeel_reports", defaultReports);
+let editingId = null;
+
+/* LOCAL STORAGE */
+
+function loadData(key, fallback) {
+  try {
+    const data = localStorage.getItem(key);
+    return data ? JSON.parse(data) : JSON.parse(JSON.stringify(fallback));
+  } catch(e) {
+    return JSON.parse(JSON.stringify(fallback));
+  }
+}
+
+function saveData() {
+  localStorage.setItem("adeel_cards", JSON.stringify(cards));
+  localStorage.setItem("adeel_reports", JSON.stringify(reports));
+}
+
+/* SIDEBAR */
+
+function toggleSidebar() {
+  document.getElementById("sidebar").classList.toggle("open");
+  document.getElementById("overlay").classList.toggle("show");
+}
+
+/* PAGE NAVIGATION */
+
+function showPage(page, button) {
+  document.getElementById("dashboardPage").classList.add("hidden");
+  document.getElementById("departmentPage").classList.add("hidden");
+  document.getElementById("settingsPage").classList.add("hidden");
+
+  document.querySelectorAll(".nav-item").forEach(item => {
+    item.classList.remove("active");
+  });
+
+  if(button) button.classList.add("active");
+
+  if(page === "dashboard") {
+    document.getElementById("dashboardPage").classList.remove("hidden");
+  }
+  else if(page === "Settings") {
+    document.getElementById("settingsPage").classList.remove("hidden");
+  }
+  else {
+    document.getElementById("departmentPage").classList.remove("hidden");
+    document.getElementById("departmentTitle").textContent = page;
+    renderDepartment(page);
+  }
+
+  document.getElementById("sidebar").classList.remove("open");
+  document.getElementById("overlay").classList.remove("show");
+}
+
+/* DEPARTMENT PLACEHOLDER */
+
+const departmentOptions = {
+  "Installments": [
+    "Applications",
+    "Orders & Sales",
+    "Customers",
+    "Installment Plans",
+    "Advance Payments",
+    "User Incentives",
+    "Reports"
+  ],
+  "Website": [
+    "Installment Website",
+    "Cash Website",
+    "Website Management",
+    "Website Settings",
+    "Website Reports"
+  ],
+  "Database": [
+    "Brands",
+    "Models",
+    "Variants",
+    "Product Specifications",
+    "Product Images",
+    "Prices"
+  ],
+  "User Management": [
+    "All Users",
+    "Create New User",
+    "User Permissions",
+    "User Performance"
+  ],
+  "Social Media": [
+    "Posts",
+    "Post Planner",
+    "Poster Designs",
+    "Social Media Reports"
+  ],
+  "Dropshipping": [
+    "Products",
+    "Orders",
+    "Markaz Settings",
+    "Reports"
+  ],
+  "POS": [
+    "New Sale",
+    "Sales History",
+    "Customers",
+    "POS Reports"
+  ],
+  "AI Agents": [
+    "AI Assistants",
+    "Automation",
+    "Agent Settings"
+  ]
+};
+
+function renderDepartment(name) {
+  const options = departmentOptions[name] || [];
+
+  document.getElementById("departmentOptions").innerHTML =
+    options.map(option => `
+      <div class="module-option"
+        onclick="alert('${option} screen is a prototype.')">
+        ${option} <span style="float:right;color:#888">›</span>
+      </div>
+    `).join("");
+}
+
+/* RENDER OVERVIEW CARDS */
+
+function renderCards() {
+  const grid = document.getElementById("cardsGrid");
+
+  grid.innerHTML = cards.map(card => `
+    <div class="overview-card"
+      data-id="${card.id}"
+      onpointerdown="startLongPress(event, this)"
+      onpointermove="moveLongPress(event, this)"
+      onpointerup="endLongPress(event, this)"
+      onpointercancel="endLongPress(event, this)"
+      oncontextmenu="return false">
+
+      <div class="card-top">
+        <div class="card-icon">${escapeHTML(card.icon)}</div>
+
+        <div class="card-actions">
+          <button onclick="editCard('${card.id}')"
+            title="Edit">✎</button>
+          <button onclick="deleteCard('${card.id}')"
+            title="Delete">×</button>
+        </div>
+      </div>
+
+      <div class="card-value">${escapeHTML(card.value)}</div>
+      <div class="card-name">${escapeHTML(card.name)}</div>
+      <div class="drag-hint">Hold to move</div>
+    </div>
+  `).join("");
+}
+
+/* RENDER REPORTS */
+
+function renderReports() {
+  document.getElementById("reportsList").innerHTML =
+    reports.map(report => `
+      <div class="report-item"
+        onclick="openReport('${report.id}')">
+
+        <div class="report-icon">${escapeHTML(report.icon)}</div>
+
+        <div class="report-info">
+          <div class="report-name">${escapeHTML(report.name)}</div>
+          <div class="report-desc">${escapeHTML(report.desc)}</div>
+        </div>
+
+        <div class="report-arrow">›</div>
+      </div>
+    `).join("");
+}
+
+function renderAll() {
+  renderCards();
+  renderReports();
+}
+
+/* ADD CARD */
+
+function openAddModal() {
+  editingId = null;
+  document.getElementById("modalTitle").textContent = "Add Overview Card";
+
+  document.getElementById("reportSelect").innerHTML =
+    availableReports.map(report =>
+      `<option value="${report.id}">${escapeHTML(report.name)}</option>`
+    ).join("");
+
+  document.getElementById("cardName").value = "";
+  document.getElementById("cardValue").value = "";
+  document.getElementById("cardIcon").value = "";
+
+  selectReport();
+
+  document.getElementById("cardModal").classList.add("show");
+}
+
+function selectReport() {
+  const id = document.getElementById("reportSelect").value;
+  const report = availableReports.find(r => r.id === id);
+
+  if(!report || editingId) return;
+
+  document.getElementById("cardName").value = report.name;
+  document.getElementById("cardValue").value = report.value;
+  document.getElementById("cardIcon").value = report.icon;
+}
+
+/* EDIT CARD */
+
+function editCard(id) {
+  event.stopPropagation();
+
+  const card = cards.find(c => c.id === id);
+  if(!card) return;
+
+  editingId = id;
+
+  document.getElementById("modalTitle").textContent = "Edit Overview Card";
+
+  document.getElementById("reportSelect").innerHTML =
+    availableReports.map(report =>
+      `<option value="${report.id}">${escapeHTML(report.name)}</option>`
+    ).join("");
+
+  document.getElementById("reportSelect").value = card.id;
+  document.getElementById("cardName").value = card.name;
+  document.getElementById("cardValue").value = card.value;
+  document.getElementById("cardIcon").value = card.icon;
+
+  document.getElementById("cardModal").classList.add("show");
+}
+
+/* SAVE CARD */
+
+function saveCard() {
+  const name = document.getElementById("cardName").value.trim();
+  const value = document.getElementById("cardValue").value.trim();
+  const icon = document.getElementById("cardIcon").value.trim();
+  const selectedId = document.getElementById("reportSelect").value;
+
+  if(!name) {
+    alert("Card name zaroor likhein.");
+    return;
+  }
+
+  if(editingId) {
+    const index = cards.findIndex(c => c.id === editingId);
+
+    if(index !== -1) {
+      cards[index] = {
+        ...cards[index],
+        name,
+        value,
+        icon: icon || "▦"
+      };
+    }
+  }
+  else {
+    if(cards.some(c => c.id === selectedId)) {
+      alert("Ye Overview Card pehle se add hai.");
+      return;
+    }
+
+    cards.push({
+      id:selectedId,
+      name,
+      value,
+      icon:icon || "▦"
+    });
+  }
+
+  saveData();
+  renderCards();
+  closeModal();
+}
+
+/* DELETE CARD */
+
+function deleteCard(id) {
+  event.stopPropagation();
+
+  if(!confirm("Kya aap ye Overview Card delete karna chahte hain?")) {
+    return;
+  }
+
+  cards = cards.filter(card => card.id !== id);
+  saveData();
+  renderCards();
+}
+
+/* CLOSE MODAL */
+
+function closeModal() {
+  document.getElementById("cardModal").classList.remove("show");
+}
+
+/* OPEN REPORT */
+
+function openReport(id) {
+  const report = reports.find(r => r.id === id);
+  if(report) {
+    alert(report.name + "\n\nReport screen ka connection baad mein add hoga.");
+  }
+}
+
+/* LONG PRESS TO REORDER */
+
+let pressTimer = null;
+let activeCard = null;
+let isDragging = false;
+let startX = 0;
+let startY = 0;
+
+function startLongPress(e, element) {
+  if(e.target.closest("button")) return;
+
+  activeCard = element;
+  isDragging = false;
+  startX = e.clientX;
+  startY = e.clientY;
+
+  clearTimeout(pressTimer);
+
+  pressTimer = setTimeout(() => {
+    isDragging = true;
+    activeCard.classList.add("dragging");
+    if(navigator.vibrate) navigator.vibrate(35);
+  }, 550);
+}
+
+function moveLongPress(e, element) {
+  if(!activeCard) return;
+
+  const distance = Math.hypot(
+    e.clientX - startX,
+    e.clientY - startY
+  );
+
+  if(!isDragging && distance > 10) {
+    clearTimeout(pressTimer);
+  }
+
+  if(!isDragging) return;
+
+  e.preventDefault();
+
+  const target = document.elementFromPoint(e.clientX, e.clientY);
+  const targetCard = target?.closest(".overview-card");
+
+  if(targetCard && targetCard !== activeCard) {
+    targetCard.classList.add("drag-target");
+
+    const rect = targetCard.getBoundingClientRect();
+    const after = e.clientX > rect.left + rect.width / 2;
+
+    const grid = document.getElementById("cardsGrid");
+
+    if(after) {
+      grid.insertBefore(activeCard, targetCard.nextSibling);
+    } else {
+      grid.insertBefore(activeCard, targetCard);
+    }
+
+    document.querySelectorAll(".overview-card").forEach(card => {
+      if(card !== activeCard) card.classList.remove("drag-target");
+    });
+  }
+}
+
+function endLongPress() {
+  clearTimeout(pressTimer);
+
+  if(activeCard) {
+    activeCard.classList.remove("dragging");
+  }
+
+  document.querySelectorAll(".overview-card").forEach(card => {
+    card.classList.remove("drag-target");
+  });
+
+  if(isDragging) {
+    const newOrder = [...document.querySelectorAll(".overview-card")]
+      .map(el => el.dataset.id);
+
+    cards.sort((a,b) =>
+      newOrder.indexOf(a.id) - newOrder.indexOf(b.id)
+    );
+
+    saveData();
+  }
+
+  activeCard = null;
+  isDragging = false;
+}
+
+/* FONT SETTINGS */
+
+function saveFontSettings() {
+  const settings = {
+    font:document.getElementById("fontFamily").value,
+    heading:document.getElementById("headingSize").value,
+    subheading:document.getElementById("subheadingSize").value,
+    body:document.getElementById("bodySize").value,
+    small:document.getElementById("smallSize").value
+  };
+
+  localStorage.setItem("adeel_font_settings", JSON.stringify(settings));
+  applyFontSettings(settings);
+}
+
+function applyFontSettings(settings) {
+  document.documentElement.style.setProperty("--font", settings.font);
+  document.documentElement.style.setProperty("--heading-size", settings.heading);
+  document.documentElement.style.setProperty("--subheading-size", settings.subheading);
+  document.documentElement.style.setProperty("--body-size", settings.body);
+  document.documentElement.style.setProperty("--small-size", settings.small);
+}
+
+function loadFontSettings() {
+  const settings = loadData("adeel_font_settings", {
+    font:"Arial, sans-serif",
+    heading:"22px",
+    subheading:"16px",
+    body:"14px",
+    small:"12px"
+  });
+
+  document.getElementById("fontFamily").value = settings.font;
+  document.getElementById("headingSize").value = settings.heading;
+  document.getElementById("subheadingSize").value = settings.subheading;
+  document.getElementById("bodySize").value = settings.body;
+  document.getElementById("smallSize").value = settings.small;
+
+  applyFontSettings(settings);
+}
+
+function resetSettings() {
+  if(!confirm("Font settings default par reset kar dein?")) return;
+
+  localStorage.removeItem("adeel_font_settings");
+  loadFontSettings();
+}
+
+/* BASIC HTML SAFETY */
+
+function escapeHTML(value) {
+  return String(value ?? "").replace(/[&<>"']/g, char => ({
+    "&":"&amp;",
+    "<":"&lt;",
+    ">":"&gt;",
+    '"':"&quot;",
+    "'":"&#39;"
+  })[char]);
+}
+
+/* INITIALIZE */
+
+renderAll();
+loadFontSettings();
+
+</script>
+
+</body>
+</html>

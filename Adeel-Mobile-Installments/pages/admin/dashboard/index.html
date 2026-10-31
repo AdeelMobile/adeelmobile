@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#FDFCF8">
+  <meta name="description" content="Adeel Mobile Installments admin dashboard.">
+  <title>Main Dashboard | Adeel Mobile Installments</title>
+  <link rel="stylesheet" href="../../../css/main.css">
+  <link rel="stylesheet" href="../../../css/dashboard.css">
+</head>
+<body class="admin-body">
+  <div class="admin-shell">
+    <header class="topbar">
+      <button class="icon-button menu-trigger" id="menu-open" type="button" aria-label="Open navigation menu" aria-controls="admin-sidebar" aria-expanded="false">☰</button>
+      <a class="topbar-brand" href="../../../" aria-label="Adeel Mobile Installments home">
+        <span class="topbar-mark" aria-hidden="true">AM</span>
+        <span>Adeel Mobile</span>
+      </a>
+      <div class="topbar-actions">
+        <button class="icon-button" type="button" aria-label="Notifications">♧</button>
+        <button class="profile-button" type="button" aria-label="Administrator profile">A</button>
+      </div>
+    </header>
+
+    <div class="admin-layout">
+      <div class="sidebar-backdrop" id="sidebar-backdrop" hidden></div>
+      <aside class="admin-sidebar" id="admin-sidebar" aria-label="Admin navigation">
+        <div class="sidebar-heading">
+          <div class="sidebar-brand-mark" aria-hidden="true">AM</div>
+          <div>
+            <strong>Adeel Mobile</strong>
+            <span>Admin Control Panel</span>
+          </div>
+          <button class="icon-button sidebar-close" id="menu-close" type="button" aria-label="Close navigation menu">×</button>
+        </div>
+
+        <nav class="sidebar-nav">
+          <p class="nav-caption">WORKSPACE</p>
+          <a class="nav-link is-active" href="./" aria-current="page"><span class="nav-icon">▦</span><span>Main Dashboard</span></a>
+          <a class="nav-link" href="#" data-coming-soon><span class="nav-icon">♙</span><span>Users</span></a>
+          <a class="nav-link" href="#" data-coming-soon><span class="nav-icon">✓</span><span>Verifications</span></a>
+          <a class="nav-link" href="#" data-coming-soon><span class="nav-icon">♧</span><span>Customers</span></a>
+          <a class="nav-link" href="#" data-coming-soon><span class="nav-icon">▣</span><span>Products</span></a>
+          <a class="nav-link" href="#" data-coming-soon><span class="nav-icon">▤</span><span>Installment Plans</span></a>
+          <a class="nav-link" href="#" data-coming-soon><span class="nav-icon">◉</span><span>User Profits &amp; Wallet</span></a>
+          <a class="nav-link" href="#" data-coming-soon><span class="nav-icon">⌂</span><span>Website Management</span></a>
+          <a class="nav-link" href="#" data-coming-soon><span class="nav-icon">▥</span><span>Reports &amp; Analytics</span></a>
+          <a class="nav-link" href="#" data-coming-soon><span class="nav-icon">◌</span><span>WhatsApp &amp; Sharing</span></a>
+          <a class="nav-link" href="#" data-coming-soon><span class="nav-icon">⚙</span><span>Settings</span></a>
+          <a class="nav-link" href="#" data-coming-soon><span class="nav-icon">◷</span><span>Activity Logs</span></a>
+        </nav>
+
+        <div class="sidebar-account">
+          <div class="account-avatar">A</div>
+          <div class="account-copy"><strong>Administrator</strong><span>Admin account</span></div>
+          <button class="logout-button" id="logout-button" type="button">Log out</button>
+        </div>
+      </aside>
+
+      <main class="dashboard-main">
+        <div class="page-heading">
+          <div>
+            <p class="eyebrow">OVERVIEW</p>
+            <h1>Main Dashboard</h1>
+            <p class="page-subtitle">Welcome to Adeel Mobile Installments</p>
+          </div>
+          <span class="date-label" id="dashboard-date">Dashboard overview</span>
+        </div>
+
+        <section class="stats-grid" aria-label="Business overview">
+          <article class="stat-card"><span class="stat-icon">♙</span><p>Total Users</p><strong>—</strong><small>Registered accounts</small></article>
+          <article class="stat-card"><span class="stat-icon">♧</span><p>Total Customers</p><strong>—</strong><small>Customer records</small></article>
+          <article class="stat-card"><span class="stat-icon">▣</span><p>Total Products</p><strong>—</strong><small>Product catalogue</small></article>
+          <article class="stat-card status-pending"><span class="stat-icon">◷</span><p>Pending Verifications</p><strong>—</strong><small>Awaiting review</small></article>
+          <article class="stat-card status-approved"><span class="stat-icon">✓</span><p>Approved Verifications</p><strong>—</strong><small>Approved applications</small></article>
+          <article class="stat-card status-rejected"><span class="stat-icon">×</span><p>Rejected Verifications</p><strong>—</strong><small>Rejected applications</small></article>
+          <article class="stat-card"><span class="stat-icon">▤</span><p>Total Sales</p><strong>—</strong><small>Recorded sales</small></article>
+          <article class="stat-card"><span class="stat-icon">₨</span><p>Advance Received</p><strong>—</strong><small>Recorded advances</small></article>
+          <article class="stat-card"><span class="stat-icon">◉</span><p>User Profits</p><strong>—</strong><small>Eligible profit records</small></article>
+        </section>
+
+        <section class="dashboard-section">
+          <div class="section-heading"><div><h2>Business Activity</h2><p>Charts will appear when verified data is connected.</p></div></div>
+          <div class="chart-placeholder-grid">
+            <article class="panel-card chart-placeholder"><h3>Monthly Sales</h3><div class="empty-chart"><span>Chart data not connected</span></div></article>
+            <article class="panel-card chart-placeholder"><h3>Verification Status</h3><div class="empty-chart"><span>Chart data not connected</span></div></article>
+          </div>
+        </section>
+
+        <section class="dashboard-section">
+          <div class="section-heading"><div><h2>Quick Actions</h2><p>Common admin tasks</p></div></div>
+          <div class="quick-actions">
+            <a href="../users/create-user/" class="quick-action"><span>＋</span><strong>Create User</strong></a>
+            <a href="../users/all-users/" class="quick-action"><span>♙</span><strong>All Users</strong></a>
+            <a href="#" class="quick-action" data-coming-soon><span>◷</span><strong>Pending Verifications</strong></a>
+            <a href="#" class="quick-action" data-coming-soon><span>▥</span><strong>Reports</strong></a>
+          </div>
+        </section>
+
+        <section class="dashboard-section">
+          <div class="section-heading"><div><h2>Recent Activity</h2><p>Latest changes recorded in the system</p></div></div>
+          <div class="panel-card empty-activity">No activity records to display yet.</div>
+        </section>
+      </main>
+    </div>
+
+    <nav class="mobile-bottom-nav" aria-label="Quick navigation">
+      <a class="bottom-nav-active" href="./"><span>▦</span>Dashboard</a>
+      <a href="../users/all-users/"><span>♙</span>Users</a>
+      <a href="#" data-coming-soon><span>♧</span>Customers</a>
+      <button id="bottom-more" type="button"><span>☰</span>More</button>
+    </nav>
+  </div>
+  <script src="../../../js/modules/admin/dashboard/dashboard.js" defer></script>
+</body>
+</html>

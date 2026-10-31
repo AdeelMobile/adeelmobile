@@ -3,17 +3,14 @@ let currentVerificationUserId = null;
 let currentFilter = 'overall'; 
 
 document.addEventListener("DOMContentLoaded", () => {
-    // Check karein ke db defined hai ya nahi
     if (typeof db === "undefined") {
         document.getElementById("usersTableBody").innerHTML = 
             '<tr><td colspan="10" style="text-align:center;color:red;">Error: Database connection failed. Please refresh.</td></tr>';
         return;
     }
     
-    // Data fetch function call karein
     loadUsers();
 
-    // Search Bar Listener
     const searchInput = document.getElementById("searchInput");
     if (searchInput) {
         searchInput.addEventListener("input", function(e) {
@@ -32,17 +29,11 @@ function setFilter(filter, element) {
 async function loadUsers() {
   const tbody = document.getElementById("usersTableBody");
   try {
-    console.log("Fetching users from database..."); // Debugging ke liye
-    
     const { data, error } = await db.from("users").select("*").order("id", { ascending: false });
     
-    if (error) {
-        console.error("Database Error:", error);
-        throw error;
-    }
+    if (error) throw error;
     
     allUsersData = data || []; 
-    console.log("Users fetched:", allUsersData.length); // Debugging
     
     if(allUsersData.length === 0) {
         tbody.innerHTML = '<tr><td colspan="10" style="text-align:center;">No users found in database.</td></tr>';
@@ -62,7 +53,6 @@ function applyFilters() {
     
     let filtered = allUsersData;
     
-    // Date Filter Logic
     if (currentFilter !== 'overall') {
         const now = new Date();
         let compareDate = new Date();
@@ -75,7 +65,6 @@ function applyFilters() {
         });
     }
     
-    // Search Filter Logic
     if (searchTerm !== "") {
         filtered = filtered.filter(user => {
             return (user.name || "").toLowerCase().includes(searchTerm) || 
@@ -110,7 +99,9 @@ function renderTable(data) {
 
       const formsIconSvg = `<svg viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 18px; height: 18px;"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg>`;
 
-      const editIconSvg = `<svg viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px; height:18px;"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>`;
+      const editIconSvg = `<svg viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px; height:18px; margin-right:4px;"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>`;
+
+      const deleteIconSvg = `<svg viewBox="0 0 24 24" fill="none" stroke="#b00020" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px; height:18px; margin-right:4px;"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>`;
 
       html += `
         <tr class="user-row">
@@ -129,15 +120,41 @@ function renderTable(data) {
             </button>
           </td>
 
-          <td>
-            <button class="btn-image-style" onclick="window.location.href='../Edit-User/edit-user.html?id=${user.id}'">
+          <td style="display: flex; gap: 8px; justify-content: center; border-bottom: none;">
+            <!-- EDIT BUTTON -->
+            <button class="btn-image-style" onclick="window.location.href='../Edit-User/edit-user.html?id=${user.id}'" style="padding: 8px 12px; font-size: 13px;">
                 ${editIconSvg} Edit
+            </button>
+            
+            <!-- DELETE BUTTON -->
+            <button class="btn-image-style" onclick="deleteUser(${user.id}, '${user.name}')" style="padding: 8px 12px; font-size: 13px; color: #b00020; background: #fff5f5; border-color: #f8d7da;">
+                ${deleteIconSvg} Delete
             </button>
           </td>
         </tr>
       `;
     });
     tbody.innerHTML = html;
+}
+
+/* ==========================================
+   DELETE USER LOGIC
+   ========================================== */
+async function deleteUser(userId, userName) {
+    const confirmDelete = confirm(`Kya aap waqai "${userName}" ko delete karna chahte hain? Ye wapas nahi aayega.`);
+    if (!confirmDelete) return;
+
+    try {
+        const { error } = await db.from("users").delete().eq("id", userId);
+        if (error) throw error;
+        
+        alert("✅ User successfully delete ho gaya!");
+        loadUsers(); // List refresh karein
+        
+    } catch (err) {
+        console.error("Delete Error:", err);
+        alert("❌ User delete nahi ho saka. Error: " + err.message);
+    }
 }
 
 /* ==========================================

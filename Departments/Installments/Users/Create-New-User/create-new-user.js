@@ -94,6 +94,7 @@
           percentage: 0, // Ab overall percentage nahi, brand-wise hoga
           sale_target: target,
           status: "active",
+          login_username: username, // Ye line add ki hai
           referral_code: makeCode(name)
         }).select("id").single();
 
@@ -112,7 +113,6 @@
           var brandInsert = await db.from(BRAND_INCENTIVE_TABLE).insert(brandPayloads);
           if (brandInsert.error) {
               console.error("Brand Incentives Error:", brandInsert.error);
-              // Yahan hum error throw nahi karenge taake user create ho jaye, lekin console mein dikhayenge
           }
       }
 
@@ -132,7 +132,7 @@
       }
 
       // 4. Login Link
-      var loginUrl = new URL("../../../index.html", window.location.href).href;
+      var loginUrl = window.location.origin + "/index.html";
       $("loginLinkInput").value = loginUrl;
       $("resultBox").hidden = false;
       

@@ -24,7 +24,10 @@
   moreButton?.addEventListener("click", () => setSidebarOpen(true));
 
   document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape") setSidebarOpen(false);
+    if (event.key === "Escape" && sidebar?.classList.contains("is-open")) {
+      setSidebarOpen(false);
+      openButton?.focus();
+    }
   });
 
   document.querySelectorAll("[data-coming-soon]").forEach((link) => {

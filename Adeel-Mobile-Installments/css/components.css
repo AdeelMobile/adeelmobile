@@ -1,0 +1,203 @@
+/* Shared UI components for Adeel Mobile Installments.
+   Keep business rules and data access out of this presentation layer. */
+
+.ui-card {
+  min-width: 0;
+  padding: var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-card);
+}
+
+.ui-button {
+  display: inline-flex;
+  min-height: var(--touch-target-min);
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: 0 var(--space-4);
+  border: 1px solid var(--color-text);
+  border-radius: var(--radius-md);
+  color: #FFFFFF;
+  background: var(--color-text);
+  font: inherit;
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.ui-button:disabled,
+.ui-button[aria-disabled="true"] {
+  opacity: 0.58;
+  cursor: not-allowed;
+}
+
+.ui-button-secondary {
+  border-color: var(--color-border);
+  color: var(--color-text);
+  background: var(--color-surface);
+}
+
+.ui-button-danger {
+  border-color: var(--color-danger);
+  background: var(--color-danger);
+}
+
+.ui-field {
+  display: grid;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.ui-field > label,
+.ui-label {
+  color: var(--color-text);
+  font-size: var(--font-size-sm);
+  font-weight: 650;
+}
+
+.ui-input,
+.ui-select,
+.ui-textarea {
+  width: 100%;
+  min-width: 0;
+  min-height: 48px;
+  padding: var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  outline: none;
+  color: var(--color-text);
+  background: var(--color-surface);
+  font: inherit;
+  font-size: var(--font-size-sm);
+}
+
+.ui-textarea {
+  min-height: 96px;
+  resize: vertical;
+}
+
+.ui-input:focus,
+.ui-select:focus,
+.ui-textarea:focus {
+  border-color: var(--color-accent);
+  box-shadow: var(--focus-ring);
+}
+
+.ui-help {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-normal);
+}
+
+.ui-alert {
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  color: var(--color-text);
+  background: var(--color-soft);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-normal);
+}
+
+.ui-alert-success {
+  border-color: #B7DCC5;
+  color: var(--color-success);
+  background: var(--color-success-soft);
+}
+
+.ui-alert-warning {
+  border-color: #F0D5A6;
+  color: var(--color-warning);
+  background: var(--color-warning-soft);
+}
+
+.ui-alert-danger {
+  border-color: #F1C7C3;
+  color: var(--color-danger);
+  background: var(--color-danger-soft);
+}
+
+.ui-badge {
+  display: inline-flex;
+  min-height: 24px;
+  align-items: center;
+  padding: 2px var(--space-2);
+  border-radius: 999px;
+  color: var(--color-muted);
+  background: var(--color-soft);
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.ui-badge-success {
+  color: var(--color-success);
+  background: var(--color-success-soft);
+}
+
+.ui-badge-warning {
+  color: var(--color-warning);
+  background: var(--color-warning-soft);
+}
+
+.ui-badge-danger {
+  color: var(--color-danger);
+  background: var(--color-danger-soft);
+}
+
+.ui-empty-state {
+  display: grid;
+  min-height: 180px;
+  align-content: center;
+  justify-items: center;
+  gap: var(--space-3);
+  padding: var(--space-6);
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-lg);
+  background: rgba(255, 255, 255, 0.6);
+  text-align: center;
+}
+
+.ui-empty-state h2,
+.ui-empty-state p {
+  margin: 0;
+}
+
+.ui-empty-state p {
+  max-width: 42ch;
+  color: var(--color-muted);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-normal);
+}
+
+.ui-divider {
+  width: 100%;
+  height: 1px;
+  border: 0;
+  background: var(--color-border);
+}
+
+:where(.ui-button, .ui-input, .ui-select, .ui-textarea, .ui-card, a, button):focus-visible {
+  outline: 3px solid rgba(36, 91, 69, 0.28);
+  outline-offset: 2px;
+}
+
+@media (max-width: 480px) {
+  .ui-card {
+    padding: var(--space-3);
+  }
+
+  .ui-button {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ui-button {
+    transition: none;
+  }
+}

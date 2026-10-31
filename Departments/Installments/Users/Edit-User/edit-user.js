@@ -55,8 +55,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         document.getElementById("fAddress").value = userData.address || '';
         document.getElementById("fTarget").value = userData.sale_target || 0;
         
-        // Username set karein
-        document.getElementById("fUsername").value = userData.username || userData.referral_code || '';
+        // Username set karein (login_username use kiya hai)
+        document.getElementById("fUsername").value = userData.login_username || userData.referral_code || '';
 
         // Brands load karein
         await loadBrands();
@@ -101,21 +101,19 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
 
         try {
-            // A. Users Table mein basic details update karein
+            // A. Users Table mein basic details update karein (login_username use kiya hai)
             const { error: updateError } = await db.from("users").update({
                 name: document.getElementById("fName").value.trim(),
                 father_name: document.getElementById("fFather").value.trim(),
                 whatsapp: document.getElementById("fWhatsapp").value.trim(),
                 address: document.getElementById("fAddress").value.trim(),
                 sale_target: Number(document.getElementById("fTarget").value),
-                username: newUsername
+                login_username: newUsername
             }).eq("id", userId);
 
             if (updateError) throw updateError;
 
             // B. Login Credentials Update Karein (Edge Function)
-            // Sirf tab call karein agar password change hua hai ya username change hua hai
-            // Lekin safe rehne ke liye hum hamesha call karenge, password khali ho to function skip kar dega
             showMessage("Updating login details...");
             
             const loginResult = await db.functions.invoke("manage-user-login", {

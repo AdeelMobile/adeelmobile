@@ -551,3 +551,12 @@
     min-height: 154px;
   }
 }
+
+
+/* Prevent the page behind the mobile navigation drawer from scrolling. */
+@media (max-width: 759px) {
+  body.sidebar-is-open {
+    overflow: hidden;
+    overscroll-behavior: none;
+  }
+}

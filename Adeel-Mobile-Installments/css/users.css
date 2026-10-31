@@ -323,3 +323,149 @@
     font-size: 13px;
   }
 }
+
+
+/* All Users page */
+.heading-action {
+  display: inline-flex;
+  min-height: 42px;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  padding: 0 13px;
+  border-radius: 10px;
+  color: #FFFFFF;
+  background: var(--color-text);
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.user-list-tools {
+  display: grid;
+  gap: 10px;
+  margin: 18px 0 14px;
+}
+
+.user-search {
+  display: flex;
+  min-height: 47px;
+  align-items: center;
+  gap: 9px;
+  padding: 0 12px;
+  border: 1px solid var(--color-border);
+  border-radius: 11px;
+  background: #FFFFFF;
+}
+
+.user-search > span {
+  color: var(--color-muted);
+  font-size: 20px;
+}
+
+.user-search input {
+  width: 100%;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  color: var(--color-text);
+  background: transparent;
+  font: inherit;
+  font-size: 12px;
+}
+
+.filter-control {
+  display: flex;
+  min-height: 45px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 0 11px;
+  border: 1px solid var(--color-border);
+  border-radius: 11px;
+  background: #FFFFFF;
+}
+
+.filter-control span {
+  color: var(--color-muted);
+  font-size: 11px;
+}
+
+.filter-control select {
+  max-width: 60%;
+  border: 0;
+  outline: 0;
+  color: var(--color-text);
+  background: transparent;
+  font: inherit;
+  font-size: 12px;
+}
+
+.user-list-empty {
+  display: flex;
+  min-height: 250px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 25px 18px;
+  border: 1px dashed var(--color-border);
+  border-radius: 15px;
+  background: rgba(255, 255, 255, 0.6);
+  text-align: center;
+}
+
+.empty-users-icon {
+  display: grid;
+  width: 48px;
+  height: 48px;
+  place-items: center;
+  border-radius: 15px;
+  color: var(--color-muted);
+  background: var(--color-soft);
+  font-size: 23px;
+}
+
+.user-list-empty h2 {
+  margin: 14px 0 6px;
+  font-size: 15px;
+}
+
+.user-list-empty p {
+  max-width: 330px;
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 11px;
+  line-height: 1.55;
+}
+
+.empty-create-link {
+  width: auto;
+  min-height: 42px;
+  margin-top: 16px;
+  padding: 0 15px;
+  font-size: 12px;
+  text-decoration: none;
+}
+
+.list-footer-note {
+  margin: 13px 0 0;
+  color: #737B87;
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+@media (min-width: 650px) {
+  .user-list-tools {
+    grid-template-columns: minmax(220px, 1fr) 170px 170px;
+    align-items: center;
+  }
+
+  .user-search,
+  .filter-control {
+    min-height: 48px;
+  }
+
+  .user-list-empty {
+    min-height: 310px;
+  }
+}

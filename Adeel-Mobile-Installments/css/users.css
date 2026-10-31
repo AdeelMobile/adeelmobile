@@ -1,0 +1,133 @@
+.user-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 9px;
+  margin-bottom: 19px;
+}
+
+.user-summary-card {
+  display: flex;
+  min-height: 83px;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 12px 10px;
+  border: 1px solid var(--color-border);
+  border-radius: 13px;
+  background: var(--color-surface);
+}
+
+.user-summary-card span {
+  color: var(--color-muted);
+  font-size: 10px;
+  line-height: 1.35;
+}
+
+.user-summary-card strong {
+  font-size: 22px;
+  font-weight: 750;
+}
+
+.users-choice-grid {
+  display: grid;
+  gap: 13px;
+}
+
+.users-choice-card {
+  display: flex;
+  min-height: 120px;
+  align-items: center;
+  gap: 13px;
+  padding: 17px 15px;
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
+  color: var(--color-text);
+  background: var(--color-surface);
+  text-decoration: none;
+  transition: border-color 150ms ease, transform 150ms ease;
+}
+
+.users-choice-card:hover {
+  border-color: #C8CEC9;
+  transform: translateY(-1px);
+}
+
+.choice-icon {
+  display: grid;
+  width: 43px;
+  height: 43px;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 13px;
+  color: var(--color-accent);
+  background: var(--color-soft);
+  font-size: 23px;
+}
+
+.choice-copy {
+  display: grid;
+  flex: 1;
+  gap: 6px;
+}
+
+.choice-copy strong {
+  font-size: 15px;
+  font-weight: 750;
+}
+
+.choice-copy small {
+  color: var(--color-muted);
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.choice-arrow {
+  color: var(--color-muted);
+  font-size: 20px;
+}
+
+.users-note {
+  margin-top: 19px;
+  padding: 14px;
+  border: 1px dashed var(--color-border);
+  border-radius: 12px;
+  color: var(--color-muted);
+  background: rgba(255, 255, 255, 0.55);
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+@media (min-width: 760px) {
+  .user-summary-grid {
+    max-width: 680px;
+    gap: 13px;
+    margin-bottom: 25px;
+  }
+
+  .user-summary-card {
+    min-height: 100px;
+    padding: 16px;
+  }
+
+  .user-summary-card span {
+    font-size: 12px;
+  }
+
+  .users-choice-grid {
+    max-width: 900px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .users-choice-card {
+    min-height: 145px;
+    padding: 20px;
+  }
+
+  .choice-copy strong {
+    font-size: 16px;
+  }
+
+  .choice-copy small {
+    font-size: 12px;
+  }
+}

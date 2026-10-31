@@ -1,3 +1,4 @@
+
 "use strict";
 
 (function () {
@@ -95,6 +96,9 @@
     var username = $("fUsername").value.trim().toLowerCase();
     var password = $("fPassword").value;
     var target = Number($("fTarget").value) || 0;
+
+    // Keep username lowercase
+    $("fUsername").value = username;
 
     if (!name || !father || !whatsapp || !username || !password) {
       return showMessage("Please fill all required fields (*).", true);
@@ -287,6 +291,24 @@
     if (!form) return;
 
     form.addEventListener("submit", saveUser);
+
+    // Automatically convert username to lowercase while typing
+    var usernameInput = $("fUsername");
+
+    if (usernameInput) {
+      usernameInput.addEventListener("input", function () {
+        var start = usernameInput.selectionStart;
+        var end = usernameInput.selectionEnd;
+
+        usernameInput.value = usernameInput.value.toLowerCase();
+
+        try {
+          usernameInput.setSelectionRange(start, end);
+        } catch (err) {
+          // Ignore cursor restoration errors
+        }
+      });
+    }
 
     var copyBtn = $("copyLinkBtn");
 

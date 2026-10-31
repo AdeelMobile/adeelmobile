@@ -1,235 +1,178 @@
-# Adeel Mobile Installments — Master Roadmap & Phase Test Gates
+# Adeel Mobile Installments — Locked, Live-Testable Phase Roadmap
 
-## Working rules
+## Non-negotiable development rules
 
-1. Work only inside `Adeel-Mobile-Installments/`. Do not modify the unrelated legacy project.
-2. Build one small, reviewable step at a time. Keep each phase independently testable.
-3. Every phase ends with a test gate. The next phase cannot start until the current gate is marked **PASS** by evidence.
-4. A phase is not considered fully complete just because its code is committed. Static checks, browser checks, mobile checks, and backend checks must be reported separately.
-5. Use a separate staging/test deployment for browser and phone testing when needed. Do not publish to production without the user's explicit approval.
-6. Do not change Supabase database schema, data, Storage, or RLS policies without explicit approval. Read-only inspection and frontend preparation do not authorize changes.
-7. Never store plaintext passwords, trust client-supplied roles, or describe a mock login as secure authentication.
-8. Record test results, defects, fixes, and commit SHA in the phase QA report.
+1. Work only inside `Adeel-Mobile-Installments/`. Never touch the unrelated legacy project.
+2. **One phase = one independently testable, working software increment.** Do not finish a phase with only disconnected code, mock screens, or unfinished dependencies.
+3. At the end of EVERY phase, deploy that exact build to the agreed test/staging URL and test the actual feature in a browser and on the user's Android phone before starting the next phase.
+4. A phase is not PASS until its live tests pass. GitHub/static checks alone are not enough.
+5. **After a phase is accepted as PASS, freeze it.** Do not edit, rename, delete, restyle, or refactor any file belonging to a previously passed phase.
+6. Every later phase must be additive: add new files/modules, new routes/pages, or compatible backend objects only. Integrate through extension points/contracts prepared in advance. Do not rewrite a passed phase to make the next phase work.
+7. If a new phase appears to require changing a frozen file, STOP. Do not silently change it. First design an additive adapter/extension. If that is genuinely impossible, explain the conflict and ask the user for explicit permission before any exception. The old phase remains frozen by default.
+8. If a defect is found in the current phase before PASS, fix it within that current phase and repeat its tests. Do not move the defect into a later phase.
+9. Keep a tagged/recorded Git commit for every accepted phase. Deploy and test the exact commit, not uncommitted or later mixed work.
+10. Use a dedicated staging/test environment and test data. Never mix test records with real customer/financial records.
+11. No production deployment, custom-domain connection, Supabase schema/data/Storage/RLS changes, or paid service activation without the user's explicit approval.
+12. Never use fake authentication, plaintext passwords, client-trusted roles, or unapproved financial calculations. Clearly label any temporary mock data as test-only.
+
+## What every phase must deliver
+
+Each phase must include:
+- A clearly defined user-visible feature that can be opened and exercised on its own.
+- All files and dependencies needed for that feature.
+- Loading, empty, validation, success, and error states where relevant.
+- A short acceptance checklist written before implementation.
+- A staging deployment of the phase's exact commit.
+- A live browser test and Android phone test, with the user reporting observations/screenshots where needed.
+- A QA report recording pass/fail for every test, defects, fix commits, deployed commit, and test URL.
+- A **PASS / FAIL / BLOCKED** decision.
+
+**Gate rule:** PASS = freeze phase and unlock next phase. FAIL = fix only current phase and retest. BLOCKED = do not proceed; identify missing permission, business decision, credentials, or external dependency.
 
 ## Phase status
 
-| Phase | Scope | Status |
+| Phase | Independently testable deliverable | Status |
 |---|---|---|
-| 1 | Project foundation and responsive shell | Implementation/static checks complete; live visual test pending |
-| 2 | Authentication and session foundation | Not started |
-| 3 | Roles, permissions, and protected navigation | Not started |
-| 4 | Admin dashboard and shared admin shell | Not started |
-| 5 | User/customer records and verification workflow | Not started |
-| 6 | Products, brands, categories, and catalog management | Not started |
-| 7 | Installment plans, calculator, and payment rules | Not started — business rules must be confirmed first |
-| 8 | Orders, installment schedules, receipts, and payment tracking | Not started |
-| 9 | Wallet, profit ledger, and referral attribution | Not started — profit rules must be confirmed first |
-| 10 | Customer-facing website and product journey | Not started |
-| 11 | User portal and account self-service | Not started |
-| 12 | Reports, exports, activity logs, and audit trail | Not started |
-| 13 | WhatsApp sharing and manual message workflows | Not started |
-| 14 | Website settings, content management, and themes | Not started |
-| 15 | Security, privacy, accessibility, and performance hardening | Not started |
-| 16 | Full regression, device QA, PWA decision, and release readiness | Not started |
+| 1 | Foundation, page loading, responsive shell, navigation and mobile drawer | Static checks passed; live test pending; NOT FROZEN |
+| 2 | Real login, logout, session restore and password reset | Locked |
+| 3 | Role-based access and protected pages | Locked |
+| 4 | Admin dashboard with working summary/data states | Locked |
+| 5 | User/customer create, list, search, view and edit | Locked |
+| 6 | Identity verification review and private document access | Locked |
+| 7 | Product, brand and category management | Locked |
+| 8 | Public product catalogue and product detail journey | Locked |
+| 9 | Installment plan setup and calculator | Locked — business rules required |
+| 10 | Customer order creation and installment schedule | Locked |
+| 11 | Payment collection, receipts and due tracking | Locked |
+| 12 | Wallet, profit ledger and referral attribution | Locked — business rules required |
+| 13 | User portal with personal account and permitted records | Locked |
+| 14 | Reports, exports and activity/audit history | Locked |
+| 15 | Website content/settings, posters and manual WhatsApp sharing | Locked |
+| 16 | Security, accessibility, performance, full regression and release readiness | Locked |
 
-## Phase details and mandatory test gates
+## Phase-by-phase scope and live acceptance tests
 
-### Phase 1 — Project foundation and responsive shell
-**Goal:** Establish the project structure, entry points, shared styles/components, navigation, and responsive layout.
+### Phase 1 — Foundation and responsive shell
+**Deliverable:** Existing entry/login/admin pages load; shared styles and helpers load; navigation and mobile drawer work; layout adapts to phone/tablet/desktop. This phase tests the foundation only, not real authentication or database features.
 
-**Implementation checklist**
-- Project folder structure and documentation.
-- Root entry point and login entry page.
-- Global design tokens and shared component styles.
-- Shared UI helper functions.
-- Admin page shell, sidebar, and mobile drawer behavior.
-- Responsive breakpoints, focus states, and touch target baseline.
+**Live test:** Open the staging URL on desktop and Android. Visit every implemented page; test navigation, mobile drawer open/close, scrolling, keyboard/Escape where supported, layout widths, and horizontal overflow. Check browser console and network errors.
 
-**Test gate**
-- Static: HTML local references resolve; CSS/JS syntax checks; shared assets load; no files changed outside the project folder.
-- Browser: root page and each implemented page load without console errors.
-- Mobile: check narrow screen layout, drawer open/close, Escape behavior where supported, scrolling, touch targets, and horizontal overflow.
-- Confirm all navigation destinations behave as expected; unfinished destinations must be clearly identified.
-- Save screenshots/observations and record defects.
+**Exit:** All implemented pages load and the above interactions work. Record known non-functional placeholders clearly. After PASS, freeze all Phase 1 files.
 
-**Current result:** Static repository checks passed. Browser/device visual QA has not yet been performed. Phase 1 remains **awaiting live/manual test gate**. A staging deployment is only made after the user approves it.
+**Current state:** Static repository checks were completed earlier; live browser/mobile testing is still pending. Phase 1 is NOT yet accepted or frozen.
 
-### Phase 2 — Authentication and session foundation
-**Goal:** Implement real Supabase Auth flows, not a simulated login.
+### Phase 2 — Real authentication
+**Deliverable:** Real Supabase Auth login, logout, session persistence/restore, password reset and clear error/loading states. No fake login.
 
-**Implementation checklist**
-- Confirm authentication method and required account setup.
-- Configure frontend client using public project URL and anon/publishable key only; never expose service-role keys.
-- Login, logout, session restore, password reset, and user-facing error states.
-- Loading states and safe handling of expired sessions.
-- Do not create or change database schema unless separately approved.
+**Live test:** Test valid and invalid credentials, refresh while signed in, logout, expired session, password reset email/link, and direct access after logout. Verify no privileged key or plaintext password is exposed.
 
-**Test gate**
-- Valid login succeeds; invalid login fails safely.
-- Refresh restores a valid session; logout clears it.
-- Password reset flow is tested end-to-end.
-- No password or privileged secret is written to local storage, source code, or logs.
-- Test on desktop and Android browser; record results.
+**Exit:** All authentication flows work on staging and Android. Supabase configuration/credentials must be supplied safely; service-role key must never enter frontend code. No database schema changes without separate approval.
 
-### Phase 3 — Roles, permissions, and protected navigation
-**Goal:** Enforce admin/user access using trusted authorization, not client-side hiding alone.
+### Phase 3 — Roles and protected access
+**Deliverable:** Admin and user roles with protected navigation and trusted authorization enforcement.
 
-**Implementation checklist**
-- Define role names and allowed actions with the user.
-- Decide and approve the trusted source for role assignment.
-- Protected routes and safe unauthorized states.
-- Backend/database enforcement plan; request approval before RLS/schema changes.
+**Live test:** Sign in as each role; verify allowed and denied pages/actions; paste restricted URLs directly; attempt unauthorized data access. Hiding a button alone does not count as security.
 
-**Test gate**
-- Admin and regular user see only permitted screens.
-- Direct URL access to restricted screens is denied.
-- API/data access is denied when unauthorized, not merely hidden in UI.
-- Verify session expiry and role changes.
+**Exit:** UI and backend/data authorization tests pass. Role assignment source and any required RLS/schema changes must be approved first.
 
-### Phase 4 — Admin dashboard and shared admin shell
-**Goal:** Complete admin navigation, dashboard summary cards, responsive shell, and empty/loading/error states.
+### Phase 4 — Working admin dashboard
+**Deliverable:** Admin landing dashboard with real approved data or explicitly labelled test data, functional navigation, loading/empty/error states.
 
-**Test gate**
-- All dashboard links resolve to implemented pages or clear placeholders.
-- Layout checked at phone, tablet, and desktop widths.
-- Loading, empty, and error states render correctly.
-- No unauthorized data appears.
+**Live test:** Sign in as admin; inspect cards, totals, navigation, empty state, error state, refresh and phone layout. Totals must reconcile with the test data source.
 
-### Phase 5 — User/customer records and verification
-**Goal:** Build user/customer profiles, create/edit/list/search flows, and identity verification workflow.
+### Phase 5 — User/customer management
+**Deliverable:** Create, list, search, view and edit user/customer records, with validation and status display.
 
-**Test gate**
-- Create, view, edit, search, filter, and status changes work.
-- Required-field validation and duplicate handling work.
-- Private identity documents are access-controlled; test unauthorized access.
-- Audit events are recorded if the approved backend design includes them.
+**Live test:** Create a test record; search it; open and edit it; test required fields, invalid values, duplicate handling and refresh persistence. Confirm a regular user cannot access admin-only operations.
 
-### Phase 6 — Products, brands, categories, and catalog management
-**Goal:** Admin CRUD and catalog browsing foundations.
+### Phase 6 — Identity verification
+**Deliverable:** Submit/view verification status and admin review workflow, including private document upload/view where approved.
 
-**Test gate**
-- Create/edit/archive products, brands, and categories.
-- Image upload constraints and failure handling.
-- Search/filter/sort and product detail consistency.
-- Test empty catalog, large lists, and mobile layout.
+**Live test:** Submit test verification; review/approve/reject as admin; verify status changes; test unauthorized document access and file restrictions. Use synthetic test documents only.
 
-### Phase 7 — Installment plans, calculator, and payment rules
-**Goal:** Implement approved plan terms and accurate calculations.
+### Phase 7 — Product administration
+**Deliverable:** Create/edit/archive products, brands and categories with validated fields and image handling.
 
-**Must confirm before implementation**
-- 3/6/9 month plan eligibility and terms.
-- Advance amount/percentage, markup, fees, rounding, due-date rules, and late-payment policy.
-- Whether prices or terms can vary by product/customer.
+**Live test:** Add test brand/category/product; edit and archive; validate image upload and errors; confirm list/search/filter and persistence.
 
-**Test gate**
-- User-approved sample cases match independently calculated expected values.
-- Boundary, rounding, invalid-input, and date cases pass.
-- No unapproved financial formula is assumed.
+### Phase 8 — Public catalogue
+**Deliverable:** Customer-facing product listing, search/filter and product details connected to approved catalogue data.
 
-### Phase 8 — Orders, installment schedules, receipts, and payment tracking
-**Goal:** Link customer orders to approved plans and track due/paid/overdue installments.
+**Live test:** Browse as signed-out visitor; search/filter; open product; verify images, price and availability; test empty and unavailable states on phone and desktop.
 
-**Test gate**
-- Order lifecycle and schedule calculations are consistent.
-- Payment recording is permission-controlled and auditable.
-- Duplicate submissions do not double-record a payment.
-- Receipt totals reconcile with the ledger.
+### Phase 9 — Installment plans and calculator
+**Deliverable:** Admin-configured plans and customer-facing calculator using only confirmed business rules.
 
-### Phase 9 — Wallet, profit ledger, and referral attribution
-**Goal:** Track wallet/profit and referrals using confirmed business rules.
+**Must decide first:** 3/6/9 month terms, advance amount/percentage, markup/fees, rounding, due-date rules, late charges, eligibility and product-specific differences.
 
-**Must confirm before implementation**
-- Exact profit formula and when profit becomes eligible.
-- Confirmed rule: profit is not credited before actual advance receipt.
-- Referral ownership, attribution window, reversal/cancellation behavior, and payout rules.
+**Live test:** Run approved sample calculations, boundary values, invalid inputs and rounding/date cases. Compare against independently agreed expected results. No assumptions on financial formulas.
 
-**Test gate**
-- No profit is credited before the qualifying receipt.
-- Reversals/cancellations are handled correctly.
-- Referral attribution cannot be forged by editing client-side values.
-- Ledger totals reconcile with underlying transactions.
+### Phase 10 — Customer orders and schedules
+**Deliverable:** Create a test order from a product and approved plan; generate installment schedule and order status.
 
-### Phase 10 — Customer-facing website and product journey
-**Goal:** Homepage, catalog, search, filters, product details, plan display, and inquiry journey.
+**Live test:** Complete order flow; inspect schedule, totals and status; test invalid plan/product, cancellation and duplicate submission. Confirm data persists correctly.
 
-**Test gate**
-- Browse/search/filter/product detail journeys work on phone and desktop.
-- Displayed prices and installment terms match approved data.
-- Broken images, empty results, and unavailable products have clear states.
-- Forms validate and do not expose private information.
+### Phase 11 — Payments, receipts and due tracking
+**Deliverable:** Record an actual test payment, issue a receipt, and show paid/upcoming/overdue instalments.
 
-### Phase 11 — User portal and account self-service
-**Goal:** Private user dashboard, profile, relevant records, calculator, referrals, and permitted reports.
+**Live test:** Record payment; refresh; inspect receipt and remaining balance; test duplicate payment prevention, partial payment if supported, overdue status and permissions. Use test records, not real money.
 
-**Test gate**
-- Each user can access only their own authorized records.
-- Direct URL and data-access checks pass.
-- Dashboard totals reconcile with source records.
-- Mobile navigation and session expiry behave correctly.
+### Phase 12 — Wallet, profit and referrals
+**Deliverable:** Referral attribution and ledger entries based on approved business rules.
 
-### Phase 12 — Reports, exports, activity logs, and audit trail
-**Goal:** Reliable operational reports and traceable administrative actions.
+**Must decide first:** Exact profit formula, qualifying event, reversals, referral ownership/window and payout rules. Profit must not be credited before actual advance receipt.
 
-**Test gate**
-- Report totals match source records for known test data.
-- Date filters, pagination, and exports are correct.
-- Sensitive actions record actor, time, and action details as approved.
-- Unauthorized users cannot read logs or exports.
+**Live test:** Test referred and non-referred orders, qualifying advance receipt, pre-receipt state, cancellation/reversal and ledger reconciliation. Client-side edits must not forge attribution or balances.
 
-### Phase 13 — WhatsApp sharing and manual message workflows
-**Goal:** Create prefilled WhatsApp messages/links for manual sending only.
+### Phase 13 — User portal
+**Deliverable:** Signed-in user dashboard and permitted personal records, balances and referral information.
 
-**Test gate**
-- Correct customer/product/plan details are inserted.
-- Phone numbers and URL encoding are handled safely.
-- User must manually review and send; no automated messaging is claimed.
-- Test with and without WhatsApp installed.
+**Live test:** Sign in as two separate test users; confirm each sees only their own data; test direct URLs, refresh, logout and phone navigation.
 
-### Phase 14 — Website settings, content management, and themes
-**Goal:** Manage approved site content, banners/posters, and appearance settings.
+### Phase 14 — Reports and audit history
+**Deliverable:** Searchable reports, approved exports and traceable activity history.
 
-**Test gate**
-- Changes preview correctly and persist only through approved storage.
-- Invalid uploads and missing content fail gracefully.
-- Theme and content changes work across screen sizes.
-- No unapproved public exposure of private files.
+**Live test:** Generate reports from known test records; check date filters, totals, pagination and exports; verify unauthorized users cannot read sensitive logs.
 
-### Phase 15 — Security, privacy, accessibility, and performance hardening
-**Goal:** Cross-cutting security and quality review.
+### Phase 15 — Website settings and communication tools
+**Deliverable:** Approved editable website content/posters/theme settings and prefilled WhatsApp messages for manual review/send.
 
-**Test gate**
-- Authorization and private-file access tests pass.
-- Secrets are not present in frontend bundles or repository.
-- Form labels, keyboard navigation, focus visibility, contrast, and reduced-motion behavior reviewed.
-- Performance and responsive checks run on representative devices.
-- All high-severity defects resolved.
+**Live test:** Change test banner/content/theme and verify preview/persistence; test invalid uploads; generate WhatsApp link and verify correct encoded text. No automated WhatsApp sending is included.
 
-### Phase 16 — Full regression and release readiness
-**Goal:** Verify complete workflows and decide release format.
+### Phase 16 — Hardening and release readiness
+**Deliverable:** Security/privacy/accessibility/performance fixes, full regression report and agreed PWA vs APK decision.
 
-**Test gate**
-- End-to-end scenarios pass from sign-in through customer/order/payment/report workflows.
-- Regression suite passes after fixes.
-- Android and desktop browser checks completed.
-- PWA vs APK decision made with the user; do not claim an APK unless one is actually built and tested.
-- Production release/deployment only after explicit user approval.
+**Live test:** Repeat all phase acceptance tests; check Android and desktop; inspect secrets, permissions, private files, keyboard/focus, contrast, responsive behavior and performance. APK may only be claimed after it is actually built and tested.
 
-## Standard phase exit report
+## Frozen phase register
 
-Every phase must finish with a report containing:
-- Phase number and scope.
-- Files created/changed (all paths under this project folder).
-- Commit SHA.
-- Static test results.
-- Browser/device/backend test results, clearly separated.
-- Defects found and their status.
-- **Gate decision: PASS / FAIL / BLOCKED**.
-- Exact next phase, which remains locked unless the gate is PASS.
+For each PASS phase, append:
+- Phase number and PASS date.
+- Exact commit SHA and staging build URL.
+- QA report path and test evidence.
+- Complete list of files frozen by that phase.
+- Any published interfaces/contracts that later phases must use.
+
+Later phases must not edit any path in this frozen-file register. Keep new functionality in new phase-owned files and connect it through pre-agreed extension points.
+
+## QA report format
+
+For every phase create `docs/PHASE_<number>_QA.md` containing:
+- Scope and acceptance checklist.
+- Files added/changed (all inside this project folder).
+- Static test outcomes.
+- Staging deployment URL and exact commit SHA.
+- Browser test results.
+- Android test results.
+- Backend/security test results where applicable.
+- Defects and retest outcomes.
+- PASS / FAIL / BLOCKED decision.
+- Frozen file list when PASS.
 
 ## Deployment policy
 
-- GitHub is the source of truth for code.
-- Use a staging/test deployment to perform live browser and mobile checks when required.
-- Ask before creating or configuring a Cloudflare Pages project, connecting a domain, or deploying.
-- Staging is not production. Never describe a staging build as a public production launch.
-- Never deploy database migrations or alter Supabase resources without separate explicit approval.
+- GitHub is the source of truth.
+- Deploy each phase's exact commit to staging for user testing after the user approves staging setup/deployment.
+- A phase's staging deployment is a test release, not production.
+- Ask before configuring Cloudflare Pages, connecting a custom domain, enabling paid services, or deploying production.
+- Do not apply Supabase migrations or alter schema/data/Storage/RLS without explicit approval.

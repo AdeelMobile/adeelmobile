@@ -1,6 +1,6 @@
 # Phase 3 — Roles and Protected Access
 
-Status: IN PROGRESS — isolated branch `phase-3-roles`
+Status: IN PROGRESS — backend role/RLS implementation and client route-guard code committed; live QA pending — isolated branch `phase-3-roles`
 Base: `phase-2-auth` commit `f64f5c71865c85307b4b82d98f8186a7b9d74495`
 Supabase project: `adeel-mobile-database` (`nqihozwbdrvpyalctwbc`)
 
@@ -22,14 +22,59 @@ Deliver a live-testable Admin/User access-control slice. A signed-in session alo
 
 - `public.users` has `auth_user_id` and `login_username`, but no role column was found.
 - `public.ims_whoami()` currently returns `admin` when `private.is_admin()` is true.
-- `private.is_admin()` currently treats any authenticated Auth identity with no matching `public.users` row as Admin. This is not a safe, explicit Admin allow-list and must not be relied on as the final authorization model.
+- Initial audit found `private.is_admin()` treated any authenticated Auth identity with no matching `public.users` row as Admin. This unsafe behavior has been replaced by an explicit private allow-list keyed to `auth.users.id`.
 - Existing RLS policies use `private.is_admin()` across multiple tables, so role-source changes must be reviewed as a coordinated security migration.
-- Audit also found broad `public` policies on `verifications` and `user_brand_incentives`, plus RLS advisor errors for `colors` and `download_history`. These need a separately reviewed remediation plan before protected-data acceptance.
-- No schema, data, Auth configuration, RLS policy, function, or Storage changes were made during this audit.
+- Initial audit found broad `public` policies on `verifications` and `user_brand_incentives`, plus RLS disabled on `colors` and `download_history`. These have been remediated with scoped policies; see implementation record below.
+- The initial audit itself was read-only. Subsequent approved Phase 3 migrations are recorded below.
 
 ## Approval boundary
 
-The implementation may prepare client-side modules, route integration, test documentation, and SQL migration drafts on this branch. It must not apply database migrations or alter Supabase schema/data, Auth settings, functions, RLS policies, grants, or Storage until the user gives separate explicit approval. Never expose service-role keys.
+The user explicitly approved Phase 3 Database, Functions, RLS and grant changes, and separately confirmed the existing Admin Auth identity should receive trusted Admin access. The applied changes are limited to the role allow-list, the reviewed protected-table policies, and function grants documented below. No unrelated Auth settings, Storage, service-role keys, or production deployment were changed.
+
+
+## Implementation record (2026-11-01)
+
+### Trusted role contract — implemented
+- Added private.admin_allowlist, keyed by the immutable Supabase Auth UUID; the table is private and has no client-role table grants.
+- Existing Auth identity adeelmobilelinkroad@gmail.com (UUID b503f7eb-e570-4a6a-83e7-1b97e9f20635) is explicitly enabled in the allow-list. Its app_metadata.role remains null; role comes from the private allow-list, not editable client metadata.
+- private.is_admin() now returns true only for an enabled allow-list entry. Unknown signed-in identities are not Admin.
+- public.ims_whoami() returns admin, user only for an active linked public.users row, or none. An inactive/unmapped identity is denied.
+- Admin account currently has no public.users row; this is intentional for the trusted Admin identity and does not grant it standard-user ownership.
+
+### Backend policies — implemented
+- Removed unrestricted public SELECT/INSERT/UPDATE/DELETE policies from verifications; existing Admin-all and own-user-read policies remain. Public verification submissions continue only through the existing validated RPC function.
+- Removed unrestricted policies from user_brand_incentives; Admin has full access, active mapped users can read only their own rows, and authenticated DML grants are constrained by RLS.
+- Standardized sales_records admin predicates on private.is_admin() instead of a potentially stale JWT app_metadata role.
+- Enabled RLS on colors with public read and trusted Admin writes; enabled RLS on download_history with Admin-only access (the table has no owner column).
+- Revoked direct client execution of trigger/event-trigger functions public.rls_auto_enable() and public.sync_variant_cover(). The public verification-submission RPC remains intentionally callable by anon and authenticated because the public application form uses it; its input checks were reviewed but rate limiting remains a separate concern.
+- No Storage policies, Auth project settings, leaked-password protection settings, or password records were changed.
+
+### Applied migration history
+- 20261101020542_phase_3_trusted_admin_allowlist
+- 20261101020645_phase_3_protected_table_rls
+- 20261101020730_phase_3_lockdown_function_grants
+- Matching SQL files are committed under supabase/migrations/.
+
+### Client route implementation — committed, not live-tested
+- Added js/modules/auth/role.js to verify the Auth user with getUser() and obtain role only from ims_whoami().
+- Added route-guard.js and applied it to the Admin dashboard, user-management, all-users, create-user and standard-user landing routes. Protected pages stay hidden while role verification runs. Standard users are redirected away from Admin routes; signed-out users go to login; unknown/failed roles are denied.
+- Added login-bridge.js to route a verified Admin to the Admin dashboard and a verified User to the User home after login/session restoration. Added a minimal User home route and local sign-out controls.
+- Removed the temporary blanket Admin-to-login redirect from _redirects so the route guard can evaluate the authenticated role.
+
+### Verification performed
+- Database role simulation with the Admin Auth UUID returned is_admin=true and ims_whoami()='admin'.
+- Database role simulation with the active Hamza user UUID returned is_admin=false and ims_whoami()='user'.
+- Database role simulation with an unmapped UUID returned is_admin=false and ims_whoami()='none'.
+- RLS simulation as authenticated Admin returned access to the protected verification/download tables; simulated standard User saw no unrelated verification, sales, incentive or download rows. Public colors catalogue remained readable.
+- These are database-side simulated JWT/role checks, not real browser/API requests. No dummy Auth test accounts were created.
+
+### Remaining blockers before PASS/freeze
+- Deploy and verify the isolated branch preview URL; no preview deployment is confirmed yet.
+- Test actual Admin and standard-user login/session restore, direct URLs, logout, refresh, browser back/forward and failed-role behavior on Android and desktop.
+- Test direct REST/API reads and writes as both roles, plus signed-out/anon access, using dedicated dummy data.
+- Supabase Security Advisor still reports the intentional public verification RPC, authenticated SECURITY DEFINER functions that enforce Admin checks, the existing store_settings RLS-without-policy notice, and leaked-password protection disabled. Review the advisor output before acceptance; Auth settings were not changed.
+- Admin must rotate the password previously shared in chat before real login testing. Never reuse that exposed password. The 4-digit PIN remains out of scope.
+- Phase 2 remains IN PROGRESS; Phase 3 cannot be frozen until the user completes live QA and explicitly reports PASS.
 
 ## Proposed delivery gates
 
@@ -54,7 +99,7 @@ The implementation may prepare client-side modules, route integration, test docu
 - No broad permissive policy remains on private customer/verification/financial data.
 
 ### Gate D — Live QA
-- Deploy branch preview; test on Android and desktop with dedicated dummy accounts only.
+- Deploy branch preview; test on Android and desktop with dedicated dummy accounts only. This gate is still pending.
 - Record exact commit SHA, preview URL, screenshots/results, and defects.
 - Fix failures, repeat affected tests, then wait for user PASS before freezing Phase 3.
 
@@ -79,7 +124,7 @@ The implementation may prepare client-side modules, route integration, test docu
 
 - Branch: `phase-3-roles`
 - Base SHA: `f64f5c71865c85307b4b82d98f8186a7b9d74495`
-- Implementation SHA: pending
+- Implementation SHA: pending final documentation commit
 - Preview URL: pending
 - Browser/Android/backend test evidence: pending
 - User result: pending

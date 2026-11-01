@@ -1,5 +1,5 @@
 import { getVerifiedAppIdentity, signOutCurrentSession } from "./role.js";
-import { supabase } from "../../services/supabase-client.js";
+import { setRememberSession, supabase } from "../../services/supabase-client.js";
 
 let routing = false;
 const message = document.querySelector("#login-message");
@@ -34,6 +34,49 @@ async function routeAfterVerifiedLogin() {
   } finally {
     routing = false;
   }
+}
+
+// Phase 3 also permits the trusted Admin to sign in with the actual Auth email.
+// The existing Phase 2 username convention remains unchanged for standard users.
+const form = document.querySelector("#login-form");
+if (form) {
+  form.addEventListener("submit", async (event) => {
+    const identifier = String(form.elements.username.value || "").trim();
+    if (!identifier.includes("@")) return;
+
+    event.preventDefault();
+    event.stopImmediatePropagation();
+
+    const submitButton = document.querySelector("#login-submit");
+    if (message) {
+      message.hidden = true;
+      message.textContent = "";
+    }
+    if (submitButton) {
+      submitButton.disabled = true;
+      submitButton.textContent = "Signing in…";
+    }
+
+    try {
+      setRememberSession(Boolean(form.elements.remember.checked));
+      const { error } = await supabase.auth.signInWithPassword({
+        email: identifier.toLowerCase(),
+        password: form.elements.password.value
+      });
+      if (error) throw error;
+      window.setTimeout(routeAfterVerifiedLogin, 0);
+    } catch {
+      if (message) {
+        message.hidden = false;
+        message.textContent = "Unable to sign in. Check your details or contact the administrator.";
+      }
+    } finally {
+      if (submitButton) {
+        submitButton.disabled = false;
+        submitButton.textContent = "Sign in";
+      }
+    }
+  }, true);
 }
 
 supabase.auth.onAuthStateChange((event) => {

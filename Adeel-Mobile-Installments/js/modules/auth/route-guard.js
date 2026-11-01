@@ -5,6 +5,7 @@ const requiredRole = document.body.dataset.requiredRole || "admin";
 const loginUrl = "/pages/login/";
 
 function showDenied(message) {
+  document.body.hidden = false;
   document.body.innerHTML = "";
   const main = document.createElement("main");
   const heading = document.createElement("h1");
@@ -12,7 +13,7 @@ function showDenied(message) {
   const link = document.createElement("a");
   heading.textContent = "Access denied";
   detail.textContent = message;
-  link.href = "/pages/login/";
+  link.href = loginUrl;
   link.textContent = "Return to sign in";
   main.append(heading, detail, link);
   document.body.append(main);

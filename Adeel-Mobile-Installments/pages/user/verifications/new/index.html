@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow"><title>New Verification | Adeel Mobile Installments</title>
+<link rel="stylesheet" href="../../../../css/phase5-verifications.css">
+<script>document.documentElement.setAttribute("data-auth-checking","true")</script>
+<script type="module" src="../../../../js/modules/auth/route-guard.js"></script>
+<script type="module" src="./new-verification.js"></script>
+</head>
+<body data-required-role="user" hidden>
+<main class="p5-shell">
+<header class="p5-head"><div><p class="p5-muted">Adeel Mobile Installments · User Portal</p><h1>New verification application</h1><p class="p5-muted">Apni details aur CNIC documents submit karein.</p></div><a class="p5-button" href="/pages/user/verifications/">My applications</a></header>
+<div class="p5-alert" data-message role="status" hidden></div>
+<form id="p5-application-form" class="p5-card">
+<div class="p5-grid">
+<div class="p5-field"><label for="customer_name">Customer full name *</label><input id="customer_name" name="customer_name" required minlength="2" maxlength="120" autocomplete="name"></div>
+<div class="p5-field"><label for="father_name">Father name *</label><input id="father_name" name="father_name" required minlength="2" maxlength="120"></div>
+<div class="p5-field"><label for="cnic_number">CNIC number *</label><input id="cnic_number" name="cnic_number" required placeholder="12345-1234567-1" pattern="[0-9]{5}-[0-9]{7}-[0-9]" maxlength="15"></div>
+<div class="p5-field"><label for="customer_phone">Mobile number *</label><input id="customer_phone" name="customer_phone" required inputmode="tel" placeholder="03XXXXXXXXX" pattern="03[0-9]{9}"></div>
+<div class="p5-field"><label for="whatsapp">WhatsApp number *</label><input id="whatsapp" name="whatsapp" required inputmode="tel" placeholder="03XXXXXXXXX" pattern="03[0-9]{9}"></div>
+<div class="p5-field"><label for="variant_id">Mobile model *</label><select id="variant_id" name="variant_id" required><option value="">Loading products…</option></select><small class="p5-price" data-product-price></small></div>
+<div class="p5-field"><label for="plan_months">Installment plan *</label><select id="plan_months" name="plan_months" required><option value="">Select duration</option><option value="3">3 months</option><option value="6">6 months</option><option value="9">9 months</option><option value="12">12 months</option></select></div>
+<div class="p5-field full"><label for="address">Complete address *</label><textarea id="address" name="address" rows="3" minlength="5" maxlength="500" required></textarea></div>
+<div class="p5-field"><label for="cnic_front">CNIC front image/PDF * (max 8 MB)</label><input id="cnic_front" name="cnic_front" type="file" accept="image/jpeg,image/png,application/pdf" required></div>
+<div class="p5-field"><label for="cnic_back">CNIC back image/PDF * (max 8 MB)</label><input id="cnic_back" name="cnic_back" type="file" accept="image/jpeg,image/png,application/pdf" required></div>
+</div>
+<p class="p5-muted p5-small">Documents private storage mein rahenge. Application submit karne ke baad status My applications mein check kar sakte hain.</p>
+<div class="p5-actions"><button class="p5-button primary" type="submit">Submit application</button><a class="p5-button" href="/pages/user/verifications/">Cancel</a></div>
+</form>
+</main>
+</body></html>

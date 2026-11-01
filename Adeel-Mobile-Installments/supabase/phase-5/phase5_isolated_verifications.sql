@@ -336,6 +336,7 @@ revoke all on function public.p5_cancel_incomplete_application(bigint) from publ
 revoke all on function public.p5_admin_approve_verification(bigint,numeric,numeric) from public, anon;
 revoke all on function public.p5_admin_reject_verification(bigint,text,text) from public, anon;
 grant execute on function public.p5_attach_verification_documents(bigint,text,text) to authenticated;
+grant execute on function public.p5_cancel_incomplete_application(bigint) to authenticated;
 grant execute on function public.p5_admin_approve_verification(bigint,numeric,numeric) to authenticated;
 grant execute on function public.p5_admin_reject_verification(bigint,text,text) to authenticated;
 

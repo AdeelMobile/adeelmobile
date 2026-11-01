@@ -49,8 +49,10 @@ function renderCards() {
   grid.replaceChildren(...metrics.map(metricCard));
 }
 
-async function fetchCount(table) {
-  const { count, error } = await supabase.from(table).select("id", { count: "exact", head: true });
+async function fetchCount(metric) {
+  let query = supabase.from(metric.table).select("id", { count: "exact", head: true });
+  if (metric.key === "users") query = query.eq("status", "active");
+  const { count, error } = await query;
   if (error) throw error;
   return count ?? 0;
 }
@@ -67,7 +69,7 @@ async function loadDashboard() {
   refreshButton.textContent = "Refreshing…";
   alertBox.hidden = true;
 
-  const results = await Promise.allSettled(metrics.map(metric => fetchCount(metric.table)));
+  const results = await Promise.allSettled(metrics.map(metric => fetchCount(metric)));
   let failures = 0;
   results.forEach((result, index) => {
     if (result.status === "fulfilled") setMetric(metrics[index].key, result.value);

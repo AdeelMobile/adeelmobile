@@ -21,39 +21,44 @@ function showDenied(message) {
 }
 
 async function guard() {
-  const identity = await getVerifiedAppIdentity();
-  if (identity.error) {
-    showDenied("Your session or role could not be verified. Please sign in again.");
-    return;
-  }
-  if (!identity.user) {
-    window.location.replace(loginUrl);
-    return;
-  }
-  if (identity.role !== requiredRole) {
-    if (identity.role === "user" && requiredRole === "admin") {
-      window.location.replace("/pages/user/");
+  try {
+    const identity = await getVerifiedAppIdentity();
+    if (identity.error) {
+      showDenied("Your session or role could not be verified. Please sign in again.");
       return;
     }
-    showDenied("This account does not have permission to open this page.");
-    return;
-  }
-
-  document.documentElement.removeAttribute("data-auth-checking");
-  document.body.hidden = false;
-
-  const logout = document.querySelector("[data-sign-out]");
-  if (logout) {
-    logout.addEventListener("click", async () => {
-      logout.disabled = true;
-      const { error } = await signOutCurrentSession();
-      if (error) {
-        logout.disabled = false;
-        showDenied("Sign out could not be completed. Please try again.");
+    if (!identity.user) {
+      window.location.replace(loginUrl);
+      return;
+    }
+    if (identity.role !== requiredRole) {
+      if (identity.role === "user" && requiredRole === "admin") {
+        window.location.replace("/pages/user/");
         return;
       }
-      window.location.replace(loginUrl);
-    });
+      showDenied("This account does not have permission to open this page.");
+      return;
+    }
+
+    document.documentElement.removeAttribute("data-auth-checking");
+    document.body.hidden = false;
+
+    const logout = document.querySelector("[data-sign-out]");
+    if (logout) {
+      logout.addEventListener("click", async () => {
+        logout.disabled = true;
+        try {
+          const { error } = await signOutCurrentSession();
+          if (error) throw error;
+          window.location.replace(loginUrl);
+        } catch {
+          logout.disabled = false;
+          showDenied("Sign out could not be completed. Please try again.");
+        }
+      });
+    }
+  } catch {
+    showDenied("Your session or role could not be verified. Please sign in again.");
   }
 }
 

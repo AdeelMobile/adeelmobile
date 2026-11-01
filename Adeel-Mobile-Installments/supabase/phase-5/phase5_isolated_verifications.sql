@@ -311,7 +311,7 @@ create or replace function public.p5_admin_reject_verification(
 declare v_reason text;
 begin
   if auth.uid() is null or not private.is_admin() then raise exception 'Admin access required'; end if;
-  if p_reason_code not in ('invalid_id','duplicate_application','incomplete_info','other') then
+  if p_reason_code is null or p_reason_code not in ('invalid_id','duplicate_application','incomplete_info','other') then
     raise exception 'Invalid rejection reason';
   end if;
   v_reason := case p_reason_code

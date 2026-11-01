@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="../../css/main.css">
   <link rel="stylesheet" href="../../css/components.css">
   <script type="module" src="./login.js"></script>
+  <script type="module" src="../../js/modules/auth/login-bridge.js"></script>
 </head>
 <body>
   <main class="auth-page">
@@ -19,42 +20,32 @@
         <p class="brand-name">Adeel Mobile</p>
         <p class="brand-subtitle">Installments</p>
       </header>
-
       <div class="auth-heading">
         <h1 id="login-title">Welcome back</h1>
         <p>Sign in with the username and password provided by your administrator.</p>
       </div>
-
       <form id="login-form" novalidate>
         <div class="form-field">
           <label for="username">Username</label>
-          <input id="username" name="username" type="text" autocomplete="username"
-            autocapitalize="none" spellcheck="false" maxlength="32" required
-            placeholder="Enter your username">
+          <input id="username" name="username" type="text" autocomplete="username" autocapitalize="none" spellcheck="false" maxlength="32" required placeholder="Enter your username">
         </div>
-
         <div class="form-field">
           <label for="password">Password</label>
           <div class="password-control">
-            <input id="password" name="password" type="password" autocomplete="current-password"
-              required placeholder="Enter your password">
-            <button class="password-toggle" id="password-toggle" type="button"
-              aria-label="Show password" aria-pressed="false">Show</button>
+            <input id="password" name="password" type="password" autocomplete="current-password" required placeholder="Enter your password">
+            <button class="password-toggle" id="password-toggle" type="button" aria-label="Show password" aria-pressed="false">Show</button>
           </div>
           <p class="field-hint">Use the password provided by your administrator. New or reset passwords must be at least 8 characters.</p>
         </div>
-
         <div class="form-options">
           <label class="remember-option">
             <input type="checkbox" name="remember" value="yes">
             <span>Remember me on this device</span>
           </label>
         </div>
-
         <p id="login-message" class="form-message" role="status" aria-live="polite" hidden></p>
         <button class="primary-button" id="login-submit" type="submit">Sign in</button>
       </form>
-
       <footer class="auth-footer">
         <p>Secure access for authorized Admins and Users</p>
         <p class="security-note">Forgot your password? Contact your administrator for a verified reset.</p>

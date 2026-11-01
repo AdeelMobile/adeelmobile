@@ -117,6 +117,15 @@ begin
   new.approved_by := null;
   new.rejected_at := null;
   new.rejected_by := null;
+  new.submitted_at := now();
+  new.updated_at := now();
+  select b.brand || ' ' || m.model, v.variant, v.price
+    into new.product_name, new.variant_name, new.product_price
+    from public.variants v
+    join public.models m on m.id = v.model_id
+    join public.brands b on b.id = m.brand_id
+    where v.id = new.variant_id;
+  if new.product_name is null then raise exception 'Selected product is unavailable'; end if;
   return new;
 end;
 $$;
@@ -237,8 +246,10 @@ grant execute on function public.p5_cancel_incomplete_application(bigint) to aut
 create or replace function public.p5_admin_approve_verification(
   p_application_id bigint, p_expected_advance numeric, p_actual_advance numeric
 ) returns jsonb language plpgsql security definer set search_path = '' as $$
-declare a public.p5_verification_applications%rowtype;
-declare c_id bigint; contract_id bigint;
+declare
+  a public.p5_verification_applications%rowtype;
+  c_id bigint;
+  contract_id bigint;
 begin
   if auth.uid() is null or not private.is_admin() then raise exception 'Admin access required'; end if;
   if p_actual_advance is null or p_actual_advance < 0
@@ -324,7 +335,7 @@ grant execute on function public.p5_admin_reject_verification(bigint,text,text) 
 insert into storage.buckets(id, name, public, file_size_limit, allowed_mime_types)
 values ('p5-verification-docs', 'p5-verification-docs', false, 8388608,
   array['image/jpeg','image/png','application/pdf'])
-on conflict (id) do nothing;
+;
 
 create policy p5_private_docs_insert_owner on storage.objects
 for insert to authenticated

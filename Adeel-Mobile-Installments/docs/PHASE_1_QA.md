@@ -46,4 +46,6 @@ Do not start backend/authentication work until the user confirms the foundation 
 - Confirmed from the prior handler source that it did not send credentials to a server; it only performed local validation and displayed that authentication was not connected.
 - No Supabase schema, records, storage, or RLS changes were made.
 - **Important:** Chrome displayed a Google Safe Browsing phishing warning before this remediation. A code change cannot itself clear Google's warning. The domain must be rechecked and, if still flagged, submitted for Google's review after the site is verified clean.
+- Added `_redirects` at the Pages output root to redirect all `/pages/admin/*` preview routes to the safe login information page (HTTP 302) until real authentication and role-based authorization are implemented. This is temporary route hiding, **not** a substitute for server-side authorization; no private data should be placed in these static pages.
+- Commit for temporary route mitigation: `de0b1a92dc50eb8058f857df07b8240eb73d6b8d`. Cloudflare deployment and live redirect behavior still require user-side confirmation.
 - **Phase 1 remains BLOCKED** until the warning is cleared (or Google confirms the classification was in error) and the user completes the live Android navigation/responsive checks.

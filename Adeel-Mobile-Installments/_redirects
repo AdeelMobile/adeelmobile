@@ -10,3 +10,7 @@
 /user/verifications/new/ /pages/user/verifications/new/index.html 200
 /admin/verifications/ /pages/admin/verifications/index.html 200
 /admin/verifications/detail/ /pages/admin/verifications/detail/index.html 200
+
+# Phase 6 customer listing
+/admin/customers /pages/admin/customers/index.html 200
+/admin/customers/ /pages/admin/customers/index.html 200

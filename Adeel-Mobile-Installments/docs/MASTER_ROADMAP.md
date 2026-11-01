@@ -22,9 +22,9 @@ A phase is not complete when code is merely committed. It must be available on a
 | Phase | Working feature to test live | Status |
 |---|---|---|
 | 1 | Foundation site: safe entry page, admin shell, navigation, responsive behavior | Android route/scroll checks PASS; Google review pending — BLOCKED / NOT FROZEN |
-| 2 | Real login, logout, session restore, password reset | IN PROGRESS on isolated branch `phase-2-auth`; user has not completed live credential/session tests; NOT PASS / NOT FROZEN |
-| 3 | Admin/user roles and protected routes | Backend trusted-role/RLS migrations and client route guards committed on `phase-3-roles`; simulated DB tests pass; preview/browser/Android/API live QA pending — IN PROGRESS / NOT PASS / NOT FROZEN |
-| 4 | Working admin dashboard and summary data | Locked |
+| 2 | Real login, logout, session restore, password reset | IN PROGRESS — live credential/session tests pending; NOT PASS / NOT FROZEN |
+| 3 | Admin/user roles and protected routes | Backend role/RLS simulations pass; preview/browser/Android/API live QA pending — IN PROGRESS / NOT PASS / NOT FROZEN |
+| 4 | Working admin dashboard and read-only summary data | IMPLEMENTED on `phase-4-admin-dashboard`; staging/browser/Android QA pending — IN PROGRESS / NOT PASS / NOT FROZEN |
 | 5 | User management: list/create/view/edit/search/status | Locked |
 | 6 | Customer records and verification review | Locked |
 | 7 | Brands, categories, products and catalog management | Locked |
@@ -40,20 +40,18 @@ A phase is not complete when code is merely committed. It must be available on a
 
 ## Phase test gates
 
-### Phase 1 — Foundation site (current)
-Already in GitHub: project structure, root entry, safe login-preview page (no credential fields), admin HTML pages, design tokens, shared CSS/UI helpers, dashboard drawer/navigation, QA documents. The preview intentionally does not request credentials; secure authentication belongs to Phase 2.
-**Live test:** Open staging URL on Android and desktop. Check root, login and built admin pages; test available links, mobile drawer, refresh/back, scrolling, portrait/wide layouts and horizontal overflow. Unbuilt destinations must be clearly labelled unavailable.
-**Security gate:** Chrome reported a Google Safe Browsing phishing warning on the production `pages.dev` domain. The preview credential fields and unused handler have been removed. Do not ask visitors to bypass the warning. Confirm the new deployment, recheck Google Safe Browsing, and request Google's review if still flagged. **Current evidence:** User tested the new `adeelmobile-admin.pages.dev` root, dashboard, create-user and all-users routes on Android. All displayed the safe preview; vertical scrolling worked; no horizontal overflow; text was readable (font-size preference deferred to final UI Control Panel). The older `adeelmobile-installments.pages.dev` Search Console review is still pending. **Gate:** Phase 1 remains BLOCKED / NOT PASS / NOT FROZEN until Google resolves the old domain's warning.
+### Phase 1 — Foundation
+Android root/dashboard/create-user/all-users route and scrolling checks were reported by the user as working. The old `adeelmobile-installments.pages.dev` Google Search Console review remains pending. Phase 1 is BLOCKED / NOT PASS / NOT FROZEN until the warning is resolved.
 
 ### Phase 2 — Authentication
-Initial code foundation is in progress on isolated branch `phase-2-auth`. Existing database inspection found `public.users.login_username` and `public.users.auth_user_id`; no schema/data changes have been made. The existing login convention maps a username to `username@adeelmobile.app`. The agreed account-password policy is minimum 8 characters for new/reset passwords; existing users are not blocked client-side. The synthetic email alias is not a deliverable email address, so the password recovery channel still needs a safe agreed design (admin-assisted reset is the known workflow concept). Login UI and session helpers are committed, but user live tests and recovery are still pending. Phase 2 remains IN PROGRESS / NOT PASS / NOT FROZEN.
-**Live test:** Valid test login, wrong-password rejection, session after refresh, logout, password reset completion on Android and desktop. Must use real Supabase Auth, not a mock. Confirm configuration first; frontend only gets public anon/publishable key.
+Real Supabase Auth login, wrong-password rejection, session restore, logout and password recovery remain untested by the user. Existing username alias login and Admin email bridge are implemented on their isolated branches. Phase 2 remains IN PROGRESS / NOT PASS / NOT FROZEN.
 
 ### Phase 3 — Roles and protection
-**Live test:** Test admin and standard accounts; verify permitted menus/actions; paste restricted URL; attempt unauthorized data access; verify backend denies it. Isolated branch `phase-3-roles` starts from Phase 2 branch commit `f64f5c71865c85307b4b82d98f8186a7b9d74495`. Read-only audit found no explicit role column and found `private.is_admin()` currently treats an authenticated identity with no matching `public.users` row as Admin; this must be replaced with an explicit trusted Admin allow-list before authorization is accepted. Broad public policies on `verifications` and `user_brand_incentives`, plus RLS gaps on `colors` and `download_history`, also require review. The user approved Phase 3 database/functions/RLS/grant work. Applied migrations now use a private explicit Admin allow-list, deny unknown roles, remove broad public verification/incentive policies, standardize sales-record admin checks, enable scoped RLS on colors/download history, and restrict trigger-function RPC grants. Admin and User database-side role simulations pass, inactive/unmapped users are denied, and anonymous download-history access is revoked. Client role resolver, email/username login bridge and route guards are committed. Live preview deployment and real Android/desktop/direct-API tests remain pending; Phase 3 is still IN PROGRESS / NOT PASS / NOT FROZEN. See `docs/PHASE_3_ROLES_PLAN.md`.
+Trusted private Admin allow-list, Admin/User/none resolver, protected route guards and reviewed RLS/grant migrations are committed on `phase-3-roles`. Database-side role simulations passed. Real Android/desktop login, direct URL and direct REST/API tests remain pending. Phase 3 remains IN PROGRESS / NOT PASS / NOT FROZEN.
 
 ### Phase 4 — Admin dashboard
-**Live test:** Admin opens dashboard; summary cards match known test values; refresh, empty/error states and navigation work; standard user is blocked.
+Implemented on `phase-4-admin-dashboard`. The dashboard reads exact counts from existing `users`, `customers`, `brands`, `models`, `variants`, `orders` and `verifications` tables. It is read-only, has refresh/error/last-updated states, and uses the Phase 3 Admin route guard. No database schema or data was changed. See `docs/PHASE_4_ADMIN_DASHBOARD_PLAN.md`.
+**Live test:** Admin opens dashboard; summary cards match known test values; refresh, empty/error states and navigation work; standard user and signed-out visitors are blocked. Preview deployment and browser/Android tests are pending.
 
 ### Phase 5 — User management
 **Live test:** Create, search, view, edit and change status of a test user; test validation, duplicate handling and refresh persistence.
@@ -95,4 +93,4 @@ Confirm formula, qualifying event, reversal and payout rules. No profit before a
 Record scope; files created/changed; frozen-file list; commit SHA; staging URL/version; exact steps and expected results; user's PASS/FAIL; separate static/browser/Android/backend evidence; defects and approvals; gate PASS/FAIL/BLOCKED. Next phase stays locked until PASS.
 
 ## Safeguards
-GitHub is source of truth. Staging is not production. Ask before Cloudflare/domain setup or deployment unless already authorized. No production release without approval. No Supabase schema/data/Storage/RLS changes or migrations without separate approval. If a future phase appears to need a frozen file, stop and design a new module/interface rather than editing it.
+GitHub is source of truth. Staging is not production. Ask before Cloudflare/domain setup or deployment unless already authorized. No production release without approval. No Supabase schema/data/Storage/RLS changes or migrations without separate approval. If a future phase appears to need a frozen file, stop and design a new module/interface.

@@ -79,8 +79,8 @@ export async function submitP5Application(form, frontFile, backFile) {
     if (attachError) throw attachError;
     return appId;
   } catch (error) {
-    if (paths.length) await supabase.storage.from(P5_BUCKET).remove(paths);
-    await supabase.rpc("p5_cancel_incomplete_application", { p_application_id: appId });
+    const { error: cancelError } = await supabase.rpc("p5_cancel_incomplete_application", { p_application_id: appId });
+    if (!cancelError && paths.length) await supabase.storage.from(P5_BUCKET).remove(paths);
     throw new Error(error.message || "Documents upload nahi ho sakin. Dobara koshish karein.");
   }
 }

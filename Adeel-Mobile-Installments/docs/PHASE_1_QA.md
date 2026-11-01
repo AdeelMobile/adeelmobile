@@ -49,3 +49,15 @@ Do not start backend/authentication work until the user confirms the foundation 
 - Added `_redirects` at the Pages output root to redirect all `/pages/admin/*` preview routes to the safe login information page (HTTP 302) until real authentication and role-based authorization are implemented. This is temporary route hiding, **not** a substitute for server-side authorization; no private data should be placed in these static pages.
 - Commit for temporary route mitigation: `de0b1a92dc50eb8058f857df07b8240eb73d6b8d`. Cloudflare deployment and live redirect behavior still require user-side confirmation.
 - **Phase 1 remains BLOCKED** until the warning is cleared (or Google confirms the classification was in error) and the user completes the live Android navigation/responsive checks.
+
+
+## Additional deceptive-pages cleanup — 2026-11-01
+
+- Replaced all four unfinished public admin HTML previews (dashboard, users, all-users, create-user) with a safe information-only notice.
+- Added `noindex, nofollow` metadata to those preview pages.
+- Removed the unused `js/modules/admin/users/create-user.js` script, which handled the unfinished password form.
+- Kept the `_redirects` rule that redirects `/pages/admin/*` to the safe login information page.
+- These changes remove the unfinished credential/personal-details form markup from the deployed project files; they do not implement authentication or authorization.
+- GitHub main tree after cleanup: `a7a2a7a1525c1932bac0b3d90c9633d075bcc5e7`.
+- Cloudflare deployment and live URL behavior for this additional cleanup are pending user confirmation.
+- Google Search Console still reports `Deceptive pages`; do not mark the issue resolved until Google confirms it.

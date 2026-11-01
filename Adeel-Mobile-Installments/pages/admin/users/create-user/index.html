@@ -3,101 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
   <meta name="theme-color" content="#FDFCF8">
-  <title>Create User | Adeel Mobile Installments</title>
-  <link rel="stylesheet" href="../../../../css/main.css">
-  <link rel="stylesheet" href="../../../../css/components.css">
-  <link rel="stylesheet" href="../../../../css/dashboard.css">
-  <link rel="stylesheet" href="../../../../css/users.css">
+  <meta name="description" content="Adeel Mobile Installments secure admin access is not active yet.">
+  <title>Create User Preview | Adeel Mobile Installments</title>
 </head>
-<body class="admin-body">
-  <div class="admin-shell">
-    <header class="topbar">
-      <button class="icon-button menu-trigger" id="menu-open" type="button" aria-label="Open navigation menu" aria-controls="admin-sidebar" aria-expanded="false">☰</button>
-      <a class="topbar-brand" href="../../../../"><span class="topbar-mark" aria-hidden="true">AM</span><span>Adeel Mobile</span></a>
-      <div class="topbar-actions"><button class="icon-button" type="button" aria-label="Notifications">♧</button><button class="profile-button" type="button" aria-label="Administrator profile">A</button></div>
-    </header>
-
-    <div class="admin-layout">
-      <div class="sidebar-backdrop" id="sidebar-backdrop" hidden></div>
-      <aside class="admin-sidebar" id="admin-sidebar" aria-label="Admin navigation">
-        <div class="sidebar-heading"><div class="sidebar-brand-mark" aria-hidden="true">AM</div><div><strong>Adeel Mobile</strong><span>Admin Control Panel</span></div><button class="icon-button sidebar-close" id="menu-close" type="button" aria-label="Close navigation menu">×</button></div>
-        <nav class="sidebar-nav">
-          <p class="nav-caption">WORKSPACE</p>
-          <a class="nav-link" href="../../dashboard/"><span class="nav-icon">▦</span><span>Main Dashboard</span></a>
-          <a class="nav-link is-active" href="../"><span class="nav-icon">♙</span><span>Users</span></a>
-          <a class="nav-link" href="#" data-coming-soon><span class="nav-icon">✓</span><span>Verifications</span></a>
-          <a class="nav-link" href="#" data-coming-soon><span class="nav-icon">♧</span><span>Customers</span></a>
-          <a class="nav-link" href="#" data-coming-soon><span class="nav-icon">▣</span><span>Products</span></a>
-          <a class="nav-link" href="#" data-coming-soon><span class="nav-icon">▤</span><span>Installment Plans</span></a>
-          <a class="nav-link" href="#" data-coming-soon><span class="nav-icon">◉</span><span>User Profits &amp; Wallet</span></a>
-          <a class="nav-link" href="#" data-coming-soon><span class="nav-icon">⌂</span><span>Website Management</span></a>
-          <a class="nav-link" href="#" data-coming-soon><span class="nav-icon">▥</span><span>Reports &amp; Analytics</span></a>
-          <a class="nav-link" href="#" data-coming-soon><span class="nav-icon">◌</span><span>WhatsApp &amp; Sharing</span></a>
-          <a class="nav-link" href="#" data-coming-soon><span class="nav-icon">⚙</span><span>Settings</span></a>
-          <a class="nav-link" href="#" data-coming-soon><span class="nav-icon">◷</span><span>Activity Logs</span></a>
-        </nav>
-        <div class="sidebar-account"><div class="account-avatar">A</div><div class="account-copy"><strong>Administrator</strong><span>Admin account</span></div><button class="logout-button" id="logout-button" type="button">Log out</button></div>
-      </aside>
-
-      <main class="dashboard-main">
-        <div class="page-heading">
-          <div><p class="eyebrow">USER MANAGEMENT</p><h1>Create User</h1><p class="page-subtitle">Add a new member to your sales team</p></div>
-        </div>
-
-        <form class="user-form panel-card" id="create-user-form" novalidate>
-          <section class="form-section">
-            <div class="form-section-heading"><span>01</span><div><h2>Personal Information</h2><p>Enter the user's contact details.</p></div></div>
-            <div class="form-grid">
-              <div class="form-field"><label for="full-name">Full Name</label><input id="full-name" name="fullName" type="text" placeholder="Enter full name" autocomplete="name" required></div>
-              <div class="form-field"><label for="whatsapp">WhatsApp Number</label><input id="whatsapp" name="whatsapp" type="tel" placeholder="Enter WhatsApp number" autocomplete="tel" required></div>
-              <div class="form-field form-field-wide"><label for="address">Address</label><textarea id="address" name="address" rows="3" placeholder="Enter complete address" autocomplete="street-address" required></textarea></div>
-            </div>
-          </section>
-
-          <section class="form-section">
-            <div class="form-section-heading"><span>02</span><div><h2>Sales Target</h2><p>Set the monthly sales target for this user.</p></div></div>
-            <div class="form-grid">
-              <div class="form-field"><label for="monthly-target">Monthly Sales Target (PKR)</label><input id="monthly-target" name="monthlyTarget" type="number" min="0" step="1" inputmode="numeric" placeholder="Enter target amount" required></div>
-            </div>
-          </section>
-
-          <section class="form-section">
-            <div class="form-section-heading"><span>03</span><div><h2>Brand-wise Profit Settings</h2><p>Profit rates will be configured for each available brand.</p></div></div>
-            <div class="brand-settings-empty"><strong>Brand list is not connected yet</strong><p>Available brands and their profit percentage fields will load from the product catalogue after the website and database are connected. No brand rates have been assumed.</p></div>
-          </section>
-
-          <section class="form-section">
-            <div class="form-section-heading"><span>04</span><div><h2>Login Account Details</h2><p>Create the username and secure four-digit login password.</p></div></div>
-            <div class="form-grid">
-              <div class="form-field form-field-wide"><label for="username">Username</label><input id="username" name="username" type="text" placeholder="Create a unique username" autocomplete="off" autocapitalize="none" required></div>
-              <div class="form-field"><label for="new-password">Four-Digit Password</label><div class="password-control"><input id="new-password" name="password" type="password" inputmode="numeric" pattern="[0-9]{4}" maxlength="4" placeholder="4 digits" autocomplete="new-password" required><button class="password-toggle" type="button" data-toggle-password="new-password">Show</button></div></div>
-              <div class="form-field"><label for="confirm-password">Confirm Password</label><div class="password-control"><input id="confirm-password" name="confirmPassword" type="password" inputmode="numeric" pattern="[0-9]{4}" maxlength="4" placeholder="Repeat 4 digits" autocomplete="new-password" required><button class="password-toggle" type="button" data-toggle-password="confirm-password">Show</button></div></div>
-            </div>
-            <p class="form-security-note">Passwords must be handled by the secure authentication service. They will not be stored as plain text or included in referral links.</p>
-          </section>
-
-          <p class="form-message" id="create-user-message" role="alert" aria-live="polite" hidden></p>
-          <div class="form-actions">
-            <button class="primary-button form-submit" type="submit">Create User</button>
-            <button class="secondary-button" type="reset">Reset Form</button>
-            <a class="cancel-link" href="../">Cancel</a>
-          </div>
-        </form>
-
-        <section class="panel-card user-created-panel" id="user-created-panel" hidden aria-live="polite">
-          <h2>User creation will appear here</h2>
-          <p>A referral link and WhatsApp sharing action will be shown only after the user is successfully created by the secure backend.</p>
-        </section>
-      </main>
-    </div>
-
-    <nav class="mobile-bottom-nav" aria-label="Quick navigation">
-      <a href="../../dashboard/"><span>▦</span>Dashboard</a><a class="bottom-nav-active" href="../"><span>♙</span>Users</a><a href="#" data-coming-soon><span>♧</span>Customers</a><button id="bottom-more" type="button"><span>☰</span>More</button>
-    </nav>
-  </div>
-  <script src="../../../../js/modules/admin/dashboard/dashboard.js" defer></script>
-<script src="../../../../js/components/ui.js" defer></script>
-  <script src="../../../../js/modules/admin/users/create-user.js" defer></script>
+<body>
+  <main>
+    <p>AM</p>
+    <h1>Admin preview is not available yet</h1>
+    <p>This is an early preview of Adeel Mobile Installments. Secure sign-in and authorized admin access will be enabled in later development phases.</p>
+    <p>For your safety, this preview does not request or collect usernames, passwords, personal details, or verification codes.</p>
+    <p>Please do not enter account credentials or personal information on preview pages.</p>
+    <p><a href="/pages/login/">Return to the safe preview page</a></p>
+  </main>
 </body>
 </html>

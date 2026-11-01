@@ -38,3 +38,12 @@ The GitHub connector can inspect and update repository files, but it cannot oper
 **Manual Android/Acode visual QA: deferred to the planned device-testing phase.**
 
 Do not start backend/authentication work until the user confirms the foundation checkpoint if a visual review is required first.
+
+## Security remediation — 2026-11-01
+
+- Removed the public preview username/password form because secure authentication is not part of Phase 1.
+- Removed the unused client-side login handler. The preview page no longer asks visitors for usernames, passwords, or verification codes.
+- Confirmed from the prior handler source that it did not send credentials to a server; it only performed local validation and displayed that authentication was not connected.
+- No Supabase schema, records, storage, or RLS changes were made.
+- **Important:** Chrome displayed a Google Safe Browsing phishing warning before this remediation. A code change cannot itself clear Google's warning. The domain must be rechecked and, if still flagged, submitted for Google's review after the site is verified clean.
+- **Phase 1 remains BLOCKED** until the warning is cleared (or Google confirms the classification was in error) and the user completes the live Android navigation/responsive checks.

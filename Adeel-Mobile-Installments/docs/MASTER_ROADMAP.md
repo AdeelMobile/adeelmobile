@@ -21,8 +21,8 @@ A phase is not complete when code is merely committed. It must be available on a
 
 | Phase | Working feature to test live | Status |
 |---|---|---|
-| 1 | Foundation site: safe entry page, admin shell, navigation, responsive behavior | Implementation deployed; Safe Browsing review and Android live test BLOCKED/PENDING |
-| 2 | Real login, logout, session restore, password reset | Locked |
+| 1 | Foundation site: safe entry page, admin shell, navigation, responsive behavior | Android route/scroll checks PASS; Google review pending — BLOCKED / NOT FROZEN |
+| 2 | Real login, logout, session restore, password reset | IN PROGRESS on isolated branch `phase-2-auth`; client/session foundation committed; login UI awaits password/recovery security decision |
 | 3 | Admin/user roles and protected routes | Locked |
 | 4 | Working admin dashboard and summary data | Locked |
 | 5 | User management: list/create/view/edit/search/status | Locked |
@@ -43,9 +43,10 @@ A phase is not complete when code is merely committed. It must be available on a
 ### Phase 1 — Foundation site (current)
 Already in GitHub: project structure, root entry, safe login-preview page (no credential fields), admin HTML pages, design tokens, shared CSS/UI helpers, dashboard drawer/navigation, QA documents. The preview intentionally does not request credentials; secure authentication belongs to Phase 2.
 **Live test:** Open staging URL on Android and desktop. Check root, login and built admin pages; test available links, mobile drawer, refresh/back, scrolling, portrait/wide layouts and horizontal overflow. Unbuilt destinations must be clearly labelled unavailable.
-**Security gate:** Chrome reported a Google Safe Browsing phishing warning on the production `pages.dev` domain. The preview credential fields and unused handler have been removed. Do not ask visitors to bypass the warning. Confirm the new deployment, recheck Google Safe Browsing, and request Google's review if still flagged. **Gate:** Phase 1 remains NOT PASS until Google clears the warning and the user completes Android live navigation/responsive checks.
+**Security gate:** Chrome reported a Google Safe Browsing phishing warning on the production `pages.dev` domain. The preview credential fields and unused handler have been removed. Do not ask visitors to bypass the warning. Confirm the new deployment, recheck Google Safe Browsing, and request Google's review if still flagged. **Current evidence:** User tested the new `adeelmobile-admin.pages.dev` root, dashboard, create-user and all-users routes on Android. All displayed the safe preview; vertical scrolling worked; no horizontal overflow; text was readable (font-size preference deferred to final UI Control Panel). The older `adeelmobile-installments.pages.dev` Search Console review is still pending. **Gate:** Phase 1 remains BLOCKED / NOT PASS / NOT FROZEN until Google resolves the old domain's warning.
 
 ### Phase 2 — Authentication
+Initial code foundation is in progress on isolated branch `phase-2-auth`. Existing database inspection found `public.users.login_username` and `public.users.auth_user_id`; no schema/data changes have been made. The existing login convention maps a username to `username@adeelmobile.app`. The user's prior four-digit numeric password requirement conflicts with Supabase's security guidance recommending at least 8 characters; resolve before enabling the live login form. The synthetic email alias is not a deliverable email address, so the password recovery channel also needs a safe agreed design (admin-assisted reset is the known workflow concept).
 **Live test:** Valid test login, wrong-password rejection, session after refresh, logout, password reset completion on Android and desktop. Must use real Supabase Auth, not a mock. Confirm configuration first; frontend only gets public anon/publishable key.
 
 ### Phase 3 — Roles and protection

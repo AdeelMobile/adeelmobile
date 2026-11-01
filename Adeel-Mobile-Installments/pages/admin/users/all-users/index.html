@@ -5,17 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">
   <meta name="theme-color" content="#FDFCF8">
-  <meta name="description" content="Adeel Mobile Installments secure admin access is not active yet.">
-  <title>All Users Preview | Adeel Mobile Installments</title>
+  <title>All Users | Adeel Mobile Installments</title>
+  <style>html[data-auth-checking] body{visibility:hidden}body{font-family:system-ui,sans-serif;margin:0;padding:24px;line-height:1.5}main{max-width:800px;margin:8vh auto}button{padding:12px 18px}</style>
+  <script>document.documentElement.setAttribute("data-auth-checking","true")</script>
+  <script type="module" src="../../../../js/modules/auth/route-guard.js"></script>
 </head>
-<body>
+<body data-required-role="admin" hidden>
   <main>
-    <p>AM</p>
-    <h1>Admin preview is not available yet</h1>
-    <p>This is an early preview of Adeel Mobile Installments. Secure sign-in and authorized admin access will be enabled in later development phases.</p>
-    <p>For your safety, this preview does not request or collect usernames, passwords, personal details, or verification codes.</p>
-    <p>Please do not enter account credentials or personal information on preview pages.</p>
-    <p><a href="/pages/login/">Return to the safe preview page</a></p>
+    <p>AM · Adeel Mobile Installments</p>
+    <h1>All users</h1>
+    <p>Admin access verified. The user directory will be enabled in a later phase.</p>
+    <p><a href="/pages/admin/dashboard/">Back to dashboard</a></p>
+    <button type="button" data-sign-out>Sign out</button>
   </main>
 </body>
 </html>

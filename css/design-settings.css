@@ -1,0 +1,80 @@
+/* Adeel Mobile - Admin Design & Typography Settings Engine */
+:root {
+  --admin-font-family: 'Inter', sans-serif;
+  --admin-title-size: 24px;
+  --admin-section-size: 18px;
+  --admin-card-size: 16px;
+  --admin-body-size: 14px;
+  --admin-line-height: 1.5;
+  --admin-letter-spacing: normal;
+  --admin-text-transform: none;
+}
+
+body {
+  font-family: var(--admin-font-family) !important;
+  line-height: var(--admin-line-height) !important;
+  letter-spacing: var(--admin-letter-spacing) !important;
+}
+
+h1, .page-heading h2 {
+  font-size: var(--admin-title-size) !important;
+  text-transform: var(--admin-text-transform) !important;
+}
+
+.section-title {
+  font-size: var(--admin-section-size) !important;
+}
+
+.summary-value, .card b {
+  font-size: var(--admin-card-size) !important;
+}
+
+p, span, label, input, button, td, th {
+  font-size: var(--admin-body-size) !important;
+}
+
+.design-panel {
+  background: #fff;
+  border: 1px solid #e1e5eb;
+  border-radius: 14px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+}
+
+.design-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+@media(max-width: 768px) {
+  .design-row { grid-template-columns: 1fr; }
+}
+
+.design-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.design-group label {
+  font-weight: 600;
+  font-size: 13px;
+  color: #444;
+}
+
+.design-group select, .design-group input {
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+  background: #f9f9f9;
+  outline: none;
+}
+
+.design-group select:focus, .design-group input:focus {
+  border-color: #2563eb;
+  background: #fff;
+}

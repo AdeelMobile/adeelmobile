@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Design Management & Typography | Adeel Mobile</title>
+
+  <!-- Google Fonts Import for 25+ Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=Figtree:ital,wght@0,400;0,500;0,700;1,400&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,700;1,400&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Lato:ital,wght@0,400;0,700;1,400&family=Manrope:wght@400;500;600;700&family=Merriweather+Sans:ital,wght@0,400;0,700;1,400&family=Montserrat:ital,wght@0,400;0,500;0,700;1,400&family=Nunito+Sans:ital,wght@0,400;0,600;0,700;1,400&family=Nunito:ital,wght@0,400;0,600;0,700;1,400&family=Open+Sans:ital,wght@0,400;0,600;0,700;1,400&family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,700;1,400&family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Raleway:ital,wght@0,400;0,600;0,700;1,400&family=Roboto:ital,wght@0,400;0,500;0,700;1,400&family=Rubik:ital,wght@0,400;0,500;0,700;1,400&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&family=Ubuntu:ital,wght@0,400;0,500;0,700;1,400&family=Work+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../../css/theme.css">
+  <link rel="stylesheet" href="../../css/layout.css">
+  <link rel="stylesheet" href="../../css/design-settings.css">
+
+  <style>
+    body { padding-top: 70px; background: #F8F9FA; }
+    .page-wrap { max-width: 900px; margin: auto; padding: 20px 16px 50px; }
+    .top-action-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+    .btn-save { background: #2563eb; color: #fff; border: none; padding: 12px 24px; border-radius: 8px; font-weight: 600; cursor: pointer; }
+    .btn-reset { background: #e5e7eb; color: #111; border: none; padding: 12px 20px; border-radius: 8px; font-weight: 600; cursor: pointer; }
+    .toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: #111; color: #fff; padding: 12px 24px; border-radius: 8px; opacity: 0; transition: opacity 0.3s; pointer-events: none; z-index: 1000; }
+    .toast.show { opacity: 1; }
+  </style>
+</head>
+<body>
+
+  <!-- Top Bar -->
+  <div style="position:fixed; top:0; left:0; right:0; background:#fff; border-bottom:1px solid #e1e5eb; padding:12px 20px; display:flex; align-items:center; justify-content:space-between; z-index:100;">
+    <div style="display:flex; align-items:center; gap:12px;">
+      <a href="../Main-Dashboard/main-dashboard.html" style="text-decoration:none; font-size:20px; color:#111;">← Back</a>
+      <h2 style="margin:0; font-size:18px; font-weight:700;">Admin Design & Typography Management</h2>
+    </div>
+    <div style="display:flex; gap:8px;">
+      <button class="btn-reset" id="resetBtn">Reset Default</button>
+      <button class="btn-save" id="saveBtn">Save Settings</button>
+    </div>
+  </div>
+
+  <div class="page-wrap">
+    <p style="color:#666; margin-bottom:20px;">Customize font families, sizes, line heights, and letter spacing across the admin panel instantly with live preview.</p>
+
+    <!-- Typography Family Panel -->
+    <div class="design-panel">
+      <h3 style="margin-top:0; margin-bottom:16px; font-size:16px; font-weight:700;">🔤 Font Family Selection</h3>
+      <div class="design-row">
+        <div class="design-group">
+          <label>Primary Font Family</label>
+          <select id="fontFamilySelect">
+            <option value="Inter">Inter</option>
+            <option value="Poppins">Poppins</option>
+            <option value="Roboto">Roboto</option>
+            <option value="Open Sans">Open Sans</option>
+            <option value="Lato">Lato</option>
+            <option value="Montserrat">Montserrat</option>
+            <option value="Raleway">Raleway</option>
+            <option value="Nunito Sans">Nunito Sans</option>
+            <option value="Merriweather Sans">Merriweather Sans</option>
+            <option value="IBM Plex Sans">IBM Plex Sans</option>
+            <option value="Nunito">Nunito</option>
+            <option value="Work Sans">Work Sans</option>
+            <option value="DM Sans">DM Sans</option>
+            <option value="Manrope">Manrope</option>
+            <option value="Plus Jakarta Sans">Plus Jakarta Sans</option>
+            <option value="Source Sans 3">Source Sans 3</option>
+            <option value="Ubuntu">Ubuntu</option>
+            <option value="Outfit">Outfit</option>
+            <option value="Rubik">Rubik</option>
+            <option value="Figtree">Figtree</option>
+          </select>
+        </div>
+        <div class="design-group">
+          <label>Text Transformation</label>
+          <select id="textTransformSelect">
+            <option value="none">Normal</option>
+            <option value="uppercase">Uppercase</option>
+            <option value="capitalize">Capitalize</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Font Sizes Panel -->
+    <div class="design-panel">
+      <h3 style="margin-top:0; margin-bottom:16px; font-size:16px; font-weight:700;">📏 Typography Sizes & Spacing</h3>
+      <div class="design-row">
+        <div class="design-group">
+          <label>Page Title Size (px)</label>
+          <input type="number" id="titleSizeInput" value="24" min="16" max="36">
+        </div>
+        <div class="design-group">
+          <label>Section Heading Size (px)</label>
+          <input type="number" id="sectionSizeInput" value="18" min="14" max="28">
+        </div>
+      </div>
+      <div class="design-row">
+        <div class="design-group">
+          <label>Card / Stat Value Size (px)</label>
+          <input type="number" id="cardSizeInput" value="16" min="12" max="24">
+        </div>
+        <div class="design-group">
+          <label>Body Text Size (px)</label>
+          <input type="number" id="bodySizeInput" value="14" min="11" max="18">
+        </div>
+      </div>
+      <div class="design-row">
+        <div class="design-group">
+          <label>Line Height (multiplier e.g. 1.5)</label>
+          <input type="number" id="lineHeightInput" value="1.5" min="1.0" max="2.2" step="0.1">
+        </div>
+        <div class="design-group">
+          <label>Letter Spacing (px)</label>
+          <input type="number" id="letterSpacingInput" value="0" min="-1" max="3" step="0.5">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast">Settings saved successfully!</div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+  <script src="../../js/supabase-config.js"></script>
+  <script src="../../js/auth.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      if (typeof requireLogin === "function") {
+        await requireLogin();
+      }
+
+      const fontSelect = document.getElementById("fontFamilySelect");
+      const transformSelect = document.getElementById("textTransformSelect");
+      const titleSize = document.getElementById("titleSizeInput");
+      const sectionSize = document.getElementById("sectionSizeInput");
+      const cardSize = document.getElementById("cardSizeInput");
+      const bodySize = document.getElementById("bodySizeInput");
+      const lineHeight = document.getElementById("lineHeightInput");
+      const letterSpacing = document.getElementById("letterSpacingInput");
+      const saveBtn = document.getElementById("saveBtn");
+      const resetBtn = document.getElementById("resetBtn");
+      const toast = document.getElementById("toast");
+
+      function showToast(msg) {
+        toast.textContent = msg;
+        toast.classList.add("show");
+        setTimeout(() => toast.classList.remove("show"), 2500);
+      }
+
+      function applySettings(cfg) {
+        document.documentElement.style.setProperty('--admin-font-family', `'${cfg.fontFamily}', sans-serif`);
+        document.documentElement.style.setProperty('--admin-text-transform', cfg.textTransform);
+        document.documentElement.style.setProperty('--admin-title-size', cfg.titleSize + 'px');
+        document.documentElement.style.setProperty('--admin-section-size', cfg.sectionSize + 'px');
+        document.documentElement.style.setProperty('--admin-card-size', cfg.cardSize + 'px');
+        document.documentElement.style.setProperty('--admin-body-size', cfg.bodySize + 'px');
+        document.documentElement.style.setProperty('--admin-line-height', cfg.lineHeight);
+        document.documentElement.style.setProperty('--admin-letter-spacing', cfg.letterSpacing + 'px');
+      }
+
+      // Load from localStorage
+      const saved = localStorage.getItem("adeel_admin_design_config");
+      if (saved) {
+        try {
+          const cfg = JSON.parse(saved);
+          fontSelect.value = cfg.fontFamily || "Inter";
+          transformSelect.value = cfg.textTransform || "none";
+          titleSize.value = cfg.titleSize || 24;
+          sectionSize.value = cfg.sectionSize || 18;
+          cardSize.value = cfg.cardSize || 16;
+          bodySize.value = cfg.bodySize || 14;
+          lineHeight.value = cfg.lineHeight || 1.5;
+          letterSpacing.value = cfg.letterSpacing || 0;
+          applySettings(cfg);
+        } catch(e) {}
+      }
+
+      // Live Preview on change
+      function collectAndApply() {
+        const cfg = {
+          fontFamily: fontSelect.value,
+          textTransform: transformSelect.value,
+          titleSize: titleSize.value,
+          sectionSize: sectionSize.value,
+          cardSize: cardSize.value,
+          bodySize: bodySize.value,
+          lineHeight: lineHeight.value,
+          letterSpacing: letterSpacing.value
+        };
+        applySettings(cfg);
+        return cfg;
+      }
+
+      [fontSelect, transformSelect, titleSize, sectionSize, cardSize, bodySize, lineHeight, letterSpacing].forEach(el => {
+        el.addEventListener("input", collectAndApply);
+        el.addEventListener("change", collectAndApply);
+      });
+
+      saveBtn.addEventListener("click", () => {
+        const cfg = collectAndApply();
+        localStorage.setItem("adeel_admin_design_config", JSON.stringify(cfg));
+        showToast("Design settings saved successfully!");
+      });
+
+      resetBtn.addEventListener("click", () => {
+        localStorage.removeItem("adeel_admin_design_config");
+        fontSelect.value = "Inter";
+        transformSelect.value = "none";
+        titleSize.value = 24;
+        sectionSize.value = 18;
+        cardSize.value = 16;
+        bodySize.value = 14;
+        lineHeight.value = 1.5;
+        letterSpacing.value = 0;
+        applySettings({
+          fontFamily: "Inter",
+          textTransform: "none",
+          titleSize: 24,
+          sectionSize: 18,
+          cardSize: 16,
+          bodySize: 14,
+          lineHeight: 1.5,
+          letterSpacing: 0
+        });
+        showToast("Reset to default settings!");
+      });
+    });
+  </script>
+</body>
+</html>

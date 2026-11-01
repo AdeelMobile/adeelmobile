@@ -6,3 +6,7 @@
 /user/verifications/new /pages/user/verifications/new/index.html 200
 /admin/verifications /pages/admin/verifications/index.html 200
 /admin/verifications/detail /pages/admin/verifications/detail/index.html 200
+/user/verifications/ /pages/user/verifications/index.html 200
+/user/verifications/new/ /pages/user/verifications/new/index.html 200
+/admin/verifications/ /pages/admin/verifications/index.html 200
+/admin/verifications/detail/ /pages/admin/verifications/detail/index.html 200

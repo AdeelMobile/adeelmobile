@@ -110,6 +110,13 @@ begin
   new.expected_advance := null;
   new.document_front_path := null;
   new.document_back_path := null;
+  new.rejection_reason := null;
+  new.customer_id := null;
+  new.installment_contract_id := null;
+  new.approved_at := null;
+  new.approved_by := null;
+  new.rejected_at := null;
+  new.rejected_by := null;
   return new;
 end;
 $$;
@@ -184,7 +191,7 @@ using (
 grant select, insert on public.p5_verification_applications to authenticated;
 grant select on public.p5_customers, public.p5_installment_contracts,
   public.p5_advance_receipts, public.p5_verification_events to authenticated;
-grant usage, select on all sequences in schema public to authenticated;
+grant usage, select on sequence public.p5_verification_applications_id_seq to authenticated;
 
 -- All post-submit writes go through narrowly scoped RPCs; clients cannot directly
 -- update status, customer/contract IDs, advance values, or audit events.
@@ -208,6 +215,24 @@ begin
     where id = p_application_id;
 end;
 $$;
+
+
+create or replace function public.p5_cancel_incomplete_application(p_application_id bigint)
+returns void language plpgsql security definer set search_path = '' as $
+begin
+  if auth.uid() is null then raise exception 'Authentication required'; end if;
+  if not exists (
+    select 1 from public.p5_verification_applications
+    where id = p_application_id and owner_auth_id = auth.uid()
+      and status = 'pending' and document_front_path is null and document_back_path is null
+    for update
+  ) then raise exception 'Incomplete application cannot be removed'; end if;
+  delete from public.p5_verification_events where application_id = p_application_id;
+  delete from public.p5_verification_applications where id = p_application_id;
+end;
+$;
+revoke all on function public.p5_cancel_incomplete_application(bigint) from public, anon;
+grant execute on function public.p5_cancel_incomplete_application(bigint) to authenticated;
 
 create or replace function public.p5_admin_approve_verification(
   p_application_id bigint, p_expected_advance numeric, p_actual_advance numeric
@@ -289,6 +314,7 @@ end;
 $$;
 
 revoke all on function public.p5_attach_verification_documents(bigint,text,text) from public, anon;
+revoke all on function public.p5_cancel_incomplete_application(bigint) from public, anon;
 revoke all on function public.p5_admin_approve_verification(bigint,numeric,numeric) from public, anon;
 revoke all on function public.p5_admin_reject_verification(bigint,text,text) from public, anon;
 grant execute on function public.p5_attach_verification_documents(bigint,text,text) to authenticated;

@@ -126,8 +126,8 @@ The user explicitly approved Phase 3 Database, Functions, RLS and grant changes,
 
 - Branch: `phase-3-roles`
 - Base SHA: `f64f5c71865c85307b4b82d98f8186a7b9d74495`
-- Implementation SHA: pending final documentation commit
-- Preview URL: pending
-- Browser/Android/backend test evidence: pending
+- Implementation code snapshot SHA: `19a08c1ca99be5d2b5274304effa9bd445a2764a` (subsequent commits only update this QA record/roadmap)
+- Expected preview URL: `https://phase-3-roles.adeelmobile-admin.pages.dev/` — NOT VERIFIED / deployment not confirmed
+- Backend role/RLS simulation: PASS for tested Admin/User/unknown identities; anonymous protected-table privileges denied. Browser/Android/direct REST API tests: PENDING
 - User result: pending
-- Phase status: IN PROGRESS / NOT PASS / NOT FROZEN
+- Phase status: IN PROGRESS / NOT PASS / NOT FROZEN — waiting for verified preview and user live QA

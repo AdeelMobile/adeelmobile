@@ -79,8 +79,12 @@ export async function submitP5Application(form, frontFile, backFile) {
     if (attachError) throw attachError;
     return appId;
   } catch (error) {
-    const { error: cancelError } = await supabase.rpc("p5_cancel_incomplete_application", { p_application_id: appId });
-    if (!cancelError && paths.length) await supabase.storage.from(P5_BUCKET).remove(paths);
+    const { data: current, error: lookupError } = await supabase.from("p5_verification_applications")
+      .select("document_front_path,document_back_path").eq("id", appId).maybeSingle();
+    if (!lookupError && current && !current.document_front_path && !current.document_back_path) {
+      if (paths.length) await supabase.storage.from(P5_BUCKET).remove(paths);
+      await supabase.rpc("p5_cancel_incomplete_application", { p_application_id: appId });
+    }
     throw new Error(error.message || "Documents upload nahi ho sakin. Dobara koshish karein.");
   }
 }

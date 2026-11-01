@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#FDFCF8">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Password Recovery | Adeel Mobile Installments</title>
+  <link rel="stylesheet" href="../../../css/main.css">
+  <link rel="stylesheet" href="../../../css/components.css">
+  <script type="module" src="./forgot-password.js"></script>
+</head>
+<body>
+  <main class="auth-page">
+    <section class="auth-card" aria-labelledby="forgot-title">
+      <header class="auth-brand">
+        <div class="brand-mark" aria-hidden="true">AM</div>
+        <p class="brand-name">Adeel Mobile</p>
+        <p class="brand-subtitle">Installments</p>
+      </header>
+      <div class="auth-heading">
+        <h1 id="forgot-title">Reset your password</h1>
+        <p>Enter the email address registered to your authorized account. If it is eligible, we’ll send a secure recovery link.</p>
+      </div>
+      <form id="forgot-form" novalidate>
+        <div class="form-field">
+          <label for="email">Account email</label>
+          <input id="email" name="email" type="email" autocomplete="email" autocapitalize="none" spellcheck="false" maxlength="254" required placeholder="Enter your account email">
+        </div>
+        <p id="forgot-message" class="form-message" role="status" aria-live="polite" hidden></p>
+        <button class="primary-button" id="forgot-submit" type="submit">Send recovery email</button>
+      </form>
+      <footer class="auth-footer">
+        <p><a class="text-link" href="/pages/login/">Back to sign in</a></p>
+        <p class="security-note">Recovery links are private. Do not forward or share them.</p>
+      </footer>
+    </section>
+  </main>
+</body>
+</html>

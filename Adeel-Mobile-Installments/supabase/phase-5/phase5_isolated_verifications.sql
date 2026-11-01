@@ -90,6 +90,10 @@ create unique index p5_verifications_one_pending_phone_idx
   on public.p5_verification_applications(owner_auth_id, customer_phone_normalized)
   where status = 'pending';
 create index p5_events_application_created_idx on public.p5_verification_events(application_id, created_at asc);
+create index p5_applications_variant_idx on public.p5_verification_applications(variant_id);
+create index p5_contracts_customer_idx on public.p5_installment_contracts(customer_id);
+create index p5_contracts_variant_idx on public.p5_installment_contracts(variant_id);
+create index p5_receipts_customer_idx on public.p5_advance_receipts(customer_id);
 
 create or replace function public.p5_touch_updated_at()
 returns trigger language plpgsql set search_path = '' as $$

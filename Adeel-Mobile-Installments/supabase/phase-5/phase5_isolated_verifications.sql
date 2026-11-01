@@ -2,6 +2,18 @@
 -- IMPORTANT: Draft only. Do not apply until the user explicitly approves.
 -- Existing verifications/customers/installment_plans/ims_* objects and customer-docs bucket are untouched.
 
+create or replace function public.p5_normalize_phone(p_value text)
+returns text language plpgsql immutable set search_path = '' as $p5phone$
+declare digits text;
+begin
+  digits := regexp_replace(coalesce(p_value, ''), '[^0-9]', '', 'g');
+  if left(digits, 4) = '0092' then digits := substr(digits, 3); end if;
+  if left(digits, 2) = '92' and length(digits) = 12 then digits := '0' || substr(digits, 3); end if;
+  if length(digits) = 10 and left(digits, 1) = '3' then digits := '0' || digits; end if;
+  return digits;
+end;
+$p5phone$;
+
 create table public.p5_verification_applications (
   id bigint generated always as identity primary key,
   owner_auth_id uuid not null default auth.uid(),
@@ -87,7 +99,7 @@ create table public.p5_verification_events (
 create index p5_verifications_status_created_idx on public.p5_verification_applications(status, submitted_at desc, id desc);
 create index p5_verifications_owner_created_idx on public.p5_verification_applications(owner_auth_id, submitted_at desc);
 create unique index p5_verifications_one_pending_phone_idx
-  on public.p5_verification_applications(owner_auth_id, customer_phone_normalized)
+  on public.p5_verification_applications(owner_auth_id, customer_phone_key)
   where status = 'pending';
 create index p5_events_application_created_idx on public.p5_verification_events(application_id, created_at asc);
 create index p5_applications_variant_idx on public.p5_verification_applications(variant_id);

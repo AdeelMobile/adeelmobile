@@ -3,7 +3,7 @@
 ## Isolation guarantee
 This phase introduces only new `p5_*` database objects and a new private Storage bucket named `p5-verification-docs`. It does not alter or delete the legacy `verifications`, `customers`, `installment_plans`, `ims_audit_log`, `ims_wallet_tx`, `customer-docs`, existing Edge Functions, existing policies, or any existing records. Existing `variants`, `models`, `brands`, the trusted role resolver and `private.is_admin()` are read-only dependencies.
 
-The isolated SQL has been applied to Supabase in migrations `phase5_isolated_verifications`, `phase5_lock_trigger_function_exec`, `phase5_require_active_app_user`, `phase5_verification_fk_indexes`, `phase5_link_application_records`, `phase5_normalize_pending_phone` and `phase5_lock_attached_documents`. Existing tables and bucket remain untouched.
+The isolated SQL has been applied to Supabase in migrations `phase5_isolated_verifications`, `phase5_lock_trigger_function_exec`, `phase5_require_active_app_user`, `phase5_verification_fk_indexes`, `phase5_link_application_records`, `phase5_normalize_pending_phone` and `phase5_lock_attached_documents` and `phase5_application_link_indexes`. Existing tables and bucket remain untouched.
 
 ## Delivered application code
 - User routes: `/user/verifications/new` and `/user/verifications`.

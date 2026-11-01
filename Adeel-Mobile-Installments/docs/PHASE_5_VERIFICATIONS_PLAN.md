@@ -3,7 +3,7 @@
 ## Isolation guarantee
 This phase introduces only new `p5_*` database objects and a new private Storage bucket named `p5-verification-docs`. It does not alter or delete the legacy `verifications`, `customers`, `installment_plans`, `ims_audit_log`, `ims_wallet_tx`, `customer-docs`, existing Edge Functions, existing policies, or any existing records. Existing `variants`, `models`, `brands`, the trusted role resolver and `private.is_admin()` are read-only dependencies.
 
-The SQL is staged as a proposal at `supabase/phase-5/phase5_isolated_verifications.sql`. It has **not been applied to Supabase**. Do not claim the live backend is ready until the user-approved migration is applied and verified.
+The isolated SQL has been applied to Supabase in migrations `phase5_isolated_verifications`, `phase5_lock_trigger_function_exec`, `phase5_require_active_app_user` and `phase5_verification_fk_indexes`. Existing tables and bucket remain untouched.
 
 ## Delivered application code
 - User routes: `/user/verifications/new` and `/user/verifications`.
@@ -42,6 +42,8 @@ The existing `installment_plans` table currently has no configured rows. Phase 5
 
 ## Current status
 - GitHub implementation and isolated SQL proposal staged on `phase-5-verifications`.
-- Supabase migration not yet applied; live preview not yet deployed or tested.
-- Therefore Phase 5 is **IMPLEMENTED IN BRANCH / BLOCKED FOR LIVE QA**, not PASS and not frozen.
-- Before release: inspect migration, apply only this isolated migration with explicit approval, verify new objects and RLS/storage policies, deploy the Phase 5 branch to its preview, then run the acceptance and regression tests above.
+- Supabase isolated migration is applied; five `p5_*` tables, a private bucket, nine RLS/Storage policies and four guarded RPCs are present.
+- SQL simulations passed for active-user submission, server-side product snapshot validation, unmapped-account denial, Admin rejection and status-event logging. Test transactions were rolled back; current Phase 5 tables contain zero records.
+- Supabase Security Advisor still reports pre-existing legacy findings (including the existing public `ims_submit_verification` RPC, existing Auth password-protection setting and unrelated RLS notices). Phase 5 Admin/owner SECURITY DEFINER RPC warnings are intentional and protected by explicit role/owner checks; trigger-only functions have direct execution revoked.
+- Live preview/browser/Android testing is not yet verified. Phase 5 is **BACKEND APPLIED / FRONTEND IN BRANCH / LIVE QA BLOCKED**, not PASS and not frozen.
+- Next: verify Cloudflare branch preview, then run the acceptance and Phase 2–4 regression tests above.

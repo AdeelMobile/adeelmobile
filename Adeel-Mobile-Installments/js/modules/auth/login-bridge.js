@@ -31,6 +31,12 @@ async function routeAfterVerifiedLogin() {
       message.textContent = "This account is not active or has no assigned app role. Contact the administrator.";
     }
     await signOutCurrentSession();
+  } catch {
+    if (message) {
+      message.hidden = false;
+      message.textContent = "Your account role could not be verified. Please contact the administrator.";
+    }
+    try { await signOutCurrentSession(); } catch { /* fail closed */ }
   } finally {
     routing = false;
   }

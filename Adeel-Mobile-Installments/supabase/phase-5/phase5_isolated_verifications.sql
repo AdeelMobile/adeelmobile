@@ -230,7 +230,7 @@ $$;
 
 
 create or replace function public.p5_cancel_incomplete_application(p_application_id bigint)
-returns void language plpgsql security definer set search_path = '' as $
+returns void language plpgsql security definer set search_path = '' as $cancel$
 begin
   if auth.uid() is null then raise exception 'Authentication required'; end if;
   if not exists (
@@ -242,7 +242,7 @@ begin
   delete from public.p5_verification_events where application_id = p_application_id;
   delete from public.p5_verification_applications where id = p_application_id;
 end;
-$;
+$cancel$;
 revoke all on function public.p5_cancel_incomplete_application(bigint) from public, anon;
 grant execute on function public.p5_cancel_incomplete_application(bigint) to authenticated;
 

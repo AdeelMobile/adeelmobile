@@ -66,6 +66,7 @@ The user explicitly approved Phase 3 Database, Functions, RLS and grant changes,
 - Database role simulation with the active Hamza user UUID returned is_admin=false and ims_whoami()='user'.
 - Database role simulation with an unmapped UUID returned is_admin=false and ims_whoami()='none'.
 - RLS simulation as authenticated Admin returned access to the protected verification/download tables; simulated standard User saw no unrelated verification, sales, incentive or download rows. Public colors catalogue remained readable.
+- Anon role has no SELECT privilege on verifications, user_brand_incentives or download_history; direct anonymous download-history query is rejected at the table privilege boundary. Direct trigger-function execution is denied.
 - These are database-side simulated JWT/role checks, not real browser/API requests. No dummy Auth test accounts were created.
 
 ### Remaining blockers before PASS/freeze
@@ -74,6 +75,7 @@ The user explicitly approved Phase 3 Database, Functions, RLS and grant changes,
 - Test direct REST/API reads and writes as both roles, plus signed-out/anon access, using dedicated dummy data.
 - Supabase Security Advisor still reports the intentional public verification RPC, authenticated SECURITY DEFINER functions that enforce Admin checks, the existing store_settings RLS-without-policy notice, and leaked-password protection disabled. Review the advisor output before acceptance; Auth settings were not changed.
 - Admin must rotate the password previously shared in chat before real login testing. Never reuse that exposed password. The 4-digit PIN remains out of scope.
+- Security Advisor still notes leaked-password protection is disabled; changing Auth project settings was not included in the approved scope.
 - Phase 2 remains IN PROGRESS; Phase 3 cannot be frozen until the user completes live QA and explicitly reports PASS.
 
 ## Proposed delivery gates

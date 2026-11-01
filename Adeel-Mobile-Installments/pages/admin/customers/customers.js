@@ -1,4 +1,5 @@
 import { supabase } from "../../../js/services/supabase-client.js";
+import { getVerifiedAppIdentity } from "../../../js/modules/auth/role.js";
 
 const PAGE_SIZE = 20;
 const categories = ["pending", "approved", "rejected", "repeat_customer"];
@@ -188,4 +189,7 @@ nextButton.addEventListener("click", () => {
 
 refreshButton.addEventListener("click", refreshAll);
 
-await refreshAll();
+const identity = await getVerifiedAppIdentity();
+if (!identity.error && identity.user && identity.role === "admin") {
+  await refreshAll();
+}

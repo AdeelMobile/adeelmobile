@@ -35,9 +35,7 @@ form.addEventListener("submit", async (event) => {
     form.reset();
   } catch (error) {
     message.className = "form-message";
-    message.textContent = error?.message === "Password must be at least 8 characters."
-      ? error.message
-      : "Unable to sign in. Check your details or contact the administrator.";
+    message.textContent = "Unable to sign in. Check your details or contact the administrator.";
     message.hidden = false;
   } finally {
     submitButton.disabled = false;

@@ -52,7 +52,8 @@
         return;
       }
 
-      const email = document.getElementById("email").value.trim().toLowerCase();
+      const loginInput = document.getElementById("email").value.trim().toLowerCase();
+      const email = loginInput.includes("@") ? loginInput : `${loginInput}@adeelmobile.app`;
       const password = document.getElementById("password").value;
       if (!email || !password) {
         showMessage(message, "Enter your email address and password.");

@@ -357,3 +357,10 @@ a {
     animation-iteration-count: 1 !important;
   }
 }
+
+
+.form-message-success {
+  border-color: #B7DCC5;
+  color: var(--color-success);
+  background: var(--color-success-soft);
+}

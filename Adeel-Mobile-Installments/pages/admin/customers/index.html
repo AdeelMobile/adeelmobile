@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#f5f7f5">
+  <title>All Customers | Adeel Mobile Installments</title>
+  <link rel="stylesheet" href="../../../css/phase6-customers.css">
+  <script>document.documentElement.setAttribute("data-auth-checking", "true")</script>
+  <script type="module" src="../../../js/modules/auth/route-guard.js"></script>
+  <script type="module" src="./customers.js"></script>
+</head>
+<body data-required-role="admin" hidden>
+  <main class="p6-page">
+    <div class="p6-shell">
+      <header class="p6-header">
+        <div>
+          <p class="p6-eyebrow">Adeel Mobile Installments · Admin</p>
+          <h1>All Customers</h1>
+          <p class="p6-subtitle">Approved verification customers and their current profile status.</p>
+        </div>
+        <nav class="p6-header-actions" aria-label="Admin navigation">
+          <a class="p6-button" href="/pages/admin/dashboard/">Dashboard</a>
+          <button class="p6-button" type="button" data-sign-out>Sign out</button>
+        </nav>
+      </header>
+
+      <div class="p6-alert" data-alert role="alert" hidden></div>
+
+      <section class="p6-summary" aria-label="Customer totals">
+        <article class="p6-stat p6-stat-total"><span>Total customers</span><strong data-count-total>—</strong></article>
+        <article class="p6-stat"><span>Pending</span><strong data-count-pending>—</strong></article>
+        <article class="p6-stat"><span>Approved</span><strong data-count-approved>—</strong></article>
+        <article class="p6-stat"><span>Rejected</span><strong data-count-rejected>—</strong></article>
+        <article class="p6-stat"><span>Repeat customers</span><strong data-count-repeat>—</strong></article>
+      </section>
+
+      <section class="p6-panel" aria-label="Customer filters">
+        <form class="p6-filters" data-filter-form>
+          <label class="p6-search">
+            <span>Search customers</span>
+            <input type="search" name="search" maxlength="80" placeholder="Name, phone or CNIC" autocomplete="off">
+          </label>
+          <label>
+            <span>Category</span>
+            <select name="category">
+              <option value="all">All categories</option>
+              <option value="pending">Pending</option>
+              <option value="approved">Approved</option>
+              <option value="rejected">Rejected</option>
+              <option value="repeat_customer">Repeat customer</option>
+            </select>
+          </label>
+          <label>
+            <span>Profile status</span>
+            <select name="status">
+              <option value="all">All statuses</option>
+              <option value="active">Active</option>
+              <option value="inactive">Inactive</option>
+            </select>
+          </label>
+          <div class="p6-filter-actions">
+            <button class="p6-button p6-button-primary" type="submit">Apply filters</button>
+            <button class="p6-button" type="reset" data-reset>Clear</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="p6-panel p6-table-panel">
+        <div class="p6-list-heading">
+          <div><h2>Customer records</h2><p data-result-summary>Loading customer records…</p></div>
+          <button class="p6-button" type="button" data-refresh>Refresh</button>
+        </div>
+        <div class="p6-table-wrap">
+          <table class="p6-table">
+            <thead><tr><th>Customer</th><th>Phone</th><th>CNIC</th><th>Category</th><th>Status</th><th>Added</th></tr></thead>
+            <tbody data-customer-rows><tr><td colspan="6" class="p6-empty">Loading customers…</td></tr></tbody>
+          </table>
+        </div>
+        <div class="p6-pagination">
+          <button class="p6-button" type="button" data-prev disabled>Previous</button>
+          <span data-page-label>Page 1</span>
+          <button class="p6-button" type="button" data-next disabled>Next</button>
+        </div>
+      </section>
+      <p class="p6-footnote">Customer information is visible to authorized administrators only.</p>
+    </div>
+  </main>
+</body>
+</html>

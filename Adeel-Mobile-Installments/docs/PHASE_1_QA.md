@@ -3,61 +3,66 @@
 Date: 2026-11-01  
 Repository: `AdeelMobile/adeelmobile`  
 Project boundary: `Adeel-Mobile-Installments/`  
-Branch: `main`
+Test branch/commit: `main` / `31e8f9f`  
+Live test project: `adeelmobile-admin`
 
-## Step-by-step result
+## Repository/static checks
 
 | Step | Scope | Result | Evidence |
 |---:|---|---|---|
-| 1 | Verify independent project structure | PASS | `PROJECT_STRUCTURE.md`; repository tree inspected |
-| 2 | Main entry point and login routing | PASS | Root `index.html` redirects to `pages/login/` and provides a fallback link |
-| 3 | Global design system | PASS | `css/main.css` contains project colors, typography, spacing, radius, focus and touch-target tokens |
-| 4 | Reusable UI foundation | PASS | `css/components.css` and `js/components/ui.js` created and loaded by all current application pages |
-| 5 | Navigation foundation | PASS | Dashboard/sidebar/users links are present; mobile drawer closes on route selection and Escape; backdrop and More control are wired |
-| 6 | Responsive foundation and static checks | PASS (static) | Mobile/tablet/desktop CSS breakpoints, viewport tags, 44px touch-target token and local references checked |
+| 1 | Independent project structure | PASS | Project tree inspected; work remains inside `Adeel-Mobile-Installments/` |
+| 2 | Root entry and login preview | PASS | Android browser opened the root URL and displayed the safe sign-in preview |
+| 3 | Admin dashboard route | PASS | Android browser displayed the safe sign-in preview after opening the dashboard route |
+| 4 | Create User route | PASS | Android browser displayed the safe sign-in preview; unfinished form was not exposed |
+| 5 | All Users route | PASS | Android browser displayed the safe sign-in preview |
+| 6 | Mobile vertical scrolling | PASS | User confirmed page scrolls up/down |
+| 7 | Horizontal overflow | PASS | User confirmed page does not move left/right |
+| 8 | Text readability | PASS WITH NOTE | User confirmed text is readable; font feels slightly small and is deferred to the final UI Control Panel phase |
 
-## Static verification performed
+## Live URLs tested by user
 
-- Checked 6 HTML entry pages.
-- Checked 57 local `href` / `src` references against the GitHub project tree: no missing local targets found.
-- Checked braces in 4 CSS files and 5 JavaScript files: balanced.
-- Confirmed mobile and wider-screen media-query breakpoints exist.
-- Confirmed the 44px minimum touch-target token exists.
-- Confirmed new shared CSS and JavaScript are linked from all 5 application pages.
-- Confirmed no Supabase schema, table, policy, storage or record changes were made.
-- All changes in this phase are contained in `Adeel-Mobile-Installments/`.
+- `https://adeelmobile-admin.pages.dev/`
+- `https://adeelmobile-admin.pages.dev/pages/admin/dashboard/`
+- `https://adeelmobile-admin.pages.dev/pages/admin/users/create-user/`
+- `https://adeelmobile-admin.pages.dev/pages/admin/users/all-users/`
 
-## Manual testing limitation
+All four URLs displayed the expected safe sign-in information preview.
 
-The GitHub connector can inspect and update repository files, but it cannot operate the user's Acode app or Android browser. Therefore this report does **not** claim that visual rendering, touch behavior, or browser runtime behavior has been manually tested on the user's device. Those checks remain in the dedicated mobile/final testing phase before release.
+## Deployment evidence
+
+- Cloudflare project: `adeelmobile-admin`
+- Production branch: `main`
+- Commit: `31e8f9f`
+- Cloudflare deployment ID: `206c3ffb-2144-4019-a722-85ced3dc21ea`
+- Deployment URL: `https://206c3ffb.adeelmobile-admin.pages.dev`
+- User-confirmed deployment status: SUCCESS
+- User-confirmed stable domain: `https://adeelmobile-admin.pages.dev`
+
+## Security review status
+
+- The earlier `adeelmobile-installments.pages.dev` domain was reported by Google Search Console for **Deceptive pages**.
+- The user submitted a Google Search Console review request after the cleanup.
+- Google's final decision has not yet been reported in this QA record.
+- The new `adeelmobile-admin.pages.dev` URL loaded the safe preview during the user's tests. This does not replace Google's review/clearance for the older domain.
+- Never ask the user to bypass a Chrome Dangerous Site interstitial or enter credentials while a warning is shown.
+- The admin `_redirects` rule is temporary route hiding only; it is not server-side authentication or authorization.
+
+## Remaining Phase 1 checks
+
+- Google Search Console/Safe Browsing review decision for the older flagged domain.
+- If Google still reports the old domain as unsafe, keep Phase 1 blocked until Google resolves it.
+- Additional desktop/wide-screen and browser back/refresh checks can be included in the final regression pass if needed.
 
 ## Phase 1 status
 
-**Foundation implementation and repository-level static QA: complete.**
+**Manual Android checks reported by the user: PASS for the four tested routes, vertical scroll, no horizontal overflow, and readable text.**
 
-**Manual Android/Acode visual QA: deferred to the planned device-testing phase.**
+**Overall Phase 1: BLOCKED / NOT PASS / NOT FROZEN** while the Google security review remains pending. Do not represent the new testing URL as clearance for the old flagged domain.
 
-Do not start backend/authentication work until the user confirms the foundation checkpoint if a visual review is required first.
+## Security remediation history
 
-## Security remediation — 2026-11-01
-
-- Removed the public preview username/password form because secure authentication is not part of Phase 1.
-- Removed the unused client-side login handler. The preview page no longer asks visitors for usernames, passwords, or verification codes.
-- Confirmed from the prior handler source that it did not send credentials to a server; it only performed local validation and displayed that authentication was not connected.
-- No Supabase schema, records, storage, or RLS changes were made.
-- **Important:** Chrome displayed a Google Safe Browsing phishing warning before this remediation. A code change cannot itself clear Google's warning. The domain must be rechecked and, if still flagged, submitted for Google's review after the site is verified clean.
-- Added `_redirects` at the Pages output root to redirect all `/pages/admin/*` preview routes to the safe login information page (HTTP 302) until real authentication and role-based authorization are implemented. This is temporary route hiding, **not** a substitute for server-side authorization; no private data should be placed in these static pages.
-- Commit for temporary route mitigation: `de0b1a92dc50eb8058f857df07b8240eb73d6b8d`. Cloudflare deployment and live redirect behavior still require user-side confirmation.
-- **Phase 1 remains BLOCKED** until the warning is cleared (or Google confirms the classification was in error) and the user completes the live Android navigation/responsive checks.
-
-
-## Additional deceptive-pages cleanup — 2026-11-01
-
-- Replaced all four unfinished public admin HTML previews (dashboard, users, all-users, create-user) with a safe information-only notice.
-- Added `noindex, nofollow` metadata to those preview pages.
-- Removed the unused `js/modules/admin/users/create-user.js` script, which handled the unfinished password form.
-- Kept the `_redirects` rule that redirects `/pages/admin/*` to the safe login information page.
-- These changes remove the unfinished credential/personal-details form markup from the deployed project files; they do not implement authentication or authorization.
-- GitHub main tree after cleanup: `a7a2a7a1525c1932bac0b3d90c9633d075bcc5e7`.
-- Cloudflare deployment and live URL behavior for this additional cleanup are pending user confirmation.
-- Google Search Console still reports `Deceptive pages`; do not mark the issue resolved until Google confirms it.
+- Removed the public preview username/password form and its unused client-side handler.
+- Replaced all four unfinished public admin HTML previews with information-only notices and added `noindex, nofollow`.
+- Removed the unused user-creation form script.
+- Kept the temporary `_redirects` rule for `/pages/admin/*`.
+- No Supabase schema, records, storage, RLS policies, Auth users, or Auth settings were changed during Phase 1.

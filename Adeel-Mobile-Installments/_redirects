@@ -1,0 +1,3 @@
+# Temporarily keep unfinished admin previews out of public access.
+# Real authentication and role-based authorization will be added in Phases 2–3.
+/pages/admin/*  /pages/login/  302

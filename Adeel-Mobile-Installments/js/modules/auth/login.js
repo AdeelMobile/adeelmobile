@@ -1,5 +1,4 @@
-import { supabase } from "../../services/supabase-client.js";
-import { setRememberSession } from "../../services/supabase-client.js";
+import { setRememberSession, supabase } from "../../services/supabase-client.js";
 
 const AUTH_EMAIL_DOMAIN = "adeelmobile.app";
 
@@ -15,9 +14,7 @@ export async function signInWithUsername(username, password, rememberSession = f
   const email = usernameToAuthEmail(username);
   const cleanPassword = String(password ?? "");
 
-  if (cleanPassword.length < 8) {
-    throw new Error("Password must be at least 8 characters.");
-  }
+  if (!cleanPassword) throw new Error("Please check your username and password.");
 
   setRememberSession(Boolean(rememberSession));
   return supabase.auth.signInWithPassword({ email, password: cleanPassword });

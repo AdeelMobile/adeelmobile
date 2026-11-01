@@ -1,3 +1,2 @@
-# Temporarily keep unfinished admin previews out of public access.
-# Real authentication and role-based authorization will be added in Phases 2–3.
-/pages/admin/*  /pages/login/  302
+# Phase 3 replaces the temporary admin redirect with verified client route guards.
+# Supabase RLS and trusted database role checks remain the security boundary.

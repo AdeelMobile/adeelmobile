@@ -105,6 +105,7 @@ begin
   if auth.uid() is null then raise exception 'Authentication required'; end if;
   new.owner_auth_id := auth.uid();
   new.app_user_id := private.current_app_user_id();
+  if new.app_user_id is null then raise exception 'Active application user required'; end if;
   new.status := 'pending';
   new.actual_advance := 0;
   new.expected_advance := null;
@@ -179,7 +180,7 @@ using (owner_auth_id = (select auth.uid()) or (select private.is_admin()));
 
 create policy p5_applications_insert_owner on public.p5_verification_applications
 for insert to authenticated
-with check (owner_auth_id = (select auth.uid()) and status = 'pending');
+with check (owner_auth_id = (select auth.uid()) and app_user_id is not null and status = 'pending');
 
 create policy p5_customers_admin_read on public.p5_customers
 for select to authenticated using ((select private.is_admin()));

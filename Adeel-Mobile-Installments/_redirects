@@ -1,2 +1,8 @@
 # Phase 3 replaces the temporary admin redirect with verified client route guards.
 # Supabase RLS and trusted database role checks remain the security boundary.
+
+# Phase 5 verification routes
+/user/verifications /pages/user/verifications/index.html 200
+/user/verifications/new /pages/user/verifications/new/index.html 200
+/admin/verifications /pages/admin/verifications/index.html 200
+/admin/verifications/detail /pages/admin/verifications/detail/index.html 200

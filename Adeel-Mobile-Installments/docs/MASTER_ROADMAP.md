@@ -21,7 +21,7 @@ A phase is not complete when code is merely committed. It must be available on a
 
 | Phase | Working feature to test live | Status |
 |---|---|---|
-| 1 | Foundation site: entry/login layout, admin shell, navigation, responsive behavior | Static checks complete; staging test pending |
+| 1 | Foundation site: safe entry page, admin shell, navigation, responsive behavior | Implementation deployed; Safe Browsing review and Android live test BLOCKED/PENDING |
 | 2 | Real login, logout, session restore, password reset | Locked |
 | 3 | Admin/user roles and protected routes | Locked |
 | 4 | Working admin dashboard and summary data | Locked |
@@ -41,9 +41,9 @@ A phase is not complete when code is merely committed. It must be available on a
 ## Phase test gates
 
 ### Phase 1 — Foundation site (current)
-Already in GitHub: project structure, root entry, login/admin HTML pages, design tokens, shared CSS/UI helpers, dashboard drawer/navigation, QA documents.
+Already in GitHub: project structure, root entry, safe login-preview page (no credential fields), admin HTML pages, design tokens, shared CSS/UI helpers, dashboard drawer/navigation, QA documents. The preview intentionally does not request credentials; secure authentication belongs to Phase 2.
 **Live test:** Open staging URL on Android and desktop. Check root, login and built admin pages; test available links, mobile drawer, refresh/back, scrolling, portrait/wide layouts and horizontal overflow. Unbuilt destinations must be clearly labelled unavailable.
-**Gate:** Static checks passed, but phase remains NOT PASS until staging deployment and user's live test are complete.
+**Security gate:** Chrome reported a Google Safe Browsing phishing warning on the production `pages.dev` domain. The preview credential fields and unused handler have been removed. Do not ask visitors to bypass the warning. Confirm the new deployment, recheck Google Safe Browsing, and request Google's review if still flagged. **Gate:** Phase 1 remains NOT PASS until Google clears the warning and the user completes Android live navigation/responsive checks.
 
 ### Phase 2 — Authentication
 **Live test:** Valid test login, wrong-password rejection, session after refresh, logout, password reset completion on Android and desktop. Must use real Supabase Auth, not a mock. Confirm configuration first; frontend only gets public anon/publishable key.

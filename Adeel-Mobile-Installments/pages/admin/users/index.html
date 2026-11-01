@@ -1,21 +1,45 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="robots" content="noindex, nofollow">
-  <meta name="theme-color" content="#FDFCF8">
-  <meta name="description" content="Adeel Mobile Installments secure admin access is not active yet.">
-  <title>User Management Preview | Adeel Mobile Installments</title>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow"><meta name="theme-color" content="#FDFCF8">
+  <title>User Management | Adeel Mobile Installments</title>
+  <link rel="stylesheet" href="../../../css/main.css"><link rel="stylesheet" href="../../../css/components.css">
+  <link rel="stylesheet" href="../../../css/admin.css"><link rel="stylesheet" href="../../../css/admin-users.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.118.0/dist/umd/supabase.min.js" defer></script>
+  <script src="../../../js/config/supabase.js" defer></script><script src="../../../js/modules/auth/auth.js" defer></script>
+  <script src="../../../js/modules/admin/users.js" defer></script>
 </head>
-<body>
-  <main>
-    <p>AM</p>
-    <h1>Admin preview is not available yet</h1>
-    <p>This is an early preview of Adeel Mobile Installments. Secure sign-in and authorized admin access will be enabled in later development phases.</p>
-    <p>For your safety, this preview does not request or collect usernames, passwords, personal details, or verification codes.</p>
-    <p>Please do not enter account credentials or personal information on preview pages.</p>
-    <p><a href="/pages/login/">Return to the safe preview page</a></p>
-  </main>
-</body>
-</html>
+<body data-required-role="admin" hidden>
+  <main class="admin-page"><div class="admin-shell">
+    <header class="admin-header">
+      <a class="admin-brand admin-brand-link" href="/pages/admin/dashboard/"><div class="brand-mark" aria-hidden="true">AM</div><div><strong>Adeel Mobile</strong><span>Installments · Admin</span></div></a>
+      <div class="admin-actions"><a class="admin-back" href="/pages/admin/dashboard/">Dashboard</a><button class="admin-signout" id="logout-button" type="button">Sign out</button></div>
+    </header>
+    <section class="admin-content" aria-labelledby="users-title">
+      <p class="admin-eyebrow">Admin workspace</p><h1 id="users-title">User management</h1>
+      <p class="admin-intro">Create authorized user accounts and manage their access details.</p>
+      <div class="users-toolbar"><div><strong id="users-count">Users</strong><p>Account information only. Customer installment records are not shown here.</p></div><button class="users-primary" id="open-create" type="button">＋ Create user</button></div>
+      <div class="users-filters"><input id="user-search" type="search" aria-label="Search users" placeholder="Search name, username or phone"><select id="status-filter" aria-label="Filter by status"><option value="all">All accounts</option><option value="active">Active</option><option value="disabled">Disabled</option></select><button class="users-secondary" id="refresh-users" type="button">Refresh</button></div>
+      <p class="users-message" id="users-message" role="status" aria-live="polite" hidden></p>
+      <div class="users-list" id="users-list" aria-live="polite"><div class="users-empty">Loading users…</div></div>
+    </section>
+  </div></main>
+  <dialog class="user-dialog" id="user-dialog" aria-labelledby="dialog-title"><form id="user-form" class="user-form">
+    <div class="dialog-heading"><div><p class="admin-eyebrow">User account</p><h2 id="dialog-title">Create user</h2></div><button class="dialog-close" id="close-dialog" type="button" aria-label="Close">×</button></div>
+    <input type="hidden" id="form-user-id">
+    <div class="user-form-grid">
+      <label>Full name <span>*</span><input id="form-name" maxlength="120" required autocomplete="name"></label>
+      <label>Father name<input id="form-father" maxlength="120"></label>
+      <label>Phone number<input id="form-contact" maxlength="40" inputmode="tel"></label>
+      <label>WhatsApp<input id="form-whatsapp" maxlength="40" inputmode="tel"></label>
+      <label class="full-field">Address<textarea id="form-address" rows="2" maxlength="500"></textarea></label>
+      <label>Username <span>*</span><input id="form-username" minlength="3" maxlength="30" pattern="[a-zA-Z0-9_.]+" required autocomplete="username"></label>
+      <label id="password-field">Password <span>*</span><input id="form-password" type="password" minlength="8" autocomplete="new-password"></label>
+      <label id="status-field" hidden>Account status<select id="form-status"><option value="active">Active</option><option value="disabled">Disabled</option></select></label>
+    </div>
+    <p class="dialog-hint" id="dialog-hint">Create a user profile and login together. Passwords are never stored in the user profile table.</p>
+    <p class="users-message" id="form-message" role="alert" hidden></p>
+    <div class="dialog-actions"><button class="users-secondary" id="cancel-dialog" type="button">Cancel</button><button class="users-primary" id="save-user" type="submit">Create user</button></div>
+  </form></dialog>
+</body></html>

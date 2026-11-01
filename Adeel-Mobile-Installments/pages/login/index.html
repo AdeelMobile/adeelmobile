@@ -3,12 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
   <meta name="theme-color" content="#FDFCF8">
-  <meta name="google-site-verification" content="vA705VZX1zk1hx70oNht2foFO2e_NWOcn7tUdVshoVg" />
-  <meta name="description" content="Adeel Mobile Installments preview. Secure sign-in will be enabled after authentication setup.">
+  <meta name="description" content="Secure sign in for authorized Adeel Mobile Installments users.">
   <title>Sign In | Adeel Mobile Installments</title>
   <link rel="stylesheet" href="../../css/main.css">
   <link rel="stylesheet" href="../../css/components.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.118.0/dist/umd/supabase.min.js" defer></script>
+  <script src="../../js/config/supabase.js" defer></script>
+  <script src="../../js/modules/auth/auth.js" defer></script>
 </head>
 <body>
   <main class="auth-page">
@@ -20,17 +23,32 @@
       </header>
 
       <div class="auth-heading">
-        <h1 id="login-title">Sign-in is not active yet</h1>
-        <p>This is an early preview of Adeel Mobile Installments. Secure sign-in will be enabled in Phase 2.</p>
+        <h1 id="login-title">Welcome back</h1>
+        <p>Sign in with your authorized account to continue.</p>
       </div>
 
-      <p class="field-hint" role="status">
-        For your safety, this preview does not ask for or collect usernames, passwords, or verification codes.
-      </p>
+      <form id="login-form" novalidate>
+        <div id="login-message" class="form-message" role="alert" aria-live="polite" hidden></div>
+
+        <div class="form-field">
+          <label for="email">Email or username</label>
+          <input id="email" name="email" type="text" autocomplete="username" inputmode="text" placeholder="Enter email or username" required>
+        </div>
+
+        <div class="form-field">
+          <label for="password">Password</label>
+          <div class="password-control">
+            <input id="password" name="password" type="password" autocomplete="current-password" placeholder="Enter your password" required>
+            <button class="password-toggle" id="password-toggle" type="button" aria-label="Show password">Show</button>
+          </div>
+        </div>
+
+        <button class="primary-button" type="submit">Sign in</button>
+      </form>
 
       <footer class="auth-footer">
         <p>Secure access for authorized Admins and Users</p>
-        <p class="security-note">Please do not enter account credentials on preview pages.</p>
+        <p class="security-note">Never share your password or verification codes with anyone.</p>
       </footer>
     </section>
   </main>

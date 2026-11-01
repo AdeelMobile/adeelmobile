@@ -5,17 +5,55 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">
   <meta name="theme-color" content="#FDFCF8">
-  <meta name="description" content="Adeel Mobile Installments secure admin access is not active yet.">
-  <title>Admin Dashboard Preview | Adeel Mobile Installments</title>
+  <title>Admin Dashboard | Adeel Mobile Installments</title>
+  <link rel="stylesheet" href="../../../css/main.css">
+  <link rel="stylesheet" href="../../../css/components.css">
+  <link rel="stylesheet" href="../../../css/admin.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.118.0/dist/umd/supabase.min.js" defer></script>
+  <script src="../../../js/config/supabase.js" defer></script>
+  <script src="../../../js/modules/auth/auth.js" defer></script>
 </head>
-<body>
-  <main>
-    <p>AM</p>
-    <h1>Admin preview is not available yet</h1>
-    <p>This is an early preview of Adeel Mobile Installments. Secure sign-in and authorized admin access will be enabled in later development phases.</p>
-    <p>For your safety, this preview does not request or collect usernames, passwords, personal details, or verification codes.</p>
-    <p>Please do not enter account credentials or personal information on preview pages.</p>
-    <p><a href="/pages/login/">Return to the safe preview page</a></p>
+<body data-required-role="admin" hidden>
+  <main class="admin-page">
+    <div class="admin-shell">
+      <header class="admin-header">
+        <div class="admin-brand">
+          <div class="brand-mark" aria-hidden="true">AM</div>
+          <div>
+            <strong>Adeel Mobile</strong>
+            <span>Installments · Admin</span>
+          </div>
+        </div>
+        <button class="admin-signout" id="logout-button" type="button">Sign out</button>
+      </header>
+
+      <section class="admin-content" aria-labelledby="dashboard-title">
+        <p class="admin-eyebrow">Admin workspace</p>
+        <h1 id="dashboard-title">Dashboard</h1>
+        <p class="admin-intro">Your admin access has been verified. The core workspace is being connected in stages.</p>
+
+        <div class="admin-grid">
+          <article class="admin-tile">
+            <h2>User management</h2>
+            <p>Create and manage authorized user accounts. <a href="/pages/admin/users/">Open user management →</a></p>
+          </article>
+          <article class="admin-tile">
+            <h2>All users</h2>
+            <p>Review user records, login setup, and account status. <a href="/pages/admin/users/">View users →</a></p>
+          </article>
+          <article class="admin-tile">
+            <h2>Account security</h2>
+            <p>Access is checked against the server-side admin allowlist, not a browser-stored role.</p>
+          </article>
+          <article class="admin-tile">
+            <h2>System status</h2>
+            <p>Secure sign-in is connected. User management is now available. Installment and payment modules are the next development steps.</p>
+          </article>
+        </div>
+
+        <p class="admin-note">For security, customer and installment records are not shown on this page. User management is available through the protected workspace.</p>
+      </section>
+    </div>
   </main>
 </body>
 </html>

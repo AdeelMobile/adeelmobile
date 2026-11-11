@@ -212,10 +212,15 @@ function filteredProducts() {
   return visible;
 }
 
+function isValidRetailPrice(value) {
+  const price = Number(value);
+  return Number.isSafeInteger(price) && price > 0;
+}
+
 function effectivePrice(product) {
-  const price = Number(product.price) || 0;
-  const discount = Number(product.discount_price) || 0;
-  return discount > 0 && discount < price ? discount : price;
+  const price = Number(product.price);
+  const discount = Number(product.discount_price);
+  return isValidRetailPrice(discount) && discount < price ? discount : price;
 }
 
 function renderCatalog() {
@@ -246,7 +251,8 @@ async function loadCatalog() {
     brands = brandRows.filter((brand) => brand.show_brand === true);
     products = variantRows.filter((product) =>
       product.model?.show_catalog === true &&
-      product.model?.brand?.show_brand === true
+      product.model?.brand?.show_brand === true &&
+      isValidRetailPrice(product.price)
     );
     renderBrands();
     renderCatalog();

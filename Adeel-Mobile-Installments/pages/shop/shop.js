@@ -95,19 +95,18 @@ function makePhoneCard(product) {
     priceBox.append(old);
   }
 
-  const actions = document.createElement("div");
-  actions.className = "phone-actions";
-  const estimate = document.createElement("a");
-  estimate.href = "../tools/installment-calculator/?price=" + encodeURIComponent(String(current));
-  estimate.textContent = "Estimate installments";
-  actions.append(estimate);
-
   if (product.model.status === "upcoming") {
     const badge = document.createElement("span");
     badge.className = "phone-status";
     badge.textContent = "Coming soon";
-    info.append(brand, badge, name, variant, priceBox, actions);
+    info.append(brand, badge, name, variant, priceBox);
   } else {
+    const actions = document.createElement("div");
+    actions.className = "phone-actions";
+    const estimate = document.createElement("a");
+    estimate.href = "../tools/installment-calculator/?price=" + encodeURIComponent(String(current));
+    estimate.textContent = "Estimate installments";
+    actions.append(estimate);
     info.append(brand, name, variant, priceBox, actions);
   }
   card.append(imageBox, info);

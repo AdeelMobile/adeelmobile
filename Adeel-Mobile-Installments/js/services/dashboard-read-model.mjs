@@ -11,3 +11,24 @@ export async function loadSalesDashboardSnapshot(readOnlyService, accessToken, {
   const rows = await readOnlyService.getVisibleSalesRecords(accessToken, { limit });
   return summarizeSalesSnapshot(rows);
 }
+
+
+/**
+ * Loads an inclusive calendar-date range. The bounded row limit is explicit;
+ * this helper must not be presented as a complete period total when truncated.
+ */
+export async function loadSalesDashboardDateRange(readOnlyService, accessToken, { startDate, endDate, limit = 100 } = {}) {
+  if (!readOnlyService || typeof readOnlyService.getVisibleSalesRecordsByDateRange !== "function") {
+    throw new TypeError("A date-range capable read-only Supabase service is required.");
+  }
+  const rows = await readOnlyService.getVisibleSalesRecordsByDateRange(accessToken, {
+    startDate, endDate, limit
+  });
+  const summary = summarizeSalesSnapshot(rows);
+  return Object.freeze({
+    ...summary,
+    period: Object.freeze({ startDate, endDate }),
+    isCompletePeriod: rows.length < limit,
+    isSnapshot: true
+  });
+}

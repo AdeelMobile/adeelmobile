@@ -94,7 +94,7 @@ test("date-range sales read applies validated inclusive bounds without a user fi
     startDate: "2026-11-01", endDate: "2026-11-30", limit: 40
   }), []);
   const parsed = new URL(request.url);
-  assert.deepEqual(parsed.searchParams.getAll("sale_date"), ["gte.2026-11-01", "lte.2026-11-30"]);
+  assert.equal(parsed.searchParams.get("and"), "(sale_date.gte.2026-11-01,sale_date.lte.2026-11-30)");
   assert.equal(parsed.searchParams.get("limit"), "40");
   assert.equal(parsed.searchParams.get("select"), READ_ONLY_SALES_COLUMNS);
   assert.equal(parsed.searchParams.has("user_id"), false);

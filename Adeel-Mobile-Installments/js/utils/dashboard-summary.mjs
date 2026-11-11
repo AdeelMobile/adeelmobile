@@ -6,8 +6,9 @@
 export function summarizeSalesSnapshot(rows) {
   if (!Array.isArray(rows)) throw new TypeError("Sales records must be an array.");
 
-  let totalSaleAmount = 0;
+  let totalCents = 0;
   let amountRowCount = 0;
+  let invalidAmountRows = 0;
   const byStatus = Object.create(null);
   let latestSaleDate = null;
 
@@ -26,9 +27,14 @@ export function summarizeSalesSnapshot(rows) {
       : typeof row.sale_amount === "string" && row.sale_amount.trim()
         ? Number(row.sale_amount)
         : NaN;
-    if (Number.isFinite(amount) && amount >= 0) {
-      totalSaleAmount += amount;
+    const cents = Math.round((amount + Number.EPSILON) * 100);
+    if (Number.isFinite(amount) && amount >= 0 &&
+        Number.isSafeInteger(cents) &&
+        Number.isSafeInteger(totalCents + cents)) {
+      totalCents += cents;
       amountRowCount += 1;
+    } else {
+      invalidAmountRows += 1;
     }
 
     if (typeof row.sale_date === "string" && row.sale_date.trim()) {
@@ -42,9 +48,10 @@ export function summarizeSalesSnapshot(rows) {
 
   return Object.freeze({
     recordCount: rows.length,
-    totalSaleAmount: Math.round((totalSaleAmount + Number.EPSILON) * 100) / 100,
+    totalSaleAmount: totalCents / 100,
     amountRowCount,
     rowsMissingAmount: rows.length - amountRowCount,
+    invalidAmountRows,
     byStatus: Object.freeze({ ...byStatus }),
     latestSaleDate,
     isSnapshot: true

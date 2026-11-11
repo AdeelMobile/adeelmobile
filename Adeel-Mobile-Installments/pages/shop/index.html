@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f8fc">
+  <meta name="description" content="Explore mobile phones and installment options from Adeel Mobile.">
+  <title>Phone Catalog | Adeel Mobile Installments</title>
+  <link rel="stylesheet" href="../../css/main.css">
+  <link rel="stylesheet" href="./shop.css">
+</head>
+<body class="shop-page">
+  <header class="shop-header">
+    <a class="shop-brand" href="/" aria-label="Adeel Mobile home"><span class="shop-mark">AM</span><span><strong>Adeel Mobile</strong><small>Installments</small></span></a>
+    <nav aria-label="Main navigation"><a class="active" href="./">Phones</a><a href="../tools/installment-calculator/">Installment Calculator</a><a href="../login/">Admin Login</a></nav>
+  </header>
+  <main class="shop-main">
+    <section class="shop-hero">
+      <div><p class="shop-eyebrow">ADEEL MOBILE · PHONE CATALOG</p><h1>Find your next phone.</h1><p>Explore available models and check an estimated installment plan.</p></div>
+      <div class="shop-hero-mark" aria-hidden="true">AM</div>
+    </section>
+    <section class="shop-controls" aria-label="Catalog filters">
+      <label class="shop-search"><span aria-hidden="true">⌕</span><input id="catalog-search" type="search" placeholder="Search phones or models" autocomplete="off" aria-label="Search phones or models"></label>
+      <label class="shop-filter"><span class="sr-only">Filter by brand</span><select id="brand-filter"><option value="">All brands</option></select></label>
+      <label class="shop-filter"><span class="sr-only">Sort phones</span><select id="sort-filter"><option value="price-asc">Price: low to high</option><option value="price-desc">Price: high to low</option><option value="name">Name: A to Z</option></select></label>
+    </section>
+    <div class="shop-meta"><p id="catalog-count" aria-live="polite">Loading catalog…</p><button id="clear-filters" type="button">Clear filters</button></div>
+    <section id="catalog-grid" class="catalog-grid" aria-label="Available phones">
+      <div class="catalog-state"><span class="catalog-spinner" aria-hidden="true"></span><p>Loading phones…</p></div>
+    </section>
+    <section class="shop-help"><div><strong>Need help choosing?</strong><p>Compare the price and estimate a monthly installment before you enquire.</p></div><a href="../tools/installment-calculator/">Calculate installments →</a></section>
+  </main>
+  <footer class="shop-footer"><span>© <span id="current-year"></span> Adeel Mobile</span><span>Product prices and availability may change. Final terms are confirmed by the store.</span></footer>
+  <script type="module" src="./shop.js"></script>
+</body>
+</html>

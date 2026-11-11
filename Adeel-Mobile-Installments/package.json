@@ -1,0 +1,14 @@
+{
+  "name": "adeel-mobile-installments",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Mobile-first Adeel Mobile Installments web application",
+  "scripts": {
+    "test": "node --test js/utils/*.test.mjs",
+    "test:finance": "node --test js/utils/installment-calculator.test.mjs js/utils/installment-schedule.test.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

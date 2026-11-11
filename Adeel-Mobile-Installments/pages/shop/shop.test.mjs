@@ -18,7 +18,7 @@ test("shop page loads its local stylesheet and module", () => {
 
 test("public catalog config contains only a publishable key", () => {
   const config = readFileSync(path.join(appRoot, "config/supabase.public.js"), "utf8");
-  const executableConfig = config.replace(/^\\/\\/.*$/gm, "");
+  const executableConfig = config.replace(new RegExp("^//.*$", "gm"), "");
   assert.match(executableConfig, /SUPABASE_PUBLISHABLE_KEY = "sb_publishable_/);
   assert.doesNotMatch(executableConfig, /service_role|sb_secret_|SUPABASE_SECRET_KEYS/i);
 });

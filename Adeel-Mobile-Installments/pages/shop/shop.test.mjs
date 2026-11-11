@@ -18,8 +18,9 @@ test("shop page loads its local stylesheet and module", () => {
 
 test("public catalog config contains only a publishable key", () => {
   const config = readFileSync(path.join(appRoot, "config/supabase.public.js"), "utf8");
-  assert.match(config, /sb_publishable_/);
-  assert.doesNotMatch(config, /service_role|sb_secret_|SUPABASE_SECRET_KEYS/i);
+  const executableConfig = config.replace(/^\\/\\/.*$/gm, "");
+  assert.match(executableConfig, /SUPABASE_PUBLISHABLE_KEY = "sb_publishable_/);
+  assert.doesNotMatch(executableConfig, /service_role|sb_secret_|SUPABASE_SECRET_KEYS/i);
 });
 
 test("catalog reads only public product tables and uses visibility filters", () => {

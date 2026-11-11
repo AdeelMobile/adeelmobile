@@ -6,7 +6,6 @@
   <meta name="theme-color" content="#f7f8fc">
   <meta name="google-site-verification" content="vA705VZX1zk1hx70oNht2foFO2e_NWOcn7tUdVshoVg">
   <meta name="description" content="Explore mobile phones and installment options from Adeel Mobile.">
-  <meta http-equiv="refresh" content="0; url=pages/shop/">
   <title>Adeel Mobile Installments | Phone Catalog</title>
 </head>
 <body>
@@ -15,6 +14,9 @@
     <p>Opening the phone catalog…</p>
     <p><a href="pages/shop/">Browse phones</a> · <a href="pages/login/">Admin login</a></p>
   </main>
-  <script>window.location.replace("pages/shop/");</script>
+  <script>
+    const isNativeApp = window.Capacitor?.isNativePlatform?.() === true;
+    window.location.replace(isNativeApp ? "pages/login/" : "pages/shop/");
+  </script>
 </body>
 </html>

@@ -41,7 +41,7 @@ test("own sales read delegates ownership to RLS and sends no user filter", async
       return { ok: true, json: async () => [] };
     }
   });
-  assert.deepEqual(await service.getOwnSalesRecords(token, { limit: 25 }), []);
+  assert.deepEqual(await service.getVisibleSalesRecords(token, { limit: 25 }), []);
   const parsed = new URL(request.url);
   assert.equal(parsed.pathname, "/rest/v1/sales_records");
   assert.equal(parsed.searchParams.get("limit"), "25");
@@ -53,16 +53,16 @@ test("own sales read delegates ownership to RLS and sends no user filter", async
 
 test("sales limit is bounded and rejects invalid values", async () => {
   const service = createSupabaseReadOnlyService({ ...config, fetchImpl: async () => ({ ok: true, json: async () => [] }) });
-  await assert.rejects(service.getOwnSalesRecords(token, { limit: 101 }), RangeError);
-  await assert.rejects(service.getOwnSalesRecords(token, { limit: 0 }), RangeError);
-  await assert.rejects(service.getOwnSalesRecords(token, { limit: 1.5 }), RangeError);
+  await assert.rejects(service.getVisibleSalesRecords(token, { limit: 101 }), RangeError);
+  await assert.rejects(service.getVisibleSalesRecords(token, { limit: 0 }), RangeError);
+  await assert.rejects(service.getVisibleSalesRecords(token, { limit: 1.5 }), RangeError);
 });
 
 test("rejects missing credentials, unsafe URLs and non-publishable keys", async () => {
   assert.throws(() => createSupabaseReadOnlyService({ url: "http://example.com", publishableKey: config.publishableKey }), /HTTPS Supabase/);
   assert.throws(() => createSupabaseReadOnlyService({ url: config.url, publishableKey: "service_role_secret" }), /publishable key/);
   const service = createSupabaseReadOnlyService({ ...config, fetchImpl: async () => ({ ok: true, json: async () => [] }) });
-  await assert.rejects(service.getOwnSalesRecords(""), /access token/);
+  await assert.rejects(service.getVisibleSalesRecords(""), /access token/);
 });
 
 test("HTTP errors do not expose server response bodies", async () => {
@@ -70,7 +70,7 @@ test("HTTP errors do not expose server response bodies", async () => {
     ...config,
     fetchImpl: async () => ({ ok: false, status: 403, json: async () => ({ message: "sensitive server detail" }) })
   });
-  await assert.rejects(service.getOwnSalesRecords(token), error => {
+  await assert.rejects(service.getVisibleSalesRecords(token), error => {
     assert.equal(error.status, 403);
     assert.equal(error.message, "Supabase read failed (403).");
     return true;

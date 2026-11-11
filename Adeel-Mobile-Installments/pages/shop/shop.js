@@ -127,7 +127,7 @@ function makePhoneCard(product) {
 
 function openProductDetails(product, currentPrice) {
   const brandName = product.model.brand.brand;
-  dialogTitle.textContent = brandName + " " + product.model.model;
+  dialogTitle.textContent = brandName + " " + product.model.model + " " + (product.variant || "");
   dialogPrice.textContent = money(currentPrice);
 
   dialogGallery.replaceChildren();
@@ -160,9 +160,10 @@ function openProductDetails(product, currentPrice) {
       dialogSpecs.append(item);
     });
   } else {
-    const empty = document.createElement("p");
-    empty.className = "catalog-empty";
-    empty.textContent = "Detailed specifications are not available for this model yet.";
+    const empty = document.createElement("div");
+    const detail = document.createElement("dd");
+    detail.textContent = "Detailed specifications are not available for this model yet.";
+    empty.append(detail);
     dialogSpecs.append(empty);
   }
 

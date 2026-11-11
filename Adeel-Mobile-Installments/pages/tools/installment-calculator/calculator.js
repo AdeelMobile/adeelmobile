@@ -43,6 +43,11 @@ function calculate(event) {
     error.textContent = "Please enter a valid retail price greater than zero (maximum Rs. 100,000,000).";
     error.hidden = false;
     clearResult();
+const initialPrice = new URLSearchParams(globalThis.location?.search || "").get("price");
+if (initialPrice) {
+  priceInput.value = initialPrice;
+  calculate();
+}
     priceInput.focus();
     return;
   }

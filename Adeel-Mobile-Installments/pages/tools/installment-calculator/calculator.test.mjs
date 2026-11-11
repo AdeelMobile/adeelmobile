@@ -80,6 +80,15 @@ test("UI applies 30 percent advance at the exact threshold and six-month markup"
   assert.equal(elements["schedule-rows"].children.length, 6);
 });
 
+test("fractional retail price is rejected for whole-rupee quotes", () => {
+  elements["retail-price"].value = "50000.50";
+  submit();
+  assert.equal(elements["calc-error"].hidden, false);
+  assert.match(elements["calc-error"].textContent, /whole-number retail price/);
+  assert.equal(elements["calc-schedule"].hidden, true);
+  assert.equal(elements["schedule-rows"].children.length, 0);
+});
+
 test("invalid input shows error and clears stale result and schedule", () => {
   elements["retail-price"].value = "0";
   submit();

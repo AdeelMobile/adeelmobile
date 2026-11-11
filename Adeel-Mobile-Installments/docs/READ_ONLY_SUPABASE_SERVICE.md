@@ -11,7 +11,7 @@ Status: implemented as an isolated, tested-by-design adapter; not yet connected 
 
 ## Security properties
 
-- Requires HTTPS on the existing Supabase project URL and a `sb_publishable_` key.
+- Pins HTTPS requests to the exact existing Adeel Mobile Supabase project hostname, rejects URL credentials/path/query/hash, and requires a `sb_publishable_` key.
 - Uses the caller-provided access token only in the Authorization header.
 - Uses `cache: no-store` for authenticated reads.
 - Has no INSERT, UPDATE, DELETE, Storage, password, refresh-token, or session-persistence methods.
@@ -27,7 +27,7 @@ The sales query has not yet been verified against the live Data API, CORS, or re
 
 ## Tests
 
-`js/services/supabase-readonly.test.mjs` covers exact identity allowlisting, unknown-role denial, absence of user-id filters, fixed column selection, bounded result limits, HTTPS/publishable-key validation, and sanitized HTTP errors.
+`js/services/supabase-readonly.test.mjs` covers exact identity allowlisting, unknown-role denial, absence of user-id filters, fixed column selection, bounded result limits, exact project-host/path validation, publishable-key validation, and sanitized HTTP errors.
 
 Run from the app directory with Node 20+:
 

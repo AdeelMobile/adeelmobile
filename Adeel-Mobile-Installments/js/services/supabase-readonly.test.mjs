@@ -79,3 +79,33 @@ test("HTTP errors do not expose server response bodies", async () => {
     return true;
   });
 });
+
+
+test("date-range sales read applies validated inclusive bounds without a user filter", async () => {
+  let request;
+  const service = createSupabaseReadOnlyService({
+    ...config,
+    fetchImpl: async (url, options) => {
+      request = { url, options };
+      return { ok: true, json: async () => [] };
+    }
+  });
+  assert.deepEqual(await service.getVisibleSalesRecordsByDateRange(token, {
+    startDate: "2026-11-01", endDate: "2026-11-30", limit: 40
+  }), []);
+  const parsed = new URL(request.url);
+  assert.deepEqual(parsed.searchParams.getAll("sale_date"), ["gte.2026-11-01", "lte.2026-11-30"]);
+  assert.equal(parsed.searchParams.get("limit"), "40");
+  assert.equal(parsed.searchParams.get("select"), READ_ONLY_SALES_COLUMNS);
+  assert.equal(parsed.searchParams.has("user_id"), false);
+  assert.equal(request.options.method, "GET");
+  assert.equal(request.options.cache, "no-store");
+});
+
+test("date-range sales read rejects invalid dates, reversed ranges and unsafe limits", async () => {
+  const service = createSupabaseReadOnlyService({ ...config, fetchImpl: async () => ({ ok: true, json: async () => [] }) });
+  await assert.rejects(service.getVisibleSalesRecordsByDateRange(token, { startDate: "2026-02-30", endDate: "2026-03-01" }), /valid YYYY-MM-DD/);
+  await assert.rejects(service.getVisibleSalesRecordsByDateRange(token, { startDate: "2026-11-02", endDate: "2026-11-01" }), RangeError);
+  await assert.rejects(service.getVisibleSalesRecordsByDateRange(token, { startDate: "2026-11-01", endDate: "2026-11-30", limit: 101 }), RangeError);
+  await assert.rejects(service.getVisibleSalesRecordsByDateRange(token, { startDate: "2026-11-01T00:00:00Z", endDate: "2026-11-30" }), /valid YYYY-MM-DD/);
+});

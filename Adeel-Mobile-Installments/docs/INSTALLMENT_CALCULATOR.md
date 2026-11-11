@@ -14,7 +14,7 @@ No database values or live sales are changed by this module.
 
 ## Precision
 
-The calculation keeps JavaScript numeric precision and does not round intermediate amounts. UI formatting displays PKR to two decimal places. A formal ledger rounding policy (including how to distribute a paisa remainder across scheduled payments) is intentionally not assumed; it must be agreed before posting real transactions.
+The calculation keeps JavaScript numeric precision and does not round intermediate amounts. The quote UI accepts whole-rupee retail prices and formats PKR to two decimal places. The illustrative schedule rounds the total balance to paisa once, uses equal whole-paisa amounts for the first payments, and assigns the exact remainder to the final payment. This is preview behavior only; the production ledger policy still requires explicit business approval before real transactions are posted.
 
 ## Files
 
@@ -29,6 +29,7 @@ The calculation keeps JavaScript numeric precision and does not round intermedia
 - All three markup plans are covered across examples.
 - Custom configuration.
 - Invalid amounts and unsupported plan rejection.
+- Calculator UI rejects fractional, zero, negative and excessively large retail prices.
 
 ## Not yet connected
 

@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { calculateInstallment } from "./installment-calculator.mjs";
+import { calculateInstallment, formatPKR } from "./installment-calculator.mjs";
 
 test("price below 60,000 uses 20% advance", () => {
   const result = calculateInstallment(50000, 3);
@@ -50,4 +50,20 @@ test("rejects invalid prices and unsupported plans", () => {
   assert.throws(() => calculateInstallment(-1, 3), TypeError);
   assert.throws(() => calculateInstallment(Number.NaN, 3), TypeError);
   assert.throws(() => calculateInstallment(50000, 12), RangeError);
+});
+
+test("rejects malformed advance configuration", () => {
+  const invalid = {
+    currency: "PKR",
+    advanceThreshold: 60000,
+    advanceBelowThresholdPercent: 101,
+    advanceAtOrAboveThresholdPercent: 30,
+    plans: { 3: 15, 6: 28, 9: 38 },
+  };
+  assert.throws(() => calculateInstallment(50000, 3, invalid), TypeError);
+});
+
+test("PKR formatter rejects non-finite values and returns currency text", () => {
+  assert.match(formatPKR(1000), /1,000/);
+  assert.throws(() => formatPKR(Number.NaN), TypeError);
 });

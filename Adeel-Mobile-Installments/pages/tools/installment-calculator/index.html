@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f8fc">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="description" content="Calculate Adeel Mobile installment plans in PKR.">
+  <title>Installment Calculator | Adeel Mobile</title>
+  <link rel="stylesheet" href="../../../css/main.css">
+  <link rel="stylesheet" href="./calculator.css">
+</head>
+<body class="calc-page">
+  <main class="calc-shell">
+    <header class="calc-header">
+      <a class="calc-back" href="../../login/" aria-label="Back to sign in">←</a>
+      <div><p class="calc-eyebrow">ADEEL MOBILE INSTALLMENTS</p><h1>Installment Calculator</h1><p class="calc-subtitle">Quick estimate based on your current business rules</p></div>
+      <span class="calc-mark" aria-hidden="true">AM</span>
+    </header>
+    <section class="calc-layout" aria-label="Installment calculator">
+      <form class="calc-card calc-form" id="calculator-form" novalidate>
+        <div class="calc-card-heading"><div><span class="calc-step">01</span><h2>Product details</h2></div><span class="calc-currency">PKR</span></div>
+        <label for="retail-price">Retail price</label>
+        <div class="calc-input-wrap"><span>Rs.</span><input id="retail-price" name="retailPrice" type="number" min="1" max="100000000" step="1" inputmode="numeric" placeholder="e.g. 85000" required></div>
+        <p class="calc-hint">Enter the phone's retail price in Pakistani Rupees.</p>
+        <fieldset class="calc-plans"><legend>Choose installment plan</legend><div class="calc-plan-options">
+          <label class="calc-plan"><input type="radio" name="months" value="3" checked><span><strong>3 Months</strong><small>15% markup</small></span></label>
+          <label class="calc-plan"><input type="radio" name="months" value="6"><span><strong>6 Months</strong><small>28% markup</small></span></label>
+          <label class="calc-plan"><input type="radio" name="months" value="9"><span><strong>9 Months</strong><small>38% markup</small></span></label>
+        </div></fieldset>
+        <button class="calc-submit" type="submit">Calculate installment <span>→</span></button>
+        <p class="calc-error" id="calc-error" role="alert" hidden></p>
+        <p class="calc-disclaimer">Estimate only. This tool does not create a sale, save customer data or record a payment.</p>
+      </form>
+      <section class="calc-card calc-results" aria-live="polite" aria-labelledby="result-title">
+        <div class="calc-card-heading"><div><span class="calc-step">02</span><h2 id="result-title">Your estimate</h2></div><span class="calc-status" id="calc-status">Waiting for price</span></div>
+        <div class="calc-monthly"><span>Monthly installment</span><strong id="monthly-amount">Rs. 0.00</strong><small id="monthly-caption">Select a price and plan to calculate</small></div>
+        <div class="calc-breakdown">
+          <div><span>Retail price</span><strong id="retail-output">Rs. 0.00</strong></div>
+          <div><span>Advance payment <small id="advance-percent">(—)</small></span><strong id="advance-output">Rs. 0.00</strong></div>
+          <div><span>Remaining amount</span><strong id="finance-output">Rs. 0.00</strong></div>
+          <div><span>Plan markup <small id="markup-percent">(—)</small></span><strong id="markup-output">Rs. 0.00</strong></div>
+          <div class="calc-total"><span>Total installment balance</span><strong id="total-output">Rs. 0.00</strong></div>
+        </div>
+        <button class="calc-reset" type="button" id="reset-button">Reset calculator</button>
+      </section>
+    </section>
+    <section class="calc-rules"><h2>Current calculation rules</h2>
+      <div class="calc-rule-grid">
+        <div><strong>20% advance</strong><span>Retail price below Rs. 60,000</span></div>
+        <div><strong>30% advance</strong><span>Retail price Rs. 60,000 or above</span></div>
+        <div><strong>3 / 6 / 9 months</strong><span>15% / 28% / 38% markup on remaining amount</span></div>
+      </div><p>Rules are currently built into this preview calculator. They are not yet connected to live business settings.</p>
+    </section>
+    <footer class="calc-footer">Adeel Mobile Installments · Internal calculator preview</footer>
+  </main>
+  <script type="module" src="./calculator.js"></script>
+</body></html>

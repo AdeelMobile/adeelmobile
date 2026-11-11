@@ -65,6 +65,7 @@ test("rejects missing credentials, unsafe URLs and non-publishable keys", async 
   assert.throws(() => createSupabaseReadOnlyService({ url: config.url, publishableKey: "service_role_secret" }), /publishable key/);
   const service = createSupabaseReadOnlyService({ ...config, fetchImpl: async () => ({ ok: true, json: async () => [] }) });
   await assert.rejects(service.getVisibleSalesRecords(""), /access token/);
+  await assert.rejects(service.getVisibleSalesRecords(token + " injected"), /access token/);
 });
 
 test("HTTP errors do not expose server response bodies", async () => {

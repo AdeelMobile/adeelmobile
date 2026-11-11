@@ -5,6 +5,8 @@ const form = document.getElementById("calculator-form");
 const priceInput = document.getElementById("retail-price");
 const error = document.getElementById("calc-error");
 const status = document.getElementById("calc-status");
+const schedulePanel = document.getElementById("calc-schedule");
+const scheduleRows = document.getElementById("schedule-rows");
 const fields = {
   monthly: document.getElementById("monthly-amount"),
   monthlyCaption: document.getElementById("monthly-caption"),
@@ -28,6 +30,8 @@ function clearResult() {
       : field === fields.advancePercent || field === fields.markupPercent ? "(—)" : formatPKR(0);
   });
   status.textContent = "Waiting for price";
+  schedulePanel.hidden = true;
+  scheduleRows.replaceChildren();
 }
 
 function calculate(event) {
@@ -45,7 +49,9 @@ function calculate(event) {
   try {
     const months = selectedMonths();
     const result = calculateInstallment(price, months);
-    const schedule = buildInstallmentSchedule(result.totalInstallmentBalance, months, new Date().toISOString().slice(0, 10));
+    const now = new Date();
+    const localDate = [now.getFullYear(), String(now.getMonth() + 1).padStart(2, "0"), String(now.getDate()).padStart(2, "0")].join("-");
+    const schedule = buildInstallmentSchedule(result.totalInstallmentBalance, months, localDate);
     fields.monthly.textContent = formatPKR(result.monthlyInstallment);
     fields.monthlyCaption.textContent = months + " monthly payments · " + result.markupPercent + "% markup";
     fields.retail.textContent = formatPKR(result.retailPrice);
@@ -56,6 +62,17 @@ function calculate(event) {
     fields.markup.textContent = formatPKR(result.markupAmount);
     fields.total.textContent = formatPKR(result.totalInstallmentBalance);
     status.textContent = schedule.length + " payments estimated";
+    scheduleRows.replaceChildren();
+    schedule.forEach((payment) => {
+      const row = document.createElement("li");
+      const date = document.createElement("span");
+      const amount = document.createElement("strong");
+      date.textContent = "Payment " + payment.sequence + " · " + new Intl.DateTimeFormat("en-PK", { day: "numeric", month: "short", year: "numeric", timeZone: "UTC" }).format(new Date(payment.dueDate + "T00:00:00Z"));
+      amount.textContent = formatPKR(payment.amount);
+      row.append(date, amount);
+      scheduleRows.append(row);
+    });
+    schedulePanel.hidden = false;
   } catch {
     error.textContent = "Unable to calculate this plan. Please check the entered price and try again.";
     error.hidden = false;

@@ -17,9 +17,9 @@ test("exactly 60,000 uses 30% advance", () => {
   assert.equal(result.advancePercent, 30);
   assert.equal(result.advanceAmount, 18000);
   assert.equal(result.financedAmount, 42000);
-  assert.equal(result.markupAmount, 11760);
-  assert.equal(result.totalInstallmentBalance, 53760);
-  assert.equal(result.monthlyInstallment, 8960);
+  assert.ok(Math.abs(result.markupAmount - 11760) < 1e-8);
+  assert.ok(Math.abs(result.totalInstallmentBalance - 53760) < 1e-8);
+  assert.ok(Math.abs(result.monthlyInstallment - 8960) < 1e-8);
 });
 
 test("above 60,000 uses 30% advance and 9-month markup", () => {

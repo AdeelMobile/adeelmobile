@@ -105,3 +105,10 @@ These values must be centralized/configurable and covered by boundary and roundi
 - Added a lightweight fake-DOM Node smoke-test suite for the calculator UI (under-threshold calculation, exact Rs. 60,000 boundary, six-month markup, invalid-input clearing and reset). Added `npm test` scripts; these new UI smoke tests are committed but have **not yet been executed in this environment**.
 - Corrected the calculator input font declaration and ensured invalid values clear stale result/schedule output.
 - Updated the project README so the full website + Android scope is no longer described as deferred.
+
+- Added the public phone catalog at `pages/shop/`; the app root now routes customers to the catalog and the Admin sign-in preview remains at `pages/login/`.
+- Connected the catalog with a browser-safe Supabase publishable key and read-only REST requests to the existing public `brands` and `variants` tables. The query selects only public catalog fields, filters brand/model/variant website visibility flags, and distinguishes upcoming models. No customer or staff data is queried.
+- The latest read-only catalog snapshot showed 9 visible brands and 146 catalog-visible models/variants (145 active, 1 upcoming). This is a point-in-time DB observation, not a live browser API test.
+- Product images are accepted only from the existing project's HTTPS public `phone-images` Storage path. Product names/prices are inserted as text nodes, not HTML.
+- Product cards link to the installment calculator with the selected retail price prefilled. Catalog fetch is read-only; there are no public inquiry, CNIC upload, order or payment writes.
+- Added static catalog safety/route tests. Public catalog browser/CORS/API checks are pending; no deployment has occurred.

@@ -8,6 +8,7 @@ Status: implemented as an isolated, tested-by-design adapter; not yet connected 
 
 - `whoAmI(accessToken)`: calls the existing `ims_whoami` RPC and accepts only the exact strings `admin` or `user`. Any other value fails closed.
 - `getVisibleSalesRecords(accessToken, { limit })`: performs a bounded GET of a fixed sales-record column allowlist. It does not accept or send a user ID. The database's existing RLS policy decides visibility (staff: own rows; Admin: all rows).
+- `getVisibleSalesRecordsByDateRange(accessToken, { startDate, endDate, limit })`: performs the same RLS-governed read with validated inclusive `YYYY-MM-DD` date bounds and a maximum of 100 rows.
 
 ## Security properties
 
@@ -27,7 +28,7 @@ The sales query has not yet been verified against the live Data API, CORS, or re
 
 ## Tests
 
-`js/services/supabase-readonly.test.mjs` covers exact identity allowlisting, unknown-role denial, absence of user-id filters, fixed column selection, bounded result limits, exact project-host/path validation, publishable-key validation, and sanitized HTTP errors.
+`js/services/supabase-readonly.test.mjs` covers exact identity allowlisting, unknown-role denial, absence of user-id filters, fixed column selection, bounded result limits, inclusive date-range filters and invalid-date rejection, exact project-host/path validation, publishable-key validation, and sanitized HTTP errors.
 
 Run from the app directory with Node 20+:
 

@@ -39,6 +39,9 @@ export function buildInstallmentSchedule(totalBalance, months, contractDate) {
 
   const base = parseIsoDate(contractDate);
   const totalPaisa = Math.round((totalBalance + Number.EPSILON) * 100);
+  if (!Number.isSafeInteger(totalPaisa)) {
+    throw new RangeError("Total balance exceeds the safe paisa precision limit.");
+  }
   if (totalPaisa < months) {
     throw new RangeError("Total balance is too small for the selected schedule.");
   }

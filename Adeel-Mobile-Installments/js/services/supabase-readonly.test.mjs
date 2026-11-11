@@ -59,7 +59,9 @@ test("sales limit is bounded and rejects invalid values", async () => {
 });
 
 test("rejects missing credentials, unsafe URLs and non-publishable keys", async () => {
-  assert.throws(() => createSupabaseReadOnlyService({ url: "http://example.com", publishableKey: config.publishableKey }), /HTTPS Supabase/);
+  assert.throws(() => createSupabaseReadOnlyService({ url: "http://example.com", publishableKey: config.publishableKey }), /Supabase project URL/);
+  assert.throws(() => createSupabaseReadOnlyService({ url: "https://attacker.supabase.co", publishableKey: config.publishableKey }), /Adeel Mobile HTTPS Supabase/);
+  assert.throws(() => createSupabaseReadOnlyService({ url: config.url + "/unexpected-path", publishableKey: config.publishableKey }), /Adeel Mobile HTTPS Supabase/);
   assert.throws(() => createSupabaseReadOnlyService({ url: config.url, publishableKey: "service_role_secret" }), /publishable key/);
   const service = createSupabaseReadOnlyService({ ...config, fetchImpl: async () => ({ ok: true, json: async () => [] }) });
   await assert.rejects(service.getVisibleSalesRecords(""), /access token/);

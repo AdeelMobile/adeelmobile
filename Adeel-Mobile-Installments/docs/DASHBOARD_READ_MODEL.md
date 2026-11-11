@@ -7,6 +7,7 @@
 - Returns snapshot metrics only; it does not label the result all-time totals.
 - Sums monetary values in integer paisa to avoid ordinary floating-point addition drift.
 - Excludes missing, negative, non-finite, unsafe-precision and overflowing amounts from the sum, and reports their count separately as `invalidAmountRows`.
+- The access-token guard rejects whitespace; a regression test covers an injected whitespace token.
 - Propagates authorization/network errors instead of replacing them with zero values.
 - Performs no writes and does not manage authentication.
 

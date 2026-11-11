@@ -23,8 +23,11 @@ function requireConfig(config) {
     throw new TypeError("Supabase URL and publishable key are required.");
   }
   const url = new URL(config.url);
-  if (url.protocol !== "https:" || !url.hostname.endsWith(".supabase.co")) {
-    throw new TypeError("A valid HTTPS Supabase project URL is required.");
+  if (url.protocol !== "https:" ||
+      url.hostname !== "nqihozwbdrvpyalctwbc.supabase.co" ||
+      url.username || url.password || url.pathname !== "/" ||
+      url.search || url.hash) {
+    throw new TypeError("The configured Adeel Mobile HTTPS Supabase project URL is required.");
   }
   if (!config.publishableKey.startsWith("sb_publishable_")) {
     throw new TypeError("A Supabase publishable key is required.");

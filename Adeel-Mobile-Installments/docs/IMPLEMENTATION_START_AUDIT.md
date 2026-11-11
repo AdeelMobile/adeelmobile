@@ -34,12 +34,14 @@ Do not create parallel tables until the existing schema and its intended lifecyc
 
 ## Security observations requiring investigation before live customer data
 
-1. A Storage INSERT policy named `public_upload_customer_docs` currently grants the `anon` role insert access to bucket `customer-docs` for paths whose first folder is `cnic`. This is a high-priority review item because CNIC documents are sensitive. Do not upload real identity documents or enable a public customer-document flow until bucket privacy, upload constraints, object access, retention and abuse controls are verified.
-2. Private verification documents use a separate `p5-verification-docs` bucket with owner/admin read checks in the inspected policies. Verify bucket configuration and the complete upload/download lifecycle before relying on it.
-3. Catalog tables have public read policies, which is appropriate only for fields intended for public display. Keep private pricing, internal notes and customer data out of public catalog responses.
-4. `private.is_admin()` checks an enabled private allowlist row for the authenticated user. `private.current_app_user_id()` resolves an active app user through `users.auth_user_id`. Keep role decisions server-side; never accept a role from browser form data or user-editable metadata.
-5. Several operational tables have admin-only writes and user-specific reads. The frontend must match those policies and must not assume that a visible UI control means the database will authorize the operation.
-6. The policies were inspected, but no penetration test or cross-account access test has been performed.
+1. Storage bucket `customer-docs` is private, but a Storage INSERT policy named `public_upload_customer_docs` grants the `anon` role insert access for paths whose first folder is `cnic`. The bucket has no configured file-size limit or MIME-type allowlist. This is high priority: do not enable public CNIC uploads or store real identity documents until abuse controls, validation, access, retention and deletion are reviewed.
+2. Bucket `p5-verification-docs` is private and has an 8 MiB limit plus JPEG/PNG/PDF MIME restrictions. Its inspected object policies use owner/admin checks for reads and constrained owner uploads. Verify the complete lifecycle before relying on it.
+3. Bucket `apk-files` is currently public. Do not place private builds, signing materials, credentials or customer data there. Public release binaries should be intentionally versioned and reviewed.
+4. Catalog tables have public read policies, which is appropriate only for fields intended for public display. Keep private pricing, internal notes and customer data out of public catalog responses.
+5. `private.is_admin()` checks an enabled private allowlist row for the authenticated user. `private.current_app_user_id()` resolves an active app user through `users.auth_user_id`. Keep role decisions server-side; never accept a role from browser form data or user-editable metadata.
+6. Several operational tables have admin-only writes and user-specific reads. The frontend must match those policies and must not assume that a visible UI control means the database will authorize the operation.
+7. Existing `ims_settings` contains a `calc` object, but the inspected `advance_percent`, `markup.3`, `markup.6` and `markup.9` values are null. Do not treat the database as already configured with the agreed installment terms.
+8. The policies were inspected, but no penetration test or cross-account access test has been performed.
 
 ## Build and delivery gates
 
@@ -74,7 +76,7 @@ These values must be centralized/configurable and covered by boundary and roundi
 
 - Repository documents and current login/dashboard files: inspected.
 - Supabase project status and public table definitions: inspected.
-- Public RLS policies and Storage object policies: inspected.
+- Public RLS policies, Storage object policies, bucket privacy/limits and calculator settings: inspected.
 - Database mutations/migrations: none.
 - Storage mutations: none.
 - Production deployment: none.

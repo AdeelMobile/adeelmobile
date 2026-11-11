@@ -14,7 +14,7 @@ No database values or live sales are changed by this module.
 
 ## Precision
 
-The calculation keeps JavaScript numeric precision and does not round intermediate amounts. The quote UI accepts whole-rupee retail prices and formats PKR to two decimal places. The illustrative schedule rounds the total balance to paisa once, uses equal whole-paisa amounts for the first payments, and assigns the exact remainder to the final payment. This is preview behavior only; the production ledger policy still requires explicit business approval before real transactions are posted.
+The calculation keeps JavaScript numeric precision and does not round intermediate amounts. Both the quote UI and pure calculation module accept only positive whole-rupee safe-integer retail prices; the UI additionally caps input at PKR 100,000,000. Advance percentages must remain below 100% so an installment plan cannot silently produce a zero balance. The UI formats PKR to two decimal places. The illustrative schedule rounds the total balance to paisa once, uses equal whole-paisa amounts for the first payments, and assigns the exact remainder to the final payment. This is preview behavior only; the production ledger policy still requires explicit business approval before real transactions are posted.
 
 ## Files
 
@@ -28,7 +28,7 @@ The calculation keeps JavaScript numeric precision and does not round intermedia
 - Above-threshold advance.
 - All three markup plans are covered across examples.
 - Custom configuration.
-- Invalid amounts and unsupported plan rejection.
+- Invalid amounts, fractional/unsafe retail prices, advance settings that leave no financed balance, and unsupported plan rejection.
 - Calculator UI rejects fractional, zero, negative and excessively large retail prices.
 
 ## Not yet connected

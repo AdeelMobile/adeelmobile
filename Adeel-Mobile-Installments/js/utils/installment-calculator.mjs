@@ -18,12 +18,12 @@ export const DEFAULT_INSTALLMENT_RULES = Object.freeze({
   }),
 });
 
-const isFinitePositive = (value) =>
-  typeof value === "number" && Number.isFinite(value) && value > 0;
+const isValidRetailPrice = (value) =>
+  typeof value === "number" && Number.isSafeInteger(value) && value > 0;
 
 export function calculateInstallment(retailPrice, months, rules = DEFAULT_INSTALLMENT_RULES) {
-  if (!isFinitePositive(retailPrice)) {
-    throw new TypeError("Retail price must be a positive finite number.");
+  if (!isValidRetailPrice(retailPrice)) {
+    throw new TypeError("Retail price must be a positive whole-rupee safe integer.");
   }
 
   if (!rules || typeof rules !== "object") {
@@ -41,7 +41,7 @@ export function calculateInstallment(retailPrice, months, rules = DEFAULT_INSTAL
 
   if (![threshold, belowPercent, atOrAbovePercent].every(Number.isFinite) ||
       threshold <= 0 || belowPercent < 0 || atOrAbovePercent < 0 ||
-      belowPercent > 100 || atOrAbovePercent > 100) {
+      belowPercent >= 100 || atOrAbovePercent >= 100) {
     throw new TypeError("Advance settings are invalid.");
   }
 

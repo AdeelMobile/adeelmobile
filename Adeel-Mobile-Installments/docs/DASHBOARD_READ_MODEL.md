@@ -11,4 +11,4 @@
 - Propagates authorization/network errors instead of replacing them with zero values.
 - Performs no writes and does not manage authentication.
 
-This is a data-layer building block, not a completed dashboard page or a verified Phase 4 release. Live Admin/Staff tests, complete date-range pagination, and staging acceptance remain outstanding.
+This is a data-layer building block, not a completed dashboard page or a verified Phase 4 release. Live Admin/Staff tests, complete date-range pagination remains outstanding. The date-range read model now flags a result as potentially truncated whenever it reaches its row cap; it must not be shown as a complete period total in that case.

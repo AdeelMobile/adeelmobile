@@ -81,3 +81,15 @@ These values must be centralized/configurable and covered by boundary and roundi
 - Storage mutations: none.
 - Production deployment: none.
 - Android build: not run; this environment does not have an Android SDK/Gradle toolchain.
+
+## Follow-up implementation work (2026-11-11)
+
+- Added a pure configurable installment calculator in `js/utils/installment-calculator.mjs`; it encodes the agreed PKR advance threshold and 3/6/9-month markup rules without database writes.
+- Added Node test coverage. Local execution: **7 tests passed, 0 failed**.
+- Added `docs/INSTALLMENT_CALCULATOR.md` and `docs/PRODUCT_SCOPE_DECISION.md`; the latter records the user's complete web + Android scope while preserving the existing approval gates.
+- Added `docs/SUPABASE_INTEGRATION_AND_RLS_REVIEW.md`, documenting observed schema, FK graph, RLS policies, trigger flow, Edge Function contracts and Security Advisor findings.
+- Confirmed an existing P5/P6 approval flow exists through SECURITY DEFINER RPCs; those functions internally check `private.is_admin()`. No replacement approval logic should be invented.
+- Found a legacy `manage-user-login` Edge Function whose Admin check is fail-open for missing/unexpected app_metadata role values. It is not approved for use by the new UI until corrected and reviewed. No live function was changed.
+- Supabase Security Advisor also reports leaked-password protection disabled and several SECURITY DEFINER/public-RPC warnings. These are documented for review; no settings or grants were changed.
+- No production database, Storage, RLS, Edge Function, or deployment changes were made.
+- APK remains unbuilt; no Android SDK/Gradle toolchain is available in the current build environment.

@@ -4,7 +4,7 @@ Status: implemented as an isolated, tested-by-design adapter; not yet connected 
 
 ## Purpose
 
-`js/services/supabase-readonly.mjs` exposes only two operations:
+`js/services/supabase-readonly.mjs` exposes a small allowlist of read operations:
 
 - `whoAmI(accessToken)`: calls the existing `ims_whoami` RPC and accepts only the exact strings `admin` or `user`. Any other value fails closed.
 - `getVisibleCustomers(accessToken, { limit })`: reads a bounded customer list from `p6_customers` using only `id`, `name`, `phone`, `category`, `status`, `created_at`, and `updated_at`. It deliberately excludes CNIC, address, notes, and owner identifiers; RLS decides whether the caller is an Admin or can see their own records.

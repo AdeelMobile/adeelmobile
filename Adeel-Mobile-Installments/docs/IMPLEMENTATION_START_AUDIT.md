@@ -100,3 +100,8 @@ These values must be centralized/configurable and covered by boundary and roundi
 
 - Added a standalone mobile-first calculator screen at `pages/tools/installment-calculator/` and linked it from the safe login preview. It uses the tested pure calculator and schedule modules; it does not submit sales, save customer data or connect to Supabase.
 - The calculator screen is still awaiting real-browser/mobile QA. Static code presence is not a claim of device testing or production readiness.
+
+- Calculator UI now renders an illustrative monthly due-date/payment-amount list using the pure schedule utility. The list is explicitly labeled as an estimate from today's date, not a confirmed contract schedule.
+- Added a lightweight fake-DOM Node smoke-test suite for the calculator UI (under-threshold calculation, exact Rs. 60,000 boundary, six-month markup, invalid-input clearing and reset). Added `npm test` scripts; these new UI smoke tests are committed but have **not yet been executed in this environment**.
+- Corrected the calculator input font declaration and ensured invalid values clear stale result/schedule output.
+- Updated the project README so the full website + Android scope is no longer described as deferred.

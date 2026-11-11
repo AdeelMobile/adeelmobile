@@ -5,6 +5,8 @@
 - Uses `getVisibleSalesRecords`; row visibility remains controlled by Supabase RLS.
 - Defaults to the adapter's bounded 50-row snapshot and accepts a caller limit.
 - Returns snapshot metrics only; it does not label the result all-time totals.
+- Sums monetary values in integer paisa to avoid ordinary floating-point addition drift.
+- Excludes missing, negative, non-finite, unsafe-precision and overflowing amounts from the sum, and reports their count separately as `invalidAmountRows`.
 - Propagates authorization/network errors instead of replacing them with zero values.
 - Performs no writes and does not manage authentication.
 

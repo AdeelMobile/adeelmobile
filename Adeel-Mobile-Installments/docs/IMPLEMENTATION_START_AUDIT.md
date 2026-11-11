@@ -93,3 +93,7 @@ These values must be centralized/configurable and covered by boundary and roundi
 - Supabase Security Advisor also reports leaked-password protection disabled and several SECURITY DEFINER/public-RPC warnings. These are documented for review; no settings or grants were changed.
 - No production database, Storage, RLS, Edge Function, or deployment changes were made.
 - APK remains unbuilt; no Android SDK/Gradle toolchain is available in the current build environment.
+
+- Added a pure monthly schedule builder in `js/utils/installment-schedule.mjs`: calendar-month dates, month-end clamping, integer-paisa allocation and final-installment remainder.
+- Added 5 schedule tests; local execution: **5 passed, 0 failed**. Combined calculator + schedule coverage: **12 tests passed, 0 failed**.
+- Schedule builder is intentionally not connected to any live contract or payment table. Its date/rounding conventions remain proposals until business acceptance and a separately approved ledger migration.

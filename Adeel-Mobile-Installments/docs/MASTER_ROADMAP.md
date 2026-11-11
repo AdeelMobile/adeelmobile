@@ -95,3 +95,19 @@ Record scope; files created/changed; frozen-file list; commit SHA; staging URL/v
 
 ## Safeguards
 GitHub is source of truth. Staging is not production. Ask before Cloudflare/domain setup or deployment unless already authorized. No production release without approval. No Supabase schema/data/Storage/RLS changes or migrations without separate approval. If a future phase appears to need a frozen file, stop and design a new module/interface rather than editing it.
+
+## Working-branch implementation update — 2026-11-11
+
+The full product scope is expanded by `PRODUCT_SCOPE_DECISION.md`; this does not waive any release gate or phase acceptance requirement.
+
+Current branch-only additions:
+- Public storefront route at `pages/shop/`, backed by read-only public catalog queries.
+- Safe Admin sign-in information page remains at `pages/login/`; it does not collect credentials.
+- Local finance calculator and illustrative schedule preview.
+- Automated utility, UI-smoke and static-route/catalog test files plus `npm test` scripts.
+
+Phase interpretation:
+- The storefront/catalog and calculator are preparatory, read-only preview slices. They do **not** complete or unlock Phase 7 catalog administration, Phase 8 transactional installment setup, Phase 13 full customer inquiry journey, or any later phase.
+- No staging deployment, live browser/API/CORS test, Android test, Safe Browsing clearance, backend write integration or user acceptance has been completed for these additions.
+- Phase 1 remains BLOCKED/PENDING until the current working branch is deployed to approved staging, Safe Browsing is cleared/reviewed, and actual Android/browser checks are accepted.
+- Keep all phases locked until their own working vertical slice is implemented, staged, tested and accepted. No production deployment or database/Storage/RLS mutation has been made.

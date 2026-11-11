@@ -5,7 +5,7 @@
   "type": "module",
   "description": "Mobile-first Adeel Mobile Installments web application",
   "scripts": {
-    "test": "node --test js/utils/*.test.mjs pages/tools/installment-calculator/*.test.mjs",
+    "test": "node --test js/utils/*.test.mjs pages/tools/installment-calculator/*.test.mjs pages/shop/*.test.mjs",
     "test:finance": "node --test js/utils/installment-calculator.test.mjs js/utils/installment-schedule.test.mjs pages/tools/installment-calculator/calculator.test.mjs"
   },
   "engines": {

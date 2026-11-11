@@ -30,6 +30,8 @@ test("catalog reads only public product tables and uses visibility filters", () 
   assert.match(source, /show_website=eq\.true/);
   assert.match(source, /model\.show_catalog=eq\.true/);
   assert.match(source, /model\.brand\.show_brand=eq\.true/);
+  assert.match(source, /model\.status=in\.\(active,upcoming\)/);
+  assert.doesNotMatch(source, /innerHTML/);
   assert.doesNotMatch(source, /\.insert\(|\.update\(|\.delete\(/);
 });
 

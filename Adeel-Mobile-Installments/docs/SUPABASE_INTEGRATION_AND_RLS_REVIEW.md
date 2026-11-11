@@ -84,3 +84,17 @@ The FK graph reveals that the newer verification flow has a connected workflow a
 - `product_images.variant_id → variants.id`
 
 This means the verification/P5/P6 tables already form a more specific application-to-customer-to-installment workflow. Do not replace it with a newly invented parallel contract table. Before implementation, inspect the P5/P6 triggers, functions, constraints, payment/receipt tables and policy coverage as one unit. The presence of a foreign key proves referential linkage, not that the workflow is complete or secure.
+
+## 7. P5/P6 workflow functions and trigger behavior (read-only source review)
+
+Observed trigger functions:
+- `p5_set_application_owner()` overwrites owner_auth_id with auth.uid(), obtains app_user_id from `private.current_app_user_id()`, requires an active application user, forces status=pending and actual_advance=0, clears client-supplied review/link/document fields, and derives product name/variant/price from the selected variant. This closes the app_user_id mismatch concern for normal inserts that execute this trigger.
+- `p5_record_application_event()` records submission and status/document changes in `p5_verification_events`.
+- `p6_link_approved_verification()` runs after a verification status changes to approved. It checks matching P5 customer and contract, serializes same-owner/CNIC approvals, reuses or creates a P6 customer, and links the verification and installment contract to P6 tables with conflict checks.
+- Timestamp triggers maintain updated_at.
+
+### Remaining approval-path question
+
+The inspected public RLS policy list for `p5_verification_applications` contains owner INSERT and owner/admin SELECT, but no UPDATE policy. P5 customer, contract and advance-receipt policies shown are admin SELECT only. Therefore, an authenticated browser Admin cannot be assumed to approve/reject applications or create the required P5 customer/contract rows directly through PostgREST. A trusted Edge Function, security-definer RPC or another backend workflow may exist, but it has not yet been identified and verified.
+
+Do not attempt approval by weakening RLS or by writing directly from the browser. Locate and review the trusted approval backend, its grants, validation and audit behavior before connecting the Admin review UI.

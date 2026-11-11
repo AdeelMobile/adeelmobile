@@ -12,6 +12,7 @@ Status: page and read-only query implementation committed; browser/API execution
 - Product images are restricted to HTTPS objects in the existing project's public `phone-images` bucket.
 - Gallery data accepts the existing string-list format and JSON array format; non-string gallery entries are ignored before URL validation.
 - Product-provided text is rendered with textContent, not innerHTML.
+- Variants with missing, zero, negative, fractional or unsafe-integer retail prices are excluded from the public catalog; discount prices are used only when they are positive safe integers below retail.
 
 ## Automated static checks
 
@@ -27,6 +28,7 @@ Run `npm test` from the app folder. Static tests verify the catalog files, publi
 - [ ] Filter by brand and clear filters.
 - [ ] Sort low-to-high, high-to-low and by name.
 - [ ] Confirm discount price is used only when positive and below retail price.
+- [ ] Confirm invalid retail prices are not rendered or passed into the installment calculator.
 - [ ] Confirm broken/missing images show the AM fallback.
 - [ ] Open product Details and verify model/variant title, price, gallery images and available specifications.
 - [ ] Confirm upcoming products show Coming soon and do not offer installment estimates.

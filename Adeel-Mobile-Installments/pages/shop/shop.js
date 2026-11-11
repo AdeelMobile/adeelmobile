@@ -6,6 +6,12 @@ const brandFilter = document.getElementById("brand-filter");
 const sortFilter = document.getElementById("sort-filter");
 const countLabel = document.getElementById("catalog-count");
 const clearButton = document.getElementById("clear-filters");
+const productDialog = document.getElementById("product-dialog");
+const dialogTitle = document.getElementById("dialog-title");
+const dialogGallery = document.getElementById("dialog-gallery");
+const dialogPrice = document.getElementById("dialog-price");
+const dialogSpecs = document.getElementById("dialog-specs");
+const dialogEstimate = document.getElementById("dialog-estimate");
 const projectHost = new URL(SUPABASE_URL).hostname;
 
 let products = [];
@@ -95,22 +101,79 @@ function makePhoneCard(product) {
     priceBox.append(old);
   }
 
+  const actions = document.createElement("div");
+  actions.className = "phone-actions";
+  const details = document.createElement("button");
+  details.type = "button";
+  details.textContent = "Details";
+  details.addEventListener("click", () => openProductDetails(product, current));
+  actions.append(details);
+
   if (product.model.status === "upcoming") {
     const badge = document.createElement("span");
     badge.className = "phone-status";
     badge.textContent = "Coming soon";
-    info.append(brand, badge, name, variant, priceBox);
+    info.append(brand, badge, name, variant, priceBox, actions);
   } else {
-    const actions = document.createElement("div");
-    actions.className = "phone-actions";
     const estimate = document.createElement("a");
     estimate.href = "../tools/installment-calculator/?price=" + encodeURIComponent(String(current));
-    estimate.textContent = "Estimate installments";
-    actions.append(estimate);
+    estimate.textContent = "Estimate";
+    actions.prepend(estimate);
     info.append(brand, name, variant, priceBox, actions);
   }
   card.append(imageBox, info);
   return card;
+}
+
+function openProductDetails(product, currentPrice) {
+  const brandName = product.model.brand.brand;
+  dialogTitle.textContent = brandName + " " + product.model.model;
+  dialogPrice.textContent = money(currentPrice);
+
+  dialogGallery.replaceChildren();
+  const galleryUrls = [product.image_link, ...(product.gallery_images || "").split(",")]
+    .map((value) => safeProductImage(value.trim()))
+    .filter((value, index, all) => value && all.indexOf(value) === index)
+    .slice(0, 6);
+  galleryUrls.forEach((url) => {
+    const image = document.createElement("img");
+    image.src = url;
+    image.alt = brandName + " " + product.model.model;
+    image.loading = "lazy";
+    image.referrerPolicy = "no-referrer";
+    image.addEventListener("error", () => image.remove(), { once: true });
+    dialogGallery.append(image);
+  });
+
+  dialogSpecs.replaceChildren();
+  const specs = product.specs && typeof product.specs === "object" && !Array.isArray(product.specs)
+    ? Object.entries(product.specs).slice(0, 12)
+    : [];
+  if (specs.length) {
+    specs.forEach(([key, value]) => {
+      const item = document.createElement("div");
+      const term = document.createElement("dt");
+      const detail = document.createElement("dd");
+      term.textContent = key.replace(/[_-]+/g, " ");
+      detail.textContent = value !== null && typeof value === "object" ? JSON.stringify(value) : String(value ?? "—");
+      item.append(term, detail);
+      dialogSpecs.append(item);
+    });
+  } else {
+    const empty = document.createElement("p");
+    empty.className = "catalog-empty";
+    empty.textContent = "Detailed specifications are not available for this model yet.";
+    dialogSpecs.append(empty);
+  }
+
+  if (product.model.status === "upcoming") {
+    dialogEstimate.hidden = true;
+    dialogEstimate.removeAttribute("href");
+  } else {
+    dialogEstimate.href = "../tools/installment-calculator/?price=" + encodeURIComponent(String(currentPrice));
+    dialogEstimate.hidden = false;
+  }
+  productDialog.showModal();
 }
 
 function makeFallback() {
@@ -170,7 +233,7 @@ async function loadCatalog() {
     if (!SUPABASE_URL || !SUPABASE_PUBLISHABLE_KEY) throw new Error("Public catalog connection is not configured.");
     const [brandRows, variantRows] = await Promise.all([
       apiGet("brands", "select=id,brand,show_brand&show_brand=eq.true&order=brand.asc"),
-      apiGet("variants", "select=id,variant,price,discount_price,image_link,model:models!inner(id,model,status,show_catalog,brand:brands!inner(id,brand,show_brand))&show_website=eq.true&model.show_catalog=eq.true&model.status=in.(active,upcoming)&model.brand.show_brand=eq.true&order=price.asc&limit=200")
+      apiGet("variants", "select=id,variant,price,discount_price,image_link,gallery_images,specs,model:models!inner(id,model,status,show_catalog,brand:brands!inner(id,brand,show_brand))&show_website=eq.true&model.show_catalog=eq.true&model.status=in.(active,upcoming)&model.brand.show_brand=eq.true&order=price.asc&limit=200")
     ]);
     brands = brandRows.filter((brand) => brand.show_brand === true);
     products = variantRows.filter((product) =>
@@ -201,6 +264,10 @@ clearButton.addEventListener("click", () => {
   brandFilter.value = "";
   sortFilter.value = "price-asc";
   renderCatalog();
+});
+document.getElementById("dialog-close").addEventListener("click", () => productDialog.close());
+productDialog.addEventListener("click", (event) => {
+  if (event.target === productDialog) productDialog.close();
 });
 document.getElementById("current-year").textContent = String(new Date().getFullYear());
 loadCatalog();

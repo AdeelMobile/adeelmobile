@@ -21,10 +21,13 @@ test("calculator page stylesheet and script references resolve", () => {
   const html = readFileSync(path.join(calculatorDir, "index.html"), "utf8");
   const css = html.match(/href="\.\/calculator\.css"/);
   const script = html.match(/src="\.\/calculator\.js"/);
+  const sharedCss = html.match(/href="\.\.\/\.\.\/\.\.\/css\/main\.css"/);
   assert.ok(css);
   assert.ok(script);
+  assert.ok(sharedCss);
   assert.ok(existsSync(path.join(calculatorDir, "calculator.css")));
   assert.ok(existsSync(path.join(calculatorDir, "calculator.js")));
+  assert.ok(existsSync(path.resolve(calculatorDir, "../../../css/main.css")));
 });
 
 test("calculator utility imports resolve within the app folder", () => {

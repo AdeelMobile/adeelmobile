@@ -122,11 +122,10 @@ export function createSupabaseReadOnlyService({ url, publishableKey, fetchImpl =
     }
     const params = new URLSearchParams({
       select: SALES_COLUMNS,
-      sale_date: "gte." + start,
+      and: "(sale_date.gte." + start + ",sale_date.lte." + end + ")",
       order: "sale_date.asc,created_at.asc",
       limit: String(limit)
     });
-    params.append("sale_date", "lte." + end);
     const response = await fetchImpl(config.baseUrl + "/rest/v1/sales_records?" + params.toString(), {
       method: "GET",
       headers: makeHeaders(config.key, token),

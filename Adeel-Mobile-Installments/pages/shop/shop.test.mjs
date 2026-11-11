@@ -35,7 +35,7 @@ test("catalog reads only public product tables and uses visibility filters", () 
   assert.match(source, /Array\.isArray\(rawGallery\)/);
   assert.match(source, /typeof rawGallery === "string"/);
   assert.match(source, /filter\(\(value\) => typeof value === "string"\)/);
-  assert.match(source, /showModal\\(\\)/);
+  assert.match(source, /showModal\(\)/);
   assert.doesNotMatch(source, /innerHTML/);
   assert.doesNotMatch(source, /\.insert\(|\.update\(|\.delete\(/);
 });

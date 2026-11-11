@@ -119,3 +119,19 @@ The inspected `public.ims_whoami()` returns `admin` only when `private.is_admin(
 5. Review Edge Function secrets by name and deployment configuration without retrieving or printing secret values.
 
 No Edge Function was deployed, replaced, or invoked during this review.
+
+## 9. Supabase Security Advisor snapshot (2026-11-11)
+
+The project's Security Advisor returned the following findings:
+
+- INFO: RLS enabled with no policies on `private.admin_allowlist`, `public.design_settings`, `public.p6_customer_verifications`, and `public.store_settings`. No-policy RLS normally denies API access, but verify whether each table is intentionally private or needs a narrowly scoped policy.
+- WARN: Leaked Password Protection is disabled. Enable it in Supabase Auth settings after owner approval.
+- WARN: SECURITY DEFINER functions are executable by API roles. This is not automatically exploitable if every function performs strict internal authorization; review each body and grants. In the inspected source, `ims_review`, `ims_record_advance`, `p5_admin_approve_verification`, and `p5_admin_reject_verification` explicitly call `private.is_admin()`. `p5_attach_verification_documents` and `p5_cancel_incomplete_application` enforce owner identity. `ims_whoami` is an identity helper. These guards must remain intact.
+- `handle_new_user()` is a SECURITY DEFINER trigger function that inserts a profile using raw user metadata. It is not a general-purpose app endpoint; review EXECUTE grants so clients cannot call it as an RPC unnecessarily.
+- `ims_submit_verification()` is SECURITY DEFINER and advisor-reports anon/authenticated EXECUTE. Its body validates an active referral, plan length, basic fields and product variant, then inserts into the legacy `verifications` table. It accepts document path strings and does not itself upload or verify the private file objects in the inspected body. Do not use this older RPC for the new CNIC journey without a separate review.
+
+Remediation links:
+- [Supabase RLS/function security linter](https://supabase.com/docs/guides/database/database-linter)
+- [Supabase leaked password protection](https://supabase.com/docs/guides/auth/password-security#password-strength-and-leaked-password-protection)
+
+This is a point-in-time advisory snapshot. No finding was changed or dismissed.

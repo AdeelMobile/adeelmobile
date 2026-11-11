@@ -42,6 +42,7 @@ function calculate(event) {
   if (!raw || !Number.isFinite(price) || price <= 0 || price > 100000000) {
     error.textContent = "Please enter a valid retail price greater than zero (maximum Rs. 100,000,000).";
     error.hidden = false;
+    clearResult();
     priceInput.focus();
     return;
   }

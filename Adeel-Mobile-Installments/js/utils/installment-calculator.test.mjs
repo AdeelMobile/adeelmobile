@@ -49,6 +49,8 @@ test("rejects invalid prices and unsupported plans", () => {
   assert.throws(() => calculateInstallment(0, 3), TypeError);
   assert.throws(() => calculateInstallment(-1, 3), TypeError);
   assert.throws(() => calculateInstallment(Number.NaN, 3), TypeError);
+  assert.throws(() => calculateInstallment(50000.5, 3), TypeError);
+  assert.throws(() => calculateInstallment(Number.MAX_SAFE_INTEGER + 1, 3), TypeError);
   assert.throws(() => calculateInstallment(50000, 12), RangeError);
 });
 
@@ -66,4 +68,15 @@ test("rejects malformed advance configuration", () => {
 test("PKR formatter rejects non-finite values and returns currency text", () => {
   assert.match(formatPKR(1000), /1,000/);
   assert.throws(() => formatPKR(Number.NaN), TypeError);
+});
+
+test("rejects advance configurations that leave no installment balance", () => {
+  const invalid = {
+    currency: "PKR",
+    advanceThreshold: 60000,
+    advanceBelowThresholdPercent: 100,
+    advanceAtOrAboveThresholdPercent: 30,
+    plans: { 3: 15, 6: 28, 9: 38 },
+  };
+  assert.throws(() => calculateInstallment(50000, 3, invalid), TypeError);
 });

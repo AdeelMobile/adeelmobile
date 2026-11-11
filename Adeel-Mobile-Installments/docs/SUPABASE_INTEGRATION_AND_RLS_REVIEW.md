@@ -60,3 +60,27 @@ Review type: Read-only metadata and policy inspection. No SQL mutations, data ch
 - No bucket permissions changed.
 - No live customer records or credentials read.
 - No production deployment.
+
+## 6. Foreign-key map (observed)
+
+The FK graph reveals that the newer verification flow has a connected workflow and should be evaluated before using the older generic customer/order tables:
+
+- `p5_verification_applications.variant_id → variants.id`
+- `p5_advance_receipts.application_id → p5_verification_applications.id`
+- `p5_installment_contracts.application_id → p5_verification_applications.id`
+- `p5_installment_contracts.variant_id → variants.id`
+- `p5_customers.application_id → p5_verification_applications.id`
+- `p5_verification_applications.customer_id → p5_customers.id`
+- `p5_verification_applications.installment_contract_id → p5_installment_contracts.id`
+- `p5_verification_events.application_id → p5_verification_applications.id`
+- `p6_customers.verification_id → p5_verification_applications.id`
+- `p6_customers.p5_customer_id → p5_customers.id`
+- `p6_customers.referring_user_id → users.id`
+- `p6_customer_installments.customer_id → p6_customers.id`
+- `p6_customer_verifications.customer_id → p6_customers.id`
+- `p6_customer_verifications.verification_id → p5_verification_applications.id`
+- `sales_records.order_id → orders.id`
+- `sales_records.user_id → users.id`
+- `product_images.variant_id → variants.id`
+
+This means the verification/P5/P6 tables already form a more specific application-to-customer-to-installment workflow. Do not replace it with a newly invented parallel contract table. Before implementation, inspect the P5/P6 triggers, functions, constraints, payment/receipt tables and policy coverage as one unit. The presence of a foreign key proves referential linkage, not that the workflow is complete or secure.

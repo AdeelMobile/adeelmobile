@@ -97,3 +97,6 @@ These values must be centralized/configurable and covered by boundary and roundi
 - Added a pure monthly schedule builder in `js/utils/installment-schedule.mjs`: calendar-month dates, month-end clamping, integer-paisa allocation and final-installment remainder.
 - Added 5 schedule tests; local execution: **5 passed, 0 failed**. Combined calculator + schedule coverage: **12 tests passed, 0 failed**.
 - Schedule builder is intentionally not connected to any live contract or payment table. Its date/rounding conventions remain proposals until business acceptance and a separately approved ledger migration.
+
+- Added a standalone mobile-first calculator screen at `pages/tools/installment-calculator/` and linked it from the safe login preview. It uses the tested pure calculator and schedule modules; it does not submit sales, save customer data or connect to Supabase.
+- The calculator screen is still awaiting real-browser/mobile QA. Static code presence is not a claim of device testing or production readiness.

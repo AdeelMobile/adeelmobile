@@ -46,12 +46,19 @@ globalThis.document = {
   getElementById: id => elements[id],
   createElement: tag => new FakeElement(tag)
 };
+globalThis.location = { search: "?price=85000" };
 
 await import("./calculator.js");
 
 function submit() {
   elements["calculator-form"].dispatch("submit", { preventDefault() {} });
 }
+
+test("catalog price query parameter prefills and calculates the estimate", () => {
+  assert.equal(elements["retail-price"].value, "85000");
+  assert.equal(elements["advance-percent"].textContent, "(30%)");
+  assert.equal(elements["schedule-rows"].children.length, 3);
+});
 
 test("UI calculates under-threshold advance and renders payment rows", () => {
   elements["retail-price"].value = "50000";

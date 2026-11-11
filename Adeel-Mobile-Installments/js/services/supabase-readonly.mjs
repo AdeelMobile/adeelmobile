@@ -35,6 +35,17 @@ function requireConfig(config) {
   return { baseUrl: url.origin, key: config.publishableKey };
 }
 
+function requireDateOnly(value, label) {
+  if (typeof value !== "string" || !/^\\d{4}-\\d{2}-\\d{2}$/.test(value)) {
+    throw new TypeError(label + " must be a valid YYYY-MM-DD date.");
+  }
+  const parsed = new Date(value + "T00:00:00.000Z");
+  if (Number.isNaN(parsed.getTime()) || parsed.toISOString().slice(0, 10) !== value) {
+    throw new TypeError(label + " must be a valid YYYY-MM-DD date.");
+  }
+  return value;
+}
+
 function requireAccessToken(token) {
   if (typeof token !== "string" || token.length < 20 || /\s/.test(token)) {
     throw new TypeError("A valid access token is required.");
@@ -101,7 +112,32 @@ export function createSupabaseReadOnlyService({ url, publishableKey, fetchImpl =
     return rows;
   }
 
-  return Object.freeze({ whoAmI, getVisibleSalesRecords });
+  async function getVisibleSalesRecordsByDateRange(accessToken, { startDate, endDate, limit = 100 } = {}) {
+    const token = requireAccessToken(accessToken);
+    const start = requireDateOnly(startDate, "Start date");
+    const end = requireDateOnly(endDate, "End date");
+    if (start > end) throw new RangeError("Start date must not be after end date.");
+    if (!Number.isInteger(limit) || limit < 1 || limit > 100) {
+      throw new RangeError("Sales record limit must be between 1 and 100.");
+    }
+    const params = new URLSearchParams({
+      select: SALES_COLUMNS,
+      sale_date: "gte." + start,
+      order: "sale_date.asc,created_at.asc",
+      limit: String(limit)
+    });
+    params.append("sale_date", "lte." + end);
+    const response = await fetchImpl(config.baseUrl + "/rest/v1/sales_records?" + params.toString(), {
+      method: "GET",
+      headers: makeHeaders(config.key, token),
+      cache: "no-store"
+    });
+    const rows = await readJson(response);
+    if (!Array.isArray(rows)) throw new TypeError("Unexpected sales records response.");
+    return rows;
+  }
+
+  return Object.freeze({ whoAmI, getVisibleSalesRecords, getVisibleSalesRecordsByDateRange });
 }
 
 export const READ_ONLY_SALES_COLUMNS = SALES_COLUMNS;

@@ -10,6 +10,7 @@ Status: page and read-only query implementation committed; browser/API execution
 - Does not query staff, customers, CNIC, sales, orders, contracts, payments or private settings.
 - Does not perform insert, update, delete, upload or RPC operations.
 - Product images are restricted to HTTPS objects in the existing project's public `phone-images` bucket.
+- Gallery data accepts the existing string-list format and JSON array format; non-string gallery entries are ignored before URL validation.
 - Product-provided text is rendered with textContent, not innerHTML.
 
 ## Automated static checks

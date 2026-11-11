@@ -27,6 +27,8 @@ Run `npm test` from the app folder. Static tests verify the catalog files, publi
 - [ ] Sort low-to-high, high-to-low and by name.
 - [ ] Confirm discount price is used only when positive and below retail price.
 - [ ] Confirm broken/missing images show the AM fallback.
+- [ ] Open product Details and verify model/variant title, price, gallery images and available specifications.
+- [ ] Confirm upcoming products show Coming soon and do not offer installment estimates.
 - [ ] Open Estimate installments and verify the correct price is prefilled.
 - [ ] Confirm no CORS/API errors in browser console/network panel.
 - [ ] Confirm 360px/390px/412px and desktop layouts.

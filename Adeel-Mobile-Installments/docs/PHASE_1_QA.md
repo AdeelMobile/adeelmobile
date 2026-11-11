@@ -61,3 +61,14 @@ Do not start backend/authentication work until the user confirms the foundation 
 - GitHub main tree after cleanup: `a7a2a7a1525c1932bac0b3d90c9633d075bcc5e7`.
 - Cloudflare deployment and live URL behavior for this additional cleanup are pending user confirmation.
 - Google Search Console still reports `Deceptive pages`; do not mark the issue resolved until Google confirms it.
+
+## Working-branch update — 2026-11-11 (not a Phase PASS)
+
+The current working branch now differs from the historical 2026-11-01 root-routing snapshot above:
+- The website root now routes to the public read-only phone catalog at `pages/shop/`.
+- The safe, non-credential Admin sign-in information page remains at `pages/login/` and is marked `noindex,nofollow`.
+- The catalog reads only public brand/product catalog fields through the existing project's publishable key and public RLS policies. It does not access customer/staff records or perform writes.
+- A local installment calculator preview is linked from the login and catalog pages.
+- These are additional working-branch changes only. They have not been deployed or manually tested on Android/browser, and they do not clear the previously reported Google Safe Browsing warning.
+- The old Phase 1 static routing assertions are historical evidence for the earlier root-to-login version; current branch route tests now assert the root-to-catalog route.
+- **Phase 1 remains BLOCKED/PENDING** until the current branch is deployed to an approved staging environment, Google Safe Browsing is rechecked/cleared, and actual mobile/browser navigation and responsive tests are completed.

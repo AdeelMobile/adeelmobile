@@ -131,7 +131,14 @@ function openProductDetails(product, currentPrice) {
   dialogPrice.textContent = money(currentPrice);
 
   dialogGallery.replaceChildren();
-  const galleryUrls = [product.image_link, ...(product.gallery_images || "").split(",")]
+  const rawGallery = product.gallery_images;
+  const extraGallery = Array.isArray(rawGallery)
+    ? rawGallery
+    : typeof rawGallery === "string"
+      ? rawGallery.split(",")
+      : [];
+  const galleryUrls = [product.image_link, ...extraGallery]
+    .filter((value) => typeof value === "string")
     .map((value) => safeProductImage(value.trim()))
     .filter((value, index, all) => value && all.indexOf(value) === index)
     .slice(0, 6);

@@ -36,7 +36,7 @@ function requireConfig(config) {
 }
 
 function requireAccessToken(token) {
-  if (typeof token !== "string" || token.length < 20 || /\\s/.test(token)) {
+  if (typeof token !== "string" || token.length < 20 || /\s/.test(token)) {
     throw new TypeError("A valid access token is required.");
   }
   return token;

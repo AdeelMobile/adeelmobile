@@ -92,3 +92,8 @@ document.getElementById("reset-button").addEventListener("click", () => {
   priceInput.focus();
 });
 clearResult();
+const initialPrice = new URLSearchParams(globalThis.location?.search || "").get("price");
+if (initialPrice) {
+  priceInput.value = initialPrice;
+  calculate();
+}

@@ -32,6 +32,34 @@ test("unknown identity is denied", async () => {
   await assert.rejects(service.whoAmI(token), /Access denied/);
 });
 
+test("customer read uses a privacy-minimized column allowlist and delegates ownership to RLS", async () => {
+  let request;
+  const service = createSupabaseReadOnlyService({
+    ...config,
+    fetchImpl: async (url, options) => {
+      request = { url, options };
+      return { ok: true, json: async () => [] };
+    }
+  });
+  assert.deepEqual(await service.getVisibleCustomers(token, { limit: 30 }), []);
+  const parsed = new URL(request.url);
+  assert.equal(parsed.pathname, "/rest/v1/p6_customers");
+  assert.equal(parsed.searchParams.get("limit"), "30");
+  assert.equal(parsed.searchParams.get("select"), "id,name,phone,category,status,created_at,updated_at");
+  assert.equal(parsed.searchParams.has("owner_auth_id"), false);
+  assert.equal(parsed.searchParams.has("cnic"), false);
+  assert.equal(parsed.searchParams.has("address"), false);
+  assert.equal(request.options.method, "GET");
+  assert.equal(request.options.cache, "no-store");
+});
+
+test("customer read limit is bounded and rejects invalid values", async () => {
+  const service = createSupabaseReadOnlyService({ ...config, fetchImpl: async () => ({ ok: true, json: async () => [] }) });
+  await assert.rejects(service.getVisibleCustomers(token, { limit: 101 }), RangeError);
+  await assert.rejects(service.getVisibleCustomers(token, { limit: 0 }), RangeError);
+  await assert.rejects(service.getVisibleCustomers(token, { limit: 1.5 }), RangeError);
+});
+
 test("own sales read delegates ownership to RLS and sends no user filter", async () => {
   let request;
   const service = createSupabaseReadOnlyService({

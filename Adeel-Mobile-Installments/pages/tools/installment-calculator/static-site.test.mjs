@@ -38,8 +38,8 @@ test("calculator utility imports resolve within the app folder", () => {
   }
 });
 
-test("root redirect points to the safe login preview", () => {
+test("root redirect opens the public phone catalog", () => {
   const html = readFileSync(path.join(appRoot, "index.html"), "utf8");
-  assert.match(html, /pages\/login\//);
-  assert.ok(existsSync(path.join(appRoot, "pages/login/index.html")));
+  assert.match(html, /pages\\/shop\\//);
+  assert.ok(existsSync(path.join(appRoot, "pages/shop/index.html")));
 });

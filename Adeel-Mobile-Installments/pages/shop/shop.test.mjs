@@ -5,7 +5,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const testDir = path.dirname(fileURLToPath(import.meta.url));
-const appRoot = path.resolve(testDir, "../../..");
+const appRoot = path.resolve(testDir, "../..");
 const shopDir = path.join(appRoot, "pages/shop");
 
 test("shop page loads its local stylesheet and module", () => {

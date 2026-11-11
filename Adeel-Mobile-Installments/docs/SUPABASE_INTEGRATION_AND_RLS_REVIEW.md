@@ -135,3 +135,32 @@ Remediation links:
 - [Supabase leaked password protection](https://supabase.com/docs/guides/auth/password-security#password-strength-and-leaked-password-protection)
 
 This is a point-in-time advisory snapshot. No finding was changed or dismissed.
+
+## 10. Installment collection data gap
+
+A read-only column/table-name review found:
+- `p5_installment_contracts` stores product, price, plan months, expected advance and actual advance, but no persisted markup percent/amount, financed principal, total installment balance, monthly amount, first due date or schedule rows.
+- `p5_advance_receipts` stores the advance receipt only.
+- `p6_customer_installments` currently links a P6 customer to an installment contract; its inspected columns do not contain payment amount, due date, paid date or installment status.
+- The public table-name scan found `installment_plans`, `installment_plans_old`, `p5_advance_receipts`, `p5_installment_contracts`, and `p6_customer_installments`, but no separate public payment/collection/repayment ledger table.
+
+Therefore the existing P5/P6 workflow is useful for verification and contract linkage, but a complete recurring installment collection ledger is not established by the inspected tables. Do not fake monthly paid/unpaid status in the frontend.
+
+### Proposed future ledger design (proposal only; not migrated)
+
+After separate database-change approval, design normalized records for:
+1. Contract calculation snapshot: retail price, advance %, expected/actual advance, financed principal, markup %, markup amount, total balance, plan months, monthly amount, currency and calculation-rules version.
+2. Installment schedule: one row per due date, sequence number, due amount, due date, amount paid, status and balance; deterministic month-end handling and final-payment adjustment.
+3. Payment transactions: append-only receipts with contract/customer, amount, received timestamp, method, reference, actor and idempotency key. Corrections should be reversal/adjustment records, not destructive edits.
+4. Allocation rows: allocate each payment to one or more scheduled installments, supporting partial payments and overpayments without losing reconciliation.
+5. Audit trail: actor, action, timestamp, old/new values or reversal references.
+
+### Safe defaults to validate before production
+
+- No late fee or penalty is applied unless the business explicitly configures one.
+- First recurring due date is one calendar month after the sale/contract date; preserve the day-of-month where possible and clamp to the final day for short months.
+- Divide total installment balance equally; assign any rounding remainder to the final installment so scheduled amounts sum exactly to the contract total.
+- Keep the original calculation snapshot immutable if rules later change.
+- All payment writes must be transactional and idempotent; staff access must be enforced server-side.
+
+These are proposed design defaults, not live business settings. No migration file was applied and no database objects were created.

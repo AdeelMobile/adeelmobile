@@ -102,7 +102,14 @@ function makePhoneCard(product) {
   estimate.textContent = "Estimate installments";
   actions.append(estimate);
 
-  info.append(brand, name, variant, priceBox, actions);
+  if (product.model.status === "upcoming") {
+    const badge = document.createElement("span");
+    badge.className = "phone-status";
+    badge.textContent = "Coming soon";
+    info.append(brand, badge, name, variant, priceBox, actions);
+  } else {
+    info.append(brand, name, variant, priceBox, actions);
+  }
   card.append(imageBox, info);
   return card;
 }
@@ -164,7 +171,7 @@ async function loadCatalog() {
     if (!SUPABASE_URL || !SUPABASE_PUBLISHABLE_KEY) throw new Error("Public catalog connection is not configured.");
     const [brandRows, variantRows] = await Promise.all([
       apiGet("brands", "select=id,brand,show_brand&show_brand=eq.true&order=brand.asc"),
-      apiGet("variants", "select=id,variant,price,discount_price,image_link,model:models!inner(id,model,show_catalog,brand:brands!inner(id,brand,show_brand))&show_website=eq.true&model.show_catalog=eq.true&model.brand.show_brand=eq.true&order=price.asc&limit=200")
+      apiGet("variants", "select=id,variant,price,discount_price,image_link,model:models!inner(id,model,status,show_catalog,brand:brands!inner(id,brand,show_brand))&show_website=eq.true&model.show_catalog=eq.true&model.status=in.(active,upcoming)&model.brand.show_brand=eq.true&order=price.asc&limit=200")
     ]);
     brands = brandRows.filter((brand) => brand.show_brand === true);
     products = variantRows.filter((product) =>

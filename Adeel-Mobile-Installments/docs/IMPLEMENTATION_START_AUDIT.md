@@ -118,3 +118,8 @@ These values must be centralized/configurable and covered by boundary and roundi
 - Added static route/catalog smoke tests and `npm test` includes them. These tests are committed but not executed here because the available container cannot reach GitHub to materialize the working-branch source; do not count them as PASS until run in the project environment.
 
 - Root entry routing now distinguishes the intended surfaces: normal web browsers open the public catalog, while a future Capacitor-native wrapper opens the safe Admin sign-in information page. The Android wrapper itself has not yet been generated or built.
+
+- Added a read-only sales dashboard data layer in `js/services/dashboard-read-model.mjs`, combining the RLS-backed sales read adapter with a pure snapshot summary. It deliberately does not claim lifetime totals, write records, or manage sessions.
+- Hardened summary money aggregation to integer paisa and explicit invalid/overflow handling. Focused Node harness against the same summary implementation: **4 tests passed, 0 failed**. This is not the full repository `npm test` suite.
+- Added service and utility tests plus `docs/DASHBOARD_READ_MODEL.md`. The Admin dashboard route remains a safe preview, not a working dashboard; live Supabase API/CORS, Admin/Staff account tests, full date-range pagination, staging and browser acceptance remain pending.
+- No database, Storage, RLS, Auth, Edge Function, production or Android build changes were made.

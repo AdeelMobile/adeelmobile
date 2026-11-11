@@ -3,7 +3,7 @@
  *
  * This module deliberately exposes only a small allowlist of reads. It never
  * accepts a user_id filter, never writes data, and relies on database RLS for
- * row ownership. Callers must keep the access token in memory and pass it only
+ * row visibility (staff-own/admin-all). Callers must keep the access token in memory and pass it only
  * for the duration of a request. This is not an authentication/session manager.
  */
 const SALES_COLUMNS = [
@@ -78,7 +78,7 @@ export function createSupabaseReadOnlyService({ url, publishableKey, fetchImpl =
     return identity;
   }
 
-  async function getOwnSalesRecords(accessToken, { limit = 50 } = {}) {
+  async function getVisibleSalesRecords(accessToken, { limit = 50 } = {}) {
     const token = requireAccessToken(accessToken);
     if (!Number.isInteger(limit) || limit < 1 || limit > 100) {
       throw new RangeError("Sales record limit must be between 1 and 100.");
@@ -98,7 +98,7 @@ export function createSupabaseReadOnlyService({ url, publishableKey, fetchImpl =
     return rows;
   }
 
-  return Object.freeze({ whoAmI, getOwnSalesRecords });
+  return Object.freeze({ whoAmI, getVisibleSalesRecords });
 }
 
 export const READ_ONLY_SALES_COLUMNS = SALES_COLUMNS;

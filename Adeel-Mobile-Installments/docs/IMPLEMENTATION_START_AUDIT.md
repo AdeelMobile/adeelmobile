@@ -114,3 +114,5 @@ These values must be centralized/configurable and covered by boundary and roundi
 - Added static catalog safety/route tests. Public catalog browser/CORS/API checks are pending; no deployment has occurred.
 
 - Extended the read-only catalog with a product-details dialog, safe image gallery and up to 12 public specification fields where available. Upcoming products are labeled and do not offer installment estimates. Product details are rendered via DOM text nodes; gallery URLs are restricted to the existing public phone-images bucket.
+
+- Added static route/catalog smoke tests and `npm test` includes them. These tests are committed but not executed here because the available container cannot reach GitHub to materialize the working-branch source; do not count them as PASS until run in the project environment.
